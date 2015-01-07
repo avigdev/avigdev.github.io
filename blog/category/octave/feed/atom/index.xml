@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed
+  xmlns="http://www.w3.org/2005/Atom"
+  xmlns:thr="http://purl.org/syndication/thread/1.0"
+  xml:lang="en"
+   >
+  <title type="text">Avi Gozolchiani</title>
+  <subtitle type="text">Environmental Physics at Ben Gurion University</subtitle>
+
+  <updated>2015-01-07T15:01:26Z</updated>
+  <generator uri="http://blogofile.com/">Blogofile</generator>
+
+  <link rel="alternate" type="text/html" href="http://physionet.ph.biu.ac.il/~gozolaa/blog" />
+  <id>http://physionet.ph.biu.ac.il/~gozolaa/blog/feed/atom/</id>
+  <link rel="self" type="application/atom+xml" href="http://physionet.ph.biu.ac.il/~gozolaa/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://physionet.ph.biu.ac.il/~gozolaa/blog</uri>
+    </author>
+    <title type="html"><![CDATA[ncdump -h for matlab]]></title>
+    <link rel="alternate" type="text/html" href="http://physionet.ph.biu.ac.il/~gozolaa/blog/20141230/2014-12-30-ncdump-h-for-matlab-html" />
+    <id>http://physionet.ph.biu.ac.il/~gozolaa/blog/20141230/2014-12-30-ncdump-h-for-matlab-html</id>
+    <updated>2015-01-07T16:48:09Z</updated>
+    <published>2014-12-30T13:16:00Z</published>
+    <category scheme="http://physionet.ph.biu.ac.il/~gozolaa/blog" term="matlab" />
+    <category scheme="http://physionet.ph.biu.ac.il/~gozolaa/blog" term="octave" />
+    <summary type="html"><![CDATA[ncdump -h for matlab]]></summary>
+    <content type="html" xml:base="http://physionet.ph.biu.ac.il/~gozolaa/blog/20141230/2014-12-30-ncdump-h-for-matlab-html"><![CDATA[
+
+
+
+<p>
+I launch "ncdump -h" many times during my workflow. It gives you all the meta-data you need for netcdf files, without the hassle of openning a more serious program like <a href="http://ferret.pmel.noaa.gov/Ferret/">ferret</a> . I figured out that I need the same for mat files. You will need <a href="https://www.gnu.org/software/octave/">octave</a> to make it work&#x2026;
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-matlab"><span class="linenr">1: </span>#<span style="color: #228b22;">!/</span>usr<span style="color: #228b22;">/</span>local<span style="color: #228b22;">/</span>bin<span style="color: #228b22;">/</span>octave <span style="color: #228b22;">-</span>q
+<span class="linenr">2: </span>whos(<span style="color: #8b2252;">'-file'</span>,argv(){1})
+</pre>
+</div>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2014/12/30/ncdump--h-for-matlab.org">org-mode source</a><p>]]></content>
+  </entry>
+</feed>
