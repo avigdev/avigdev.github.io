@@ -7,8 +7,7 @@ serve:
 	blogofile serve 
 
 status:
-	cd _deploy
-	ls
+	cd _deploy && ls
 
 deploy:
 	rsync -avz --delete --exclude=.git _site/ _deploy
