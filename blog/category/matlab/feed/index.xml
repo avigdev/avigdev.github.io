@@ -7,16 +7,16 @@
      xmlns:wfw="http://wellformedweb.org/CommentAPI/"
      >
   <channel>
-    <title>Avi Gozolchiani</title>
-    <link>http://physionet.ph.biu.ac.il/~gozolaa/blog</link>
+    <title>Avi Gozolchiani אבי גוזולצני</title>
+    <link>http://avigdev.github.io/blog</link>
     <description>Environmental Physics at Ben Gurion University</description>
-    <pubDate>Wed, 07 Jan 2015 19:08:33 GMT</pubDate>
+    <pubDate>Thu, 08 Jan 2015 13:32:06 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
       <title>ncdump -h for matlab</title>
-      <link>http://physionet.ph.biu.ac.il/~gozolaa/blog/20141230/2014-12-30-ncdump-h-for-matlab-html</link>
+      <link>http://avigdev.github.io/blog/20141230/2014-12-30-ncdump-h-for-matlab-html</link>
       <pubDate>Tue, 30 Dec 2014 13:16:00 IST</pubDate>
       <category><![CDATA[matlab]]></category>
       <category><![CDATA[octave]]></category>

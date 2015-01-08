@@ -22,8 +22,8 @@ body {
         linear,
         left bottom,
         left top,
-        color-stop(0, rgb(205,92,92)),
-        color-stop(0.6, rgb(233,150,122))
+        color-stop(0, rgb(175,52,52)),
+        color-stop(0.6, rgb(92,52,52))
     );
     background-image: -moz-linear-gradient(
         center bottom,

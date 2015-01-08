@@ -4,30 +4,30 @@
   xmlns:thr="http://purl.org/syndication/thread/1.0"
   xml:lang="en"
    >
-  <title type="text">Avi Gozolchiani</title>
+  <title type="text">Avi Gozolchiani אבי גוזולצני</title>
   <subtitle type="text">Environmental Physics at Ben Gurion University</subtitle>
 
-  <updated>2015-01-07T19:08:33Z</updated>
+  <updated>2015-01-08T13:32:06Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
-  <link rel="alternate" type="text/html" href="http://physionet.ph.biu.ac.il/~gozolaa/blog" />
-  <id>http://physionet.ph.biu.ac.il/~gozolaa/blog/feed/atom/</id>
-  <link rel="self" type="application/atom+xml" href="http://physionet.ph.biu.ac.il/~gozolaa/blog/feed/atom/" />
+  <link rel="alternate" type="text/html" href="http://avigdev.github.io/blog" />
+  <id>http://avigdev.github.io/blog/feed/atom/</id>
+  <link rel="self" type="application/atom+xml" href="http://avigdev.github.io/blog/feed/atom/" />
   <entry>
     <author>
       <name></name>
-      <uri>http://physionet.ph.biu.ac.il/~gozolaa/blog</uri>
+      <uri>http://avigdev.github.io/blog</uri>
     </author>
     <title type="html"><![CDATA[simplify slurm and qsub]]></title>
-    <link rel="alternate" type="text/html" href="http://physionet.ph.biu.ac.il/~gozolaa/blog/20141228/2014-12-28-simplify-slurm-and-qsub-html" />
-    <id>http://physionet.ph.biu.ac.il/~gozolaa/blog/20141228/2014-12-28-simplify-slurm-and-qsub-html</id>
+    <link rel="alternate" type="text/html" href="http://avigdev.github.io/blog/20141228/2014-12-28-simplify-slurm-and-qsub-html" />
+    <id>http://avigdev.github.io/blog/20141228/2014-12-28-simplify-slurm-and-qsub-html</id>
     <updated>2015-01-07T18:14:42Z</updated>
     <published>2014-12-28T18:48:02Z</published>
-    <category scheme="http://physionet.ph.biu.ac.il/~gozolaa/blog" term="orgmode" />
-    <category scheme="http://physionet.ph.biu.ac.il/~gozolaa/blog" term="qsub" />
-    <category scheme="http://physionet.ph.biu.ac.il/~gozolaa/blog" term="slurm" />
+    <category scheme="http://avigdev.github.io/blog" term="orgmode" />
+    <category scheme="http://avigdev.github.io/blog" term="qsub" />
+    <category scheme="http://avigdev.github.io/blog" term="slurm" />
     <summary type="html"><![CDATA[simplify slurm and qsub]]></summary>
-    <content type="html" xml:base="http://physionet.ph.biu.ac.il/~gozolaa/blog/20141228/2014-12-28-simplify-slurm-and-qsub-html"><![CDATA[
+    <content type="html" xml:base="http://avigdev.github.io/blog/20141228/2014-12-28-simplify-slurm-and-qsub-html"><![CDATA[
 
 
 

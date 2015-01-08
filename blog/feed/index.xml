@@ -7,16 +7,16 @@
      xmlns:wfw="http://wellformedweb.org/CommentAPI/"
      >
   <channel>
-    <title>Avi Gozolchiani</title>
-    <link>http://physionet.ph.biu.ac.il/~gozolaa/blog</link>
+    <title>Avi Gozolchiani אבי גוזולצני</title>
+    <link>http://avigdev.github.io/blog</link>
     <description>Environmental Physics at Ben Gurion University</description>
-    <pubDate>Wed, 07 Jan 2015 19:08:33 GMT</pubDate>
+    <pubDate>Thu, 08 Jan 2015 13:32:06 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
       <title>create a document from your figures</title>
-      <link>http://physionet.ph.biu.ac.il/~gozolaa/blog/20150107/2015-1-7-create-a-document-from-your-figures-html</link>
+      <link>http://avigdev.github.io/blog/20150107/2015-1-7-create-a-document-from-your-figures-html</link>
       <pubDate>Wed, 07 Jan 2015 20:42:00 IST</pubDate>
       <category><![CDATA[latex]]></category>
       <category><![CDATA[workflow]]></category>
@@ -136,7 +136,7 @@ where <i>LATEXTMPL</i> is an environment variable, telling your script the locat
     </item>
     <item>
       <title>ncdump -h for matlab</title>
-      <link>http://physionet.ph.biu.ac.il/~gozolaa/blog/20141230/2014-12-30-ncdump-h-for-matlab-html</link>
+      <link>http://avigdev.github.io/blog/20141230/2014-12-30-ncdump-h-for-matlab-html</link>
       <pubDate>Tue, 30 Dec 2014 13:16:00 IST</pubDate>
       <category><![CDATA[matlab]]></category>
       <category><![CDATA[octave]]></category>
@@ -160,7 +160,7 @@ I launch "ncdump -h" many times during my workflow. It gives you all the meta-da
     </item>
     <item>
       <title>simplify slurm and qsub</title>
-      <link>http://physionet.ph.biu.ac.il/~gozolaa/blog/20141228/2014-12-28-simplify-slurm-and-qsub-html</link>
+      <link>http://avigdev.github.io/blog/20141228/2014-12-28-simplify-slurm-and-qsub-html</link>
       <pubDate>Sun, 28 Dec 2014 18:48:02 IST</pubDate>
       <category><![CDATA[orgmode]]></category>
       <category><![CDATA[qsub]]></category>
