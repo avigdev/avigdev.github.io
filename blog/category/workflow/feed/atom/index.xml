@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed
+  xmlns="http://www.w3.org/2005/Atom"
+  xmlns:thr="http://purl.org/syndication/thread/1.0"
+  xml:lang="en"
+   >
+  <title type="text">Avi Gozolchiani אבי גוזולצני</title>
+  <subtitle type="text">Environmental Physics at Ben Gurion University</subtitle>
+
+  <updated>2015-01-07T20:28:10Z</updated>
+  <generator uri="http://blogofile.com/">Blogofile</generator>
+
+  <link rel="alternate" type="text/html" href="http://physionet.ph.biu.ac.il/~gozolaa/blog" />
+  <id>http://physionet.ph.biu.ac.il/~gozolaa/blog/feed/atom/</id>
+  <link rel="self" type="application/atom+xml" href="http://physionet.ph.biu.ac.il/~gozolaa/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://physionet.ph.biu.ac.il/~gozolaa/blog</uri>
+    </author>
+    <title type="html"><![CDATA[create a document from your figures]]></title>
+    <link rel="alternate" type="text/html" href="http://physionet.ph.biu.ac.il/~gozolaa/blog/20150107/2015-1-7-create-a-document-from-your-figures-html" />
+    <id>http://physionet.ph.biu.ac.il/~gozolaa/blog/20150107/2015-1-7-create-a-document-from-your-figures-html</id>
+    <updated>2015-01-07T21:08:22Z</updated>
+    <published>2015-01-07T20:42:00Z</published>
+    <category scheme="http://physionet.ph.biu.ac.il/~gozolaa/blog" term="latex" />
+    <category scheme="http://physionet.ph.biu.ac.il/~gozolaa/blog" term="workflow" />
+    <summary type="html"><![CDATA[create a document from your figures]]></summary>
+    <content type="html" xml:base="http://physionet.ph.biu.ac.il/~gozolaa/blog/20150107/2015-1-7-create-a-document-from-your-figures-html"><![CDATA[
+
+
+
+<p>
+A part of the scientific workflow is creating images and categorizing them into directories. In our little parties, we scientist show these images to each other and brag about our ability to create more. It is therefore very useful to have bundles of these in pdf or html files (depending on the kind of party).
+</p>
+
+<p>
+Here's how to create a pdf (using LaTeX) :
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-perl"><span class="linenr">1: </span><span style="color: #b22222;">#</span><span style="color: #b22222;">!/usr/bin/perl -nw </span>
+<span class="linenr">2: </span><span style="color: #b22222;">## </span><span style="color: #b22222;">syntax : ls fig_patterns | latexfigs.pl &gt; latexfile</span>
+<span class="linenr">3: </span>chomp();
+<span class="linenr">4: </span>print <span style="color: #8b2252;">"\\begin\{figure\}\n\\centering\n\\includegraphics\[scale=1.2,angle=0\]\{$_\}\n"</span>;
+<span class="linenr">5: </span>s<span style="color: #8b2252;">/_/\\_/</span>g;
+<span class="linenr">6: </span>print <span style="color: #8b2252;">"\\caption\{$_\}\n\\end\{figure\}\n\\clearpage\n"</span>;
+</pre>
+</div>
+
+<p>
+and Here's how to create a html : 
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-perl"><span class="linenr">1: </span><span style="color: #b22222;">#</span><span style="color: #b22222;">!/usr/bin/perl -nw </span>
+<span class="linenr">2: </span><span style="color: #b22222;">## </span><span style="color: #b22222;">syntax : ls fig_patterns | htmlfigs.pl &gt; htmlfile</span>
+<span class="linenr">3: </span>chomp();
+<span class="linenr">4: </span>print <span style="color: #8b2252;">"&lt;IMG src=\"$_\" width=650&gt;&lt;BR&gt;\n"</span>;
+<span class="linenr">5: </span>print <span style="color: #8b2252;">"$_&lt;BR&gt;&lt;BR&gt;\n"</span>;
+</pre>
+</div>
+
+<p>
+After some time, you may want to make a section in your book/paper from each directory.
+</p>
+
+<p>
+here's the LaTeX version : 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-perl"><span class="linenr">1: </span><span style="color: #b22222;">#</span><span style="color: #b22222;">!/usr/bin/perl -w </span>
+<span class="linenr">2: </span><span style="color: #b22222;">## </span><span style="color: #b22222;">syntax : anchor_latex.pl "tag" "text" &gt;&gt; file.latex</span>
+<span class="linenr">3: </span>$<span style="color: #a0522d;">tag</span>=shift or <span style="color: #932092;">die</span> <span style="color: #8b2252;">"syntax error: anchor_latex.pl \"tag\" \"text\"&gt;&gt;file.latex\n"</span>;
+<span class="linenr">4: </span>$<span style="color: #a0522d;">text</span>=shift or <span style="color: #932092;">die</span> <span style="color: #8b2252;">"syntax error: anchor_latex.pl \"tag\" \"text\"&gt;&gt;file.latex\n"</span>;
+<span class="linenr">5: </span>print <span style="color: #8b2252;">"\\section{$text}\\label{sec:$tag}\n"</span>;
+</pre>
+</div>
+
+<p>
+and here's the html :
+</p>
+<div class="org-src-container">
+
+<pre class="src src-perl"><span class="linenr">1: </span><span style="color: #b22222;">#</span><span style="color: #b22222;">!/usr/bin/perl -w </span>
+<span class="linenr">2: </span><span style="color: #b22222;">## </span><span style="color: #b22222;">syntax : anchor_html.pl "tag" "text" &gt;&gt; file.html</span>
+<span class="linenr">3: </span>$<span style="color: #a0522d;">tag</span>=shift or <span style="color: #932092;">die</span> <span style="color: #8b2252;">"syntax error: anchor_html.pl \"tag\" \"text\"&gt;&gt;file.html\n"</span>;
+<span class="linenr">4: </span>$<span style="color: #a0522d;">text</span>=shift or <span style="color: #932092;">die</span> <span style="color: #8b2252;">"syntax error: anchor_html.pl \"tag\" \"text\"&gt;&gt;file.html\n"</span>;
+<span class="linenr">5: </span>print <span style="color: #8b2252;">"&lt;a id=\"$tag\"&gt;&lt;h2&gt;$text&lt;/h2&gt;&lt;/a&gt;\n"</span>;
+</pre>
+</div>
+
+<p>
+you can include a template for a latexfile in your home directory : 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-latex"><span class="linenr"> 1: </span><span style="color: #932092;">\documentclass</span>[A4paper]{<span style="color: #483d8b;">article</span>}
+<span class="linenr"> 2: </span><span style="color: #932092;">\usepackage</span>{<span style="color: #483d8b;">graphicx</span>}
+<span class="linenr"> 3: </span><span style="color: #932092;">\usepackage</span>{<span style="color: #483d8b;">cite</span>}
+<span class="linenr"> 4: </span><span style="color: #932092;">\usepackage</span>{<span style="color: #483d8b;">placeins</span>} <span style="color: #b22222;">% floatbarrier definition</span>
+<span class="linenr"> 5: </span><span style="color: #932092;">\usepackage</span>[caption=false]{<span style="color: #483d8b;">subfig</span>}
+<span class="linenr"> 6: </span><span style="color: #932092;">\usepackage</span>{<span style="color: #483d8b;">fullpage</span>}
+<span class="linenr"> 7: </span><span style="color: #932092;">\newcommand</span>{<span style="color: #0000ff;">\unit</span>}[1]{<span style="color: #932092;">\ensuremath</span>{<span style="color: #932092;">\,</span> <span style="color: #932092;">\mathrm</span>{#1}}}
+<span class="linenr"> 8: </span><span style="color: #932092;">\begin</span>{<span style="color: #0000ff;">document</span>}
+<span class="linenr"> 9: </span>TEXT
+<span class="linenr">10: </span><span style="color: #932092;">\end</span>{<span style="color: #0000ff;">document</span>}
+</pre>
+</div>
+
+<p>
+and substitute your created latex code into the <b>TEXT</b> part, using perl again : 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-perl"><span class="linenr"> 1: </span><span style="color: #b22222;">#</span><span style="color: #b22222;">!/usr/bin/perl -w </span>
+<span class="linenr"> 2: </span><span style="color: #b22222;"># </span><span style="color: #b22222;">syntax : merge_latex_tmpl.pl tmpfile &gt; merged_file.tex</span>
+<span class="linenr"> 3: </span>$<span style="color: #a0522d;">tmplfilename</span>=$<span style="color: #a0522d;">ENV</span>{<span style="color: #8b2252;">'LATEXTMPL'</span>};
+<span class="linenr"> 4: </span>$<span style="color: #a0522d;">filename</span>=shift // <span style="color: #932092;">die</span> <span style="color: #8b2252;">"syntax error"</span>;
+<span class="linenr"> 5: </span>open TMPL,<span style="color: #8b2252;">"&lt;$tmplfilename"</span> // <span style="color: #932092;">die</span> <span style="color: #8b2252;">"could not find the template file"</span>;
+<span class="linenr"> 6: </span>open FILE,<span style="color: #8b2252;">"&lt;$filename"</span> // <span style="color: #932092;">die</span> <span style="color: #8b2252;">"could not find the file $filename"</span>;
+<span class="linenr"> 7: </span>$<span style="color: #a0522d;">uniq_content</span> = join(<span style="color: #8b2252;">""</span>, &lt;<span style="color: #008b8b;">FILE</span>&gt;); 
+<span class="linenr"> 8: </span><span style="color: #932092;">while</span>(&lt;<span style="color: #008b8b;">TMPL</span>&gt;){
+<span class="linenr"> 9: </span>    <span style="color: #932092;">if</span>(<span style="color: #8b2252;">/TEXT/</span>){
+<span class="linenr">10: </span>        print $<span style="color: #a0522d;">uniq_content</span>;
+<span class="linenr">11: </span>    }<span style="color: #932092;">else</span>{
+<span class="linenr">12: </span>        print;
+<span class="linenr">13: </span>    }
+<span class="linenr">14: </span>}
+</pre>
+</div>
+
+<p>
+where <i>LATEXTMPL</i> is an environment variable, telling your script the location of your template. I like templates, and I clutter quite a bit as hidden files in my home directory. Do you do it differently ? 
+</p>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/1/7/create-a-document-from-your-figures.org">org-mode source</a><p>]]></content>
+  </entry>
+</feed>
