@@ -7,7 +7,7 @@
   <title type="text">Avi Gozolchiani אבי גוזולצני</title>
   <subtitle type="text">Environmental Physics at Ben Gurion University</subtitle>
 
-  <updated>2015-01-11T11:07:41Z</updated>
+  <updated>2015-01-11T11:10:07Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://avigdev.github.io/blog" />
@@ -268,7 +268,7 @@ I launch "ncdump -h" many times during my workflow. It gives you all the meta-da
     <title type="html"><![CDATA[simplify slurm and qsub]]></title>
     <link rel="alternate" type="text/html" href="http://avigdev.github.io/blog/20141228/2014-12-28-simplify-slurm-and-qsub-html" />
     <id>http://avigdev.github.io/blog/20141228/2014-12-28-simplify-slurm-and-qsub-html</id>
-    <updated>2015-01-11T13:05:32Z</updated>
+    <updated>2015-01-11T13:09:54Z</updated>
     <published>2014-12-28T18:48:02Z</published>
     <category scheme="http://avigdev.github.io/blog" term="orgmode" />
     <category scheme="http://avigdev.github.io/blog" term="qsub" />
