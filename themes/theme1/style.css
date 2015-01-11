@@ -113,8 +113,8 @@ div#navigation li {
     float: left;
 }
 div#navigation a {
-    padding-right: 32px;
-    padding-left: 32px;
+    padding-right: 25px;
+    padding-left: 25px;
     display: block;
     text-decoration: none;
     font-weight: normal;
@@ -386,7 +386,7 @@ aside li {
 /* Fonts */
 /****************************/
 .theme_font, .theme_font * {
-    font-family: 'Architects Daughter', arial, serif;    
+    font-family: 'Architects Daughter', arial, serif;
 }
 .theme_font2, .theme_font2 * {
     font-family: 'Droid Sans', arial, serif;    
