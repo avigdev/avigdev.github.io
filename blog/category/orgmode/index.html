@@ -115,7 +115,7 @@ The usual way to use slurm and qsub is by submitting a little shell script which
 </p>
 
 <p>
-<i>FIRST</i>, most of the information is identical, so why not create a template at the home directory ? Instead of the absolute path of the current run, insert %s, instead of the number of mpi threads insert %d &#x2026; you get the idea. I call my template .slurm_cmds . 
+/FIRST,/ most of the information is identical, so why not create a template at the home directory ? Instead of the absolute path of the current run, insert %s, instead of the number of mpi threads insert %d &#x2026; you get the idea. I call my template .slurm<sub>cmds</sub> . 
 </p>
 
 <p>
@@ -201,7 +201,7 @@ the "%.50j" is important, since we want to know the full job names.
 </p>
 
 <p>
-The "-x n03" part in slurm_run.pl was added since our system admin asked me to not use node 03. Is there a better way to consistently do it?
+The "-x n03" part in slurm\<sub>run</sub>.pl was added since our system admin asked me to not use node 03. Is there a better way to consistently do it?
 </p>
 <p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2014/12/28/simplify-slurm-and-qsub.org">org-mode source</a><p>
 
@@ -232,7 +232,6 @@ The "-x n03" part in slurm_run.pl was added since our system admin asked me to n
     <h1 class="post_header_gradient theme_font">Latest Posts</h1>
     <ul>
       <li><a href="/blog/20150111/2015-01-11-matlab-subplots-packed-densely-together-html/">matlab subplots packed densely together</a></li>
-      <li><a href="/blog/20150111/2015-01-11-matlab-subplots-packed-densly-together-html/">matlab subplots packed densly together</a></li>
       <li><a href="/blog/20150107/2015-1-7-create-a-document-from-your-figures-html/">create a document from your figures</a></li>
       <li><a href="/blog/20141230/2014-12-30-ncdump-h-for-matlab-html/">ncdump -h for matlab</a></li>
       <li><a href="/blog/20141228/2014-12-28-simplify-slurm-and-qsub-html/">simplify slurm and qsub</a></li>
