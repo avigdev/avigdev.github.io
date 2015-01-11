@@ -10,7 +10,7 @@
     <title>Avi Gozolchiani אבי גוזולצני</title>
     <link>http://avigdev.github.io/blog</link>
     <description>Environmental Physics at Ben Gurion University</description>
-    <pubDate>Sun, 11 Jan 2015 10:08:49 GMT</pubDate>
+    <pubDate>Sun, 11 Jan 2015 10:25:46 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
@@ -91,10 +91,15 @@ that's our "after" exhibit :
 </p>
 
 
-<div class="figure">
+<div id="fig:pack" class="figure">
 <p><img src="/media/2015-01-11-matlab-subplots-packed-densly-together/pack_subplots.png" width="80%"> 
 </p>
+<p><span class="figure-number">Figure 2:</span> after</p>
 </div>
+
+<p>
+The "savefigs" function is non standard. Its aim is to save images in fig/eps/png formats at once, and generate README file and a mat file on the fly, with consistent names. 
+</p>
 <p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/11/matlab-subplots-packed-densly-together.org">org-mode source</a><p>]]></content:encoded>
     </item>
     <item>
