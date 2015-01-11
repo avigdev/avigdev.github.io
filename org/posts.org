@@ -1,0 +1,1383 @@
+* simplify slurm and qsub  
+  :PROPERTIES:
+  :date:     2014/12/28 18:48:02
+  :categories: slurm,qsub,orgmode
+  :updated:  2015/01/11 13:14:38
+  :END:
+
+[[http://slurm.schedmd.com][slurm]] and qsub (link anyone?) are beautiful cluster schedulers. If you work on a cluster, you probably use one. I use both, as well as some old computers which don't have schedulers. I manage my runs from an [[http://orgmode.org][orgmode]] "notebook", with a table that tells my scripts which resource uses which scheduler. 
+
+The usual way to use slurm and qsub is by submitting a little shell script which tells all the nodes how to divide their tasks, what are the important environment variables, which command are we running, etc. If you work on clusters you probably have a zillion copies of these little scripts.  
+
+/FIRST,/ most of the information is identical, so why not create a template at the home directory ? Instead of the absolute path of the current run, insert %s, instead of the number of mpi threads insert %d ... you get the idea. I call my template .slurm_cmds . 
+
+Now, we need to automatically create templates by replacing all those %x by our real information, and submit to the queue:
+
+#+NAME: slurm_run
+#+BEGIN_SRC perl -n :exports code :eval never
+#!/usr/bin/perl -w
+# purpose : insert a job to the slurm queue
+# syntax : slurm_run.pl number_of_processes cmd
+# number_of_processes= the number of cores that are expected to be used by
+# the job. this is not verified - so consistency with the compilation under
+# MPI is just assumed and is the responsibility of the user. 
+# cmd = the executable (usually binary) you wish to include in the queue 
+# the file .slurm_cmds is expected to be found on the $HOME directory.
+# this file is a template batch file with all the needed exports and a srun
+# call. slurm_run.pl just reads the template, replaces the necessary info to
+# the right places, and sends the new formed batch file to the queue.
+#
+# depends on : (1) the perl Env and Cwd libraries ,
+# (2) the $HOME/.slurm_cmds template
+#
+# Copyright 2012 Avi Gozolchiani (http://tiny.cc/avigoz)
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# $Log$
+use Env;
+use Cwd;
+$currWorkDir = &Cwd::cwd();
+# parse cmd line
+$n_proc=shift //die "syntax error : slurm_run number_of_processes cmd\n";
+$cmd=shift //die "syntax error : slurm_run number_of_processes cmd\n";
+# define file names (both source and target)
+$slurm_template="$HOME/.slurm_cmds";
+$batch_name="run-mit.batch_$1";
+# open the files
+open SLURMTEMP, $slurm_template or die "couldn't find the template file\n";
+open BATCH,">$batch_name" or die "couldn't write a temporary batch file\n";
+# copy each line from the source template to the target, with
+# the necessary changes
+while(<SLURMTEMP>){
+    last if length($_)==0;
+    if(/cd/){
+        printf BATCH $_,$currWorkDir;
+    }elsif(/srun/){ # if(/cd/){
+        printf BATCH $_ , $n_proc, $cmd;
+    }elsif(/SBATCH/){ # if(/cd/){ ... }elsif(/srun/){
+        printf BATCH $_, $n_proc;
+    }else{   # if(/cd/){... }elsif(/srun/){...}elsif(/SBATCH/){
+        print BATCH $_;
+    }        # if(/cd/){... }elsif(/srun/){...}elsif(/SBATCH/){..}else{
+}                               # while(<SLURMTEMP>){
+close BATCH;
+# send to queue
+print `sbatch -x n03 ./$batch_name`;
+#+END_SRC
+
+The last line submits my fresh batch file to the slurm queue. I can monitor it's processing via :
+#+BEGIN_SRC sh -n :exports code :eval never
+squeue  -o '%.7i %.9P %.50j %.8u %.2t %.10M %.5D %.6C %R'
+#+END_SRC
+
+
+the "%.50j" is important, since we want to know the full job names.
+
+The "-x n03" part in slurm_run.pl was added since our system admin asked me to not use node 03. Is there a better way to consistently do it?
+
+* ncdump -h for matlab
+  :PROPERTIES:
+  :date:     2014/12/30 13:16:00
+  :categories: matlab,octave
+  :updated:  2015/01/11 14:01:22
+  :END:
+
+I launch "ncdump -h" many times during my workflow. It gives you all the meta-data you need for netcdf files, without the hassle of opening a more serious program like [[http://ferret.pmel.noaa.gov/Ferret/][ferret]]. I figured out that I need the same for mat files. You will need [[https://www.gnu.org/software/octave/][octave]] to make it work...
+
+#+BEGIN_SRC matlab -n 
+#!/usr/local/bin/octave -q
+whos('-file',argv(){1})
+#+END_SRC
+
+* create a document from your figures 
+  :PROPERTIES:
+  :date:     2015/1/7 20:42:00
+  :categories: latex,workflow
+  :updated:  2015/01/11 13:05:40
+  :END:
+
+A part of the scientific workflow is creating images and categorizing them into directories. In our little parties, we scientist show these images to each other and brag about our ability to create more. It is therefore very useful to have bundles of these in pdf or html files (depending on the kind of party).
+
+Here's how to create a pdf (using LaTeX) :
+
+#+BEGIN_SRC perl -n :exports code :eval never
+#!/usr/bin/perl -nw 
+## syntax : ls fig_patterns | latexfigs.pl > latexfile
+chomp();
+print "\\begin\{figure\}\n\\centering\n\\includegraphics\[scale=1.2,angle=0\]\{$_\}\n";
+s/_/\\_/g;
+print "\\caption\{$_\}\n\\end\{figure\}\n\\clearpage\n";
+#+END_SRC
+
+and Here's how to create a html : 
+
+#+BEGIN_SRC perl -n :exports code :eval never
+#!/usr/bin/perl -nw 
+## syntax : ls fig_patterns | htmlfigs.pl > htmlfile
+chomp();
+print "<IMG src=\"$_\" width=650><BR>\n";
+print "$_<BR><BR>\n";
+#+END_SRC
+
+After some time, you may want to make a section in your book/paper from each directory.
+
+here's the LaTeX version : 
+#+BEGIN_SRC perl -n :exports code :eval never
+#!/usr/bin/perl -w 
+## syntax : anchor_latex.pl "tag" "text" >> file.latex
+$tag=shift or die "syntax error: anchor_latex.pl \"tag\" \"text\">>file.latex\n";
+$text=shift or die "syntax error: anchor_latex.pl \"tag\" \"text\">>file.latex\n";
+print "\\section{$text}\\label{sec:$tag}\n";
+#+END_SRC
+
+and here's the html :
+#+BEGIN_SRC perl -n :exports code :eval never
+#!/usr/bin/perl -w 
+## syntax : anchor_html.pl "tag" "text" >> file.html
+$tag=shift or die "syntax error: anchor_html.pl \"tag\" \"text\">>file.html\n";
+$text=shift or die "syntax error: anchor_html.pl \"tag\" \"text\">>file.html\n";
+print "<a id=\"$tag\"><h2>$text</h2></a>\n";
+#+END_SRC
+
+you can include a template for a latexfile in your home directory : 
+#+BEGIN_SRC latex -n :exports code :eval never
+\documentclass[A4paper]{article}
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage{placeins} % floatbarrier definition
+\usepackage[caption=false]{subfig}
+\usepackage{fullpage}
+\newcommand{\unit}[1]{\ensuremath{\, \mathrm{#1}}}
+\begin{document}
+TEXT
+\end{document}
+#+END_SRC
+
+and substitute your created latex code into the *TEXT* part, using perl again : 
+#+BEGIN_SRC perl -n :exports code :eval never
+#!/usr/bin/perl -w 
+# syntax : merge_latex_tmpl.pl tmpfile > merged_file.tex
+$tmplfilename=$ENV{'LATEXTMPL'};
+$filename=shift // die "syntax error";
+open TMPL,"<$tmplfilename" // die "could not find the template file";
+open FILE,"<$filename" // die "could not find the file $filename";
+$uniq_content = join("", <FILE>); 
+while(<TMPL>){
+    if(/TEXT/){
+        print $uniq_content;
+    }else{
+        print;
+    }
+}
+#+END_SRC
+ 
+where /LATEXTMPL/ is an environment variable, telling your script the location of your template. I like templates, and I clutter quite a bit as hidden files in my home directory. Do you do it differently ? 
+
+* matlab subplots packed densely together
+  :PROPERTIES:
+  :date:     2015/01/11 07:15:21
+  :categories: matlab,octave,GMT,xmgr
+  :updated:  2015/01/11 13:05:45
+  :END:
+
+During significant portion of my grad-school I had to travel a lot. I therefore couldn't rely on hooking to the university matlab license, so I searched for free alternatives. While you could use a lot of good projects, such as [[https://www.gnu.org/software/octave/][octave]] to crunch your numbers, it seems to me that making beautiful figures is not so easy.
+
+I got used to plotting with the excellent packages of [[http://gmt.soest.hawaii.edu][GMT]]. I even wrote [[https://sourceforge.net/projects/octgmt/][some little octave wrapper functions]] around GMT, since it's easy to get intimidated by their too elaborate man pages. You could still try them out, though GMT has been working lately on an official [[http://gmt.soest.hawaii.edu/projects/gmt-matlab-octave-api][matlab API]] for you (they do have mature API for c++/Fortran). I didn't try it myself, yet. Another option is good old [[http://plasma-gate.weizmann.ac.il/Grace/][xmgr]]. Both of them produce great imagery, but they have their limitations at times. 
+
+The one point where matlab excels is /better set of default parameters/. You don't have to worry so much about the line thicknesses, page width etc., as much as in the other options mentioned above. The cons side, obviously, is when you don't want the defaults. Easy things like packing your subplots close are not so easy in matlab. It's of course, nevertheless, still possible. Mainly with axis/plot handles.
+
+Here's how you do it : 
+first let's create our figs:
+#+BEGIN_SRC matlab -n :exports code :eval never-export :session
+nsubs=3;
+for isub=1:nsubs
+ subplot(nsubs,1,isub);
+ plot(rands(3,100)');
+ set(gca,'fontsize',16);
+end % for i=1:nsubs
+savefigs('nopack_subplots','save demo of packed graphs',[]);
+#+END_SRC
+
+#+RESULTS:
+: org_babel_eoe
+
+that's the result: 
+
+#+CAPTION: before
+#+NAME:   fig:nopack
+[[file:nopack_subplots.png]]
+
+now , lets pack them:
+#+BEGIN_SRC matlab -n :exports code :eval never-export :session
+packing_const=0.06
+for isub=1:nsubs
+ h=subplot(nsubs,1,isub);p = get(h, 'pos');
+ if(isub<nsubs)
+  set(gca,'fontsize',16,'XTickLabelMode', 'Manual','XTickLabel', []);
+ else %  if(isub<nsubs)
+  set(gca,'fontsize',16);
+ end %  if(isub<nsubs) ... else ...
+ set(h,'pos',[p(1) p(2) p(3) p(4)+packing_const]);
+end % for isub=1:nsubs
+savefigs('pack_subplots','save demo of packed graphs',[]);
+#+END_SRC
+
+#+RESULTS:
+: org_babel_eoe
+
+that's our "after" exhibit : 
+
+#+CAPTION: after
+#+NAME:   fig:pack
+[[file:pack_subplots.png]]
+
+The "savefigs" function is non standard. Its aim is to save images in fig/eps/png formats at once, and generate README file and a mat file on the fly, with consistent names. 
+
+* matlab plot shaded p-value
+  :PROPERTIES:
+  :date:     2015/01/01 07:15:34
+  :updated:  2015/01/01 07:15:34
+  :END:
+
+[h,I]=hist(CMlonall,180:220);
+plot(I,h);grid on;
+quan3=quantile(CMlonall,p3);
+Iquan3=(I>=quan3);
+hold on;
+area(I(Iquan3),h(Iquan3),'facecolor',[0 0 1]);
+hold off;
+
+* matlab discrete colorbar
+
+cmap=colormap;
+W_bins=minval:bin:maxval;
+W_bins_ext=(minval-bin/2):bin:(maxval+bin/2);
+cscal=(minval:(maxval-minval)/63:maxval)';
+newcmap=interp1(cscal,cmap,W_bins);
+colormap(newcmap);
+
+imagesc(x,y,w,W_bins_ext([1 length(W_bins_ext)]));colorbar;grid on;
+
+* GMT custom page dimensions
+--PAPER_MEDIA=Custom_550x580
+* matlab see also
+in order to have hyperlinks in the help, it is sufficient to include the line
+% see also func1,func2,...
+
+at the end of the header
+* latex don't mix bibliography and figures:
+\usepackage{placeins} % floatbarrier definition
+....
+\FloatBarrier % this forces all figures to be presented before the bibl.
+\bibliographystyle{unsrt}
+\bibliography{gyre_ref}
+* latex:
+disable automatic rotation in ps2pdf. 
+source http://textricks.blogspot.co.il/2010/01/ps2pdf-autorotate-switch-off.html
+
+ps2pdf -dAutoRotatePages=/None
+* matlab plot heat map with discrete color bins
+
+example:
+
+bin=1e4;minval=-8e4;maxval=8e4;
+x=0.1:0.1:100;
+y=0:200;
+[xx,yy]=ndgrid(x,y);
+w=sin(xx).*xx.^2.*exp(0.01*yy);
+w(:,195:198)=-70000;
+w(15:18,:)=70000;
+myimagesc(x,y,w,minval,maxval,bin)
+
+* linux copy to clipboard with (xc) and without (xcn) the trailing endline
+#+BEGIN_SRC sh -n
+alias xc='xclip -selection clipboard'
+alias xcn='tr -d '\''\n'\'' | pbcopy'
+#+END_SRC
+* matlab : 
+to show little steps of advance throughout the function/script,
+I wrote the function 
+verbose_disp(flag_verb,form,[variable_list])
+which displays a formatted string (like sprintf),
+only if the flag is non-zero .
+#+BEGIN_SRC matlab -n
+% purpose display only if the script is in verbose mode + include sprintf 
+% capabilities in disp.
+% syntax : verbose_disp(flag_verb,form,[variable_list])
+% flag_verb=1 if you want to display, and 0 if you don't want to
+% display
+% form = string including formatting directions for sprintf 
+% variable_list = more parameters which include variables fitting
+% into the format "form".
+%
+% see also : disp, sprintf
+
+% Copyright 2013 Avi Gozolchiani (http://tiny.cc/avigoz)
+% This program is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+% $Log$
+function verbose_disp(flag_verb,form,varargin)
+% little input checking
+if(nargin<2)
+    error('verbose_disp : wrong number of arguments');
+end                                     % if(nargin<2)
+if(~ischar(form))
+    error('second argument should be a character string');
+end                                 % if(~ischar(form))
+% if mode=verbose display the formatted string
+if(flag_verb)
+  s=sprintf(form,varargin{:});
+  disp(s);
+end % if(flag_verb)
+#+END_SRC
+
+* emacs org mode
+recurring event example:
+SCHEDULED: <2013-02-10 Sun 05:30-07:00 +1w>
+* xmgr annotation:
+(source : http://blog.louic.nl/?p=249)
+
+Subscript, superscript
+  x-squared: x\S2\N
+  subscript: 3\s10\N
+Greek letters, example: theta
+  \f{Symbol}q\f{}
+Special symbols, example: Angstrom symbol
+  \cE\C
+
+ The new method to insert special characters in xmgrace is:
+
+    Press ctrl-e while positioned in a text-edit field to bring up the font dialog box.
+    Select the desired font from the drop-down list. You probably want to use Symbol because it contains many of the commonly used special characters.
+    Click on the character you want to insert
+
+* latex units in non italics :
+in the header :
+
+\newcommand{\unit}[1]{\ensuremath{\, \mathrm{#1}}}
+
+in the body :
+$\tau=0.0257\left[\unit{N\cdot m^{-2}}\right]$
+
+* matlab check the number of arguments 
+error(nargchk(2, 4, nargin));
+* slurm
+to hold a pending job:
+scontrol uhold jobid
+
+to resume:
+scontrol release jobid
+* matlab : regridding unequally spaced sampled field, and plotting an imagesc
+
+[x1,y1]=ndgrid(x,y);
+I = TriScatteredInterp(x1(:),y1(:),z(:));  
+x1 = linspace(min(x),max(x),5);     % Define X-grid
+y1 = linspace(min(y),max(y),5);
+[x1,y1]=ndgrid(x1,y1);
+z1=I(x1,y1);
+myimagesc(x1(1,:),y1(:,1),z1,0.55,0.95,0.05);
+* matlab : save a plot in png, eps, and fig formats
+%% in the parameters section
+prints=struct('suff',{'png','eps','fig'},...
+              'func',{@(x) print('-dpng',x),@(x) print('-depsc2',x), @hgsave});
+n_printfuncs=length(prints);
+%% after the plot commands
+filename='stam.';
+for i_printfunc=1:n_printfuncs % fig,png, and eps files
+    prints(i_printfunc).func([filename,'.',prints(i_printfunc).suff]);
+end % for i_printfunc=1:n_printfuncs
+
+this is now incorporated in 
+/home/avigoz/Dropbox/oct_scripts/plotting/savefigs.m
+* matlab general slicing syntax :
+
+idx.type='()';                  % indices structure
+idx.subs={':',':',':'};
+idx.subs{dim_face}=1;
+z=subsref(z,idx);
+
+* bash shell execute the same program on all the files in the current directory
+
+find -exec prog_name flags {} +
+
+{} represents the list of filenames that will be appended by find. it must be the last argument since the "+" syntax tells "find" to create a large list and send them all at the same time.
+
+ if we want "find" to run prog_name for each of the files separately the correct syntax is :
+find -exec prog_name '{}' \;
+
+in this case {} doesn't need to be the last argument
+
+if we want a more complicated sequence of commands
+
+find -printf "zcat %p | agrep -dEOE 'grep'\n" | sh
+
+* cvs create new repository, add a new directory, and begin working:
+http://www-mrsrl.stanford.edu/~brian/cvstutorial/
+
+1. create a new repository in ~/cvsroot:
+
+cvs -d ~/cvsroot init
+
+2. env variables used by cvs:
+
+export CVSROOT=$HOME/cvsroot
+export CVSEDITOR=emacs
+
+3. backup original directory:
+mkdir cvsexample2
+cp -r cvsexample/* cvsexample2/
+
+4. remove the original files:
+rm -r cvsexample/*
+
+5. add the empty directory to cvs:
+cd ~/cvsexample
+cvs import -m "dir structure" cvsexample yourname start
+
+this adds a directory cvsexample in the repository, so one can have several projects in the same repository, and checking out only the particular project of interest.
+
+6. remove the created directory and check it out from repo (i'm not sure this is necessary...)
+cd ..
+rm -r cvsexample
+cvs checkout cvsexample
+
+7. add a subdirectory
+cd ~/cvsexample
+mkdir cartilage
+cvs add cartilage
+
+8. add a file :
+create a file (or copy from your backups), and then :
+
+cvs add *.tex
+cvs commit -m "original files" *.tex
+
+without -m "blahh", cvs will just launch emacs for your log message
+
+9. download updates from repo:
+cvs update
+
+10. see difference between current version and repo version:
+cvs diff sample.tex
+
+11. submit a modified file:
+
+cvs commit sample.tex
+
+12. read log messages :
+cvs log sample.tex
+
+13. when you have a working version, tag it:
+
+cvs tag Clinical-Release-1.0
+
+now the tagged version can be restored in a new directory if we wish:
+
+mkdir tempstuff
+cd ~/tempstuff
+cvs checkout -r Clinical-Release-1.0 cvsexample
+
+* wget : 
+
+wget -r -l1 -H -nd -np -A.txt -w5 -erobots=off -i ~/list.txt
+
+ -r recursively
+ -H follow links that point away from the website
+ -l1 only go one level deep
+ -np "no parent"
+ -nd save every thing in one directory
+ -A.txt tells wget to only download files that end with the .txt extension. 
+ -i ~/list.txt - if we have a list of websites. otherwise we can just add the URL of a specific website
+ -w5 wait 5 seconds between downloads
+ -erobots=off ignore site policy
+* python ginput:
+
+example from http://glowingpython.blogspot.co.il/2011/08/how-to-use-ginput.html
+
+from pylab import plot, ginput, show, axis
+
+axis([-1, 1, -1, 1])
+print "Please click three times"
+pts = ginput(3) # it will wait for three clicks
+print "The point selected are"
+print pts # ginput returns points as tuples
+x=map(lambda x: x[0],pts) # map applies the function passed as 
+y=map(lambda x: x[1],pts) # first parameter to each element of pts
+plot(x,y,'-o')
+axis([-1, 1, -1, 1])
+show()
+* export from libreoffice :
+(source http://www.commandlinefu.com/commands/view/11692/commandline-document-conversion-with-libreoffice)
+
+libreoffice --headless -convert-to odt:"writer8" somefile.docx
+* mitgcm alternating checkpoint :
+in data, parm03:
+pickupSuff='ckptA'
+* python split filename to file+extension
+(source : http://stackoverflow.com/questions/541390/extracting-extension-from-filename-in-python)
+
+>>> import os
+>>> fileName, fileExtension = os.path.splitext('/path/to/somefile.ext')
+>>> fileName
+'/path/to/somefile'
+>>> fileExtension
+'.ext'
+* python equivalent for importdata
+(source http://stackoverflow.com/questions/1057666/using-python-to-replace-matlab-how-to-import-data)
+
+import numpy
+imported_array = numpy.loadtxt('file.txt',delimiter='\t')  # assuming tab-delimiter
+print imported_array.shape
+* latex reference ranges of images (other stuff)
+(source : http://tex.stackexchange.com/questions/7624/how-to-reference-ranges-rather-than-separate-numbers,
+http://www.howtotex.com/packages/automatic-clever-references-with-cleveref/
+)
+
+\usepackage{cleveref}
+\crefname{figure}{Fig.}{Figs.}
+
+ \cref{winter,fall,christmas,summer,pentecost}
+
+* matlab
+filenames=fill_sprintf(index_array,filename_pattern) :
+#+BEGIN_SRC matlab -n
+% syntax: filenames=fill_sprintf(index_array,filename_pattern)
+% fill_sprintf is meant to extend sprintf to dealing with cell
+% arrays of strings (e.g. filenames with running indices).
+% the function loops through all indices in index_array, and calls
+% sprintf(filename_pattern,ind). filenames is a cell array of all 
+% filenames.
+%
+% see also : sprintf
+%
+% no special dependencies
+
+% $Log$
+function filenames=fill_sprintf(index_array,filename_pattern)
+% some input checking
+if(length(index_array)<1)
+    filenames={};
+    return;
+end
+[s,er]=sprintf(filename_pattern ,index_array(1));       % this check doesnt work in octave
+if(~isempty(er))
+    error('wrong filename pattern');
+end                                     % if(~isempty(er))
+index_array=num2cell(index_array);
+filenames=cellfun(@(x)sprintf(filename_pattern,x),index_array, ...
+                   'uniformoutput',false);
+
+#+END_SRC
+creates a cell array of filenames with running indices
+* latex small horizontal space between figs
+(source http://tex.stackexchange.com/questions/41476/lengths-and-when-to-use-them)
+\enskip
+
+* latex code snippets 
+(source http://stackoverflow.com/questions/3175105/how-to-insert-code-into-a-latex-doc)
+
+in the header : 
+#+BEGIN_SRC latex -n
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true
+  tabsize=3
+}
+
+#+END_SRC
+
+in the body text :
+#+BEGIN_SRC latex -n
+\begin{lstlisting}
+// Hello.java
+import javax.swing.JApplet;
+import java.awt.Graphics;
+
+public class Hello extends JApplet {
+    public void paintComponent(Graphics g) {
+        g.drawString("Hello, world!", 65, 95);
+    }    
+}
+\end{lstlisting}
+
+#+END_SRC
+* extract data from csv (in non trivial cases):
+
+(source : http://stackoverflow.com/questions/1641519/reading-date-and-time-from-csv-file-in-matlab)
+
+fid = fopen(filename, 'rt');
+a = textscan(fid, '%f/%f/%f %f:%f %f %f', ...
+      'Delimiter',',', 'CollectOutput',1, 'HeaderLines',4);
+fclose(fid);
+t=datenum(a{1}(:,3)+2000, a{1}(:,2), a{1}(:,1), a{1}(:,4), a{1}(:,5),zeros(length(a{1}(:,1)),1));
+directions=a{1}(:,6);
+speeds=a{1}(:,7);
+
+* latex degree:
+\def\degree{\hbox{$^\circ$}}
+* python argument line parser
+(source : http://docs.python.org/dev/library/argparse.html)
+
+import argparse
+parser = argparse.ArgumentParser(description='create encoded longitude-latitude list')
+parser.add_argument('lon_file', help='longitudes file')
+parser.add_argument('lat_file', help='latitudes file')
+parser.add_argument('out_file', help='out file')
+args = parser.parse_args()
+
+the different fields are in a data structure args.lon_file args.lat_file args.out_file
+* svn sourceforge username not recognized : 
+(source http://highlevelbits.com/2007/04/svn-over-ssh-prompts-for-wrong-username.html)
+
+just include the file config in ~/.ssh with the following content:
+Host svn.code.sf.net
+  User youruser
+
+* checking out from sourceforge : 
+
+(note the +ssh in the protocol prefix)
+
+svn --username avigdev checkout svn+ssh://svn.code.sf.net/p/panet/code ./
+* gdb mode of emacs 24 has a bug. a way around it :
+(clue from http://stackoverflow.com/questions/13959747/using-gdb-i-mi-integration-in-emacs-24)
+
+M-x gdb
+gdb -i=mi --annotate=0 PANet
+* screen : to have unique logs for each run : 
+in ~/.screenrc
+
+logfile screenlog-%Y%m%d-%c:%s
+* awk multiple types of delimiters:
+awk -F[_.] '{print $3}'
+* mitgcm numeric stability criteria
+
+The stability criterion for the horizontal laplacian friction is 
+4*Ah*delta_t/delta_x^2<0.3 (pp. 123 in the manual)
+Stability for inertial oscillations (although we don't expect such a thing)
+f^2*delta_t^2<0.5 (pp. 123 in the manual)
+Advective Courant-Friedrichs-Lewy criterion (pp. 123 in the manual)
+max_u*delta_t/delta_x<0.5
+
+* compiling large array :
+
+FFLAGS="$FFLAGS -g -convert big_endian -assume byterecl -mcmodel=large"
+
+* sync folders to hd
+
+rsync --force --ignore-errors --delete --exclude /home/avigoz/.opera/*cach* --backup-dir=`date +%Y-%m` -avb /home/avigoz/ /media/linux_part/backups/home_64
+
+* setting up a (mac) computer checklist
+- [ ] d/l home directory from external hd
+- [ ] make .profile speak with .bashrc
+- [ ] echo "logfile screenlog-%Y%m%d-%c:%s" > ~/.screenrc
+- [ ] d/l homebrew
+- [ ] d/l and setup Dropbox, Ubuntu one
+- [ ] d/l skype
+- [ ] d/l XCode
+- [ ] for compilers - enter xcode->preferences->components->command line tools->install
+- [ ] d/l (using the command "brew install") cvs,git ??
+- [ ] d/l latest version of emacs (brew install --cocoa emacs)
+- [ ]see http://stackoverflow.com/questions/10171280/how-to-launch-gui-emacs-from-command-line-in-osx)
+- [ ]>link it to Applications :
+- [ ]n -s /opt/boxen/homebrew/Cellar/emacs/24.3/Emacs.app /Applications
+- [ ]> prepare a bash script somewhere with the following script :
+- [ ]
+- [ ]!/bin/sh
+- [ ]Applications/Emacs.app/Contents/MacOS/Emacs -Q "$@" 
+- [ ]
+- [ ]>include
+- [ ](setq mac-function-modifier 'control)  in .emacs (to avoid ctrl-space problems)
+- [ ]
+- [ ] to d/l xmgr , first d/l xquartz (https://xquartz.macosforge.org). afterwards use "brew install grace" .
+- [ ]
+- [ ] to d/l octave run (see http://wiki.octave.org/Octave_for_MacOS_X):
+- [ ]rew tap homebrew/science
+- [ ]rew update && brew upgrade
+- [ ]rew install gfortran
+- [ ]rew install octave
+- [ ]rew install gnuplot
+- [ ]n -s /usr/local/Cellar/gnuplot/4.6.3/bin/gnuplot /Applications/gnuplot
+- [ ]
+- [ ]> edit /usr/local/share/octave/site/m/startup/octaverc to be :
+- [ ]
+- [ ]# System-wide startup file for Octave.
+- [ ]#
+- [ ]# This file should contain any commands that should be executed each
+- [ ]# time Octave starts for every user at this site.
+- [ ]etenv ("GNUTERM", "X11")
+- [ ]nuplot_binary("/Applications/gnuplot")
+- [ ]
+- [ ]> create a small shell script with :
+- [ ]!/bin/sh
+- [ ]
+- [ ]C_CTYPE="en_US.UTF-8"
+- [ ]
+- [ ] Replace the following line with the result in step 3 (where your octave is located)
+- [ ]usr/local/bin/octave
+- [ ]
+- [ ]> in .bash_aliases : alias octave="path_to_your_file"
+- [ ]
+- [ ] for python  scientific packages (and upgrading python):
+sudo easy_install pip
+brew install swig
+sudo pip install scipy
+
+-> run "brew doctor" to see whether anything wrong is going on. 
+
+->put the following in .bashrc:
+export PATH=/usr/local/bin:$PATH
+export PATH=/usr/local/share/python:$PATH
+
+-> continue with python .... following http://iknownothingaboutcoding.blogspot.co.il/2012/04/mac-os-x-lion-install-of-python-numpy.html :
+
+brew install readline sqlite gdbm pkg-config --universal
+brew install python --framework --universal
+cd /System/Library/Frameworks/Python.framework/Versions
+sudo rm Current
+sudo ln -s /usr/local/Cellar/python/***version***/Frameworks/Python.framework/Versions/Current
+Now install pip, by using:
+
+?
+$ easy_install pip
+To test the installation of pip type:
+
+?
+$ which pip
+and you should see the following returned:
+
+?
+/usr/local/share/python/pip
+Next use pip to install virtualenv and virtualenvwrapper:
+
+?
+$ pip install virtualenv
+$ pip install virtualenvwrapper
+$ source /usr/local/share/python/virtualenvwrapper.sh
+Install Numpy via:
+
+?
+$ pip install numpy
+Install SciPy also using pip - the “green room” link installs SciPy using the github.egg however, they’ve fixed things now so you can use the method below. The first command gets the required Fortran compiler:
+
+?
+$ brew install gfortran
+$ pip install scipy
+Pip Install Matplotlib
+
+?
+
+(i had to also do : $ sudo pip install --upgrade six)
+
+$ pip install -e git+https://github.com/matplotlib/matplotlib.git#egg=matplotlib-dev
+iPython, Pandas, SciKits, & Nose
+Pip Install iPython
+
+?
+$ pip install ipython
+then:
+
+?
+$ brew install pyqt
+append your ~/.bash_profile with the appropriate statement given to you at the END of the pyqt installation, for me it was:
+
+?
+export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
+Then:
+
+?
+$ brew install zmq
+$ pip install pyzmq
+$ pip install pygments
+Install Pandas:
+
+?
+$ pip install pandas
+Install Scikits.Statsmodels
+
+?
+$ pip install scikits.statsmodels	
+Lastly, to ensure that we have the necessary testing suites to check the packages that we’ve just installed. The testing suite that (conveniently) all of these packages is called nose.
+
+?
+$ pip install nose
+And we are finished with the installation!
+
+Installation Testing
+Numpy Testing
+First, let’s check the installations of Numpy and SciPy, as is provided on their documentation
+
+In terminal, here is what to type, along with the output that I get back:
+
+?
+$ python
+Python 2.7.3 (default, Apr 20 2012, 17:20:12)
+[GCC 4.2.1 Compatible Apple Clang 3.1 (tags/Apple/clang-318.0.58)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+ 
+>>> import numpy
+>>> numpy.test('full')
+...
+[lots of text]
+...
+[final lines]
+----------------------------------------------------------------------
+Ran 3552 tests in 35.886s
+ 
+FAILED (KNOWNFAIL=3, SKIP=1, failures=9)
+Although it’s not perfect with 0 failures, I’ll definitely take it. One issue of many that prompted me to reinstall Python and these libraries is that when I would run this test, my Terminal would crash and quit (for both Numpy and Scipy)… yeah, not good.
+
+SciPy Testing
+Now let’s test SciPy.
+
+?
+>>> import scipy
+>>> scipy.test()
+...
+[lots of text]
+...
+[final lines]
+----------------------------------------------------------------------
+Ran 5101 tests in 56.231s
+ 
+FAILED (KNOWNFAIL=12, SKIP=42, failures=9)
+Again, not batting 1000, but I’m definitely satisfied.
+
+Pandas Testing
+And lastly, let’s make sure that Pandas is working properly.
+
+?
+>>> exit()
+$ nosetests pandas
+ 
+…..
+[lots of periods, S's and other things]
+…
+Ran 1509 tests in 70.357s
+ 
+OK (SKIP=11)
+
+
+- [ ] to install gmt : brew install gmt
+- [ ] to install maxima : brew install maxima
+- [ ] d/l MITgcm
+- [ ] d/l ferret
+- [ ] d/l AUTO
+
+* take a column of numbers and put them in a row with a "+" delimiter :
+paste -sd+
+on a mac os x :
+paste -sd+ -
+(where the last dash indicates that we take standard input instead of a filename)
+* installing emacs on MAC
+(after getting brew, XCode etc.)
+>> brew install emacs
+create a text file with the following :
+
+#!/bin/sh
+/Applications/Emacs.app/Contents/MacOS/Emacs -Q "$@" 
+
+and PATH it.
+
+remove previous vers from /usr/bin/
+
+* MITGCM recipee for building a package (the name of the example package is diffus2):
+
+1) prepare an empty package that does nothing
+
+the minimal list of files (which can be coppied, with necessary name changes of files/variables/parameters/functions, from MYPACKAGE) is:
+diffus2_calc.F
+diffus2_diagnostics_init.F
+DIFFUS2_OPTIONS.h
+DIFFUS2_PARAMS.h
+DIFFUS2.h
+diffus2_output.F
+diffus2_routines.F
+diffus2_check.F
+diffus2_init_varia.F
+diffus2_readparms.F
+
+their description :
+|----------------------------+---------------------------------------------------------------------|
+| file                       | description                                                         |
+|----------------------------+---------------------------------------------------------------------|
+| headers                    |                                                                     |
+|----------------------------+---------------------------------------------------------------------|
+| DIFFUS2.h                  | define pkg variables, and their common blocks                       |
+| DIFFUS2_OPTIONS.h          | package specific MACRO option defs                                  |
+| DIFFUS2_PARAMS.h           | package parameters and their common block  (read from data.diffus2) |
+|----------------------------+---------------------------------------------------------------------|
+| code                       |                                                                     |
+|----------------------------+---------------------------------------------------------------------|
+| diffus2_calc.F             | interface for mitgcnuv (this is what the model's core calls)        |
+| diffus2_check.F            | check dependencies/conflicts with other packages                    |
+| diffus2_diagnostics_init.F | define diagnostics related to the package                           |
+| diffus2_init_varia.F       | initialize DIFFUS2 parameters and variables                         |
+| diffus2_output.F           | create diagnostic outputs                                           |
+| diffus2_readparms.F        | parse data.diffus2                                                  |
+| diffus2_routines.F         | routines that implement double diffusion parametrization schemes    |
+|----------------------------+---------------------------------------------------------------------|
+
+they should be under a new directory of the rootdir (in diffus2 case ~/MITgcm/model/pkg/diffus2 )
+
+the input file data.pkg should include the entry "useDiffus2=.TRUE.," under the namelist "&PACKAGES"
+
+this parameter should be declared (with the type LOGICAL), and included in the common block /PARM_PACKAGES/ under ~/MITgcm/model/inc/PARAMS.h .  it should also be included under the namelist "PACKAGES" in ~/MITgcm/model/src/packages_boot.F , and its default value should usually declared in this file to be .FALSE..
+
+2) parse user parameters
+
+in diffus2_readparms - create a separate NAMELIST for each namelist that should appear in data.diffus2 .
+then give the parameters default conditions.  (e.g.       diffus2_scheme    = 'kunze' )
+then try to read them    (e.g.   READ(UNIT=iUnit,NML=DIFFUS2_SCHEME,IOSTAT=errIO) ) and monitor events where errIO<0 :
+
+      READ(UNIT=iUnit,NML=DIFFUS2_SCHEME,IOSTAT=errIO)
+      IF ( errIO .LT. 0 ) THEN
+       WRITE(msgBuf,'(A)')
+     &  'S/R INI_PARMS'
+       CALL PRINT_ERROR( msgBuf , 1)
+       WRITE(msgBuf,'(A)')
+     &  'Error reading numerical model '
+       CALL PRINT_ERROR( msgBuf , 1)
+       WRITE(msgBuf,'(A)')
+     &  'parameter file "data.diffus2"'
+       CALL PRINT_ERROR( msgBuf , 1)
+       WRITE(msgBuf,'(A)')
+     &  'Problem in namelist DIFFUS2_SCHEME'
+       CALL PRINT_ERROR( msgBuf , 1)
+       STOP 'ABNORMAL END: S/R DIFFUS2_INIT'
+      ENDIF
+
+      CLOSE(iUnit)
+
+finally tell STDOUT.* that you're finished
+      WRITE(msgBuf,'(A)') ' DIFFUS2_INIT: finished reading data.diffus2'
+
+declare these variables in DIFFUS2_PARAMS.h
+
+these subroutines are run from the model file "packages_readparms.F". these are the needed lines in packages_readparms.F:
+
+C--   Initialize Diffus2 parameters
+      IF (useDiffus2) CALL DIFFUS2_READPARMS( myThid )
+#endif
+
+* ssh tunnel through proxy : 
+
+in: .ssh/config:
+
+Host tsia
+Hostname tsia.boker
+User avigoz
+ForwardAgent yes
+Port 22
+ProxyCommand ssh avigoz@sansana.bgu.ac.il nc %h %p
+
+to make it passwordless :
+
+on the local machine :
+>> ssh-keygen -t rsa
+
+on the remote machine : 
+>> mkdir -p .ssh
+
+on the local machine :
+cat .ssh/id_rsa.pub | ssh b@B 'cat >> .ssh/authorized_keys'
+
+repeat these for logging to a->b->c , for the pairs  a->b, a->c .
+* get a list of links from a website, using the textual web browser lynx :
+(source : http://tips.webdesign10.com/general/lynx-browser )
+
+lynx -dump -listonly "http://www.example.com/"
+
+* define a remote directory
+in fstab :
+sshfs#avigoz@132.64.144.245:/data/avigoz /data1 fuse defaults,allow_other 0 0
+
+in /etc/fuse.conf , uncomment :
+user_allow_other
+* to umount sshfs directory : 
+fusermount -u /data_sedeboker/
+* sshfs on mac :
+(source : http://superuser.com/questions/134140/mount-an-sshfs-via-macfuse-at-boot )
+
+brew install sshfs
+brew install fuse4x
+sudo /bin/cp -rfX /usr/local/Cellar/fuse4x-kext/0.9.2/Library/Extensions/fuse4x.kext /Library/Extensions/
+sudo chmod +s /Library/Extensions/Support/load_fuse4x
+
+sudo mkdir -p /mnt/tsia
+sudo chown avigoz /mnt /mnt/tsia
+sudo chmod a+rwx /mnt /mnt/tsia
+
+now you should be able to manually mount the remote drive: 
+sshfs tsia:/home/avigoz /mnt/tsia/ -oreconnect,allow_other,volname=tsia,sshfs_debug
+
+so now /mnt/tsia includes files from the remote source.  unmount it:
+umount /mnt/tsia
+
+
+the following does not work properly for me. I do see the files but I don't have permissions to change them
+
+if this works, pursue : 
+
+mkdir -p progs/sshfs/
+cat <<END > progs/sshfs/sshfs-authsock
+#!/bin/bash
+export SSH_AUTH_SOCK=$( ls -t /tmp/launch-*/Listeners | head -1)
+/usr/local/bin/sshfs $*
+END
+
+check the location of sshfs in the last line, since it might vary between versions of OS X .
+
+chmod a+rwx progs/sshfs/sshfs-authsock
+
+sudo emacs   /Library/LaunchAgents/tsia.home.plist  
+
+and therein : 
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+        <key>Label</key>
+        <string>tsia.home.sshfs</string>
+        <key>ProgramArguments</key>
+        <array>
+                <string>/Users/avigoz/progs/sshfs/sshfs-authsock</string>
+                <string>avigoz@tsia:</string>
+                <string>/mnt/tsia</string>
+                <string>-oreconnect,allow_other,volname=tsia</string>
+        </array>
+        <key>RunAtLoad</key>
+        <true/>
+</dict>
+</plist>
+
+
+with the obvious modifications of directory/file/user/host names . 
+
+launchctl load /Library/LaunchAgents/tsia.home.plist
+% launchctl start tsia.home.sshfs --> does not seem relevant
+
+
+* perl command line arguments :
+
+(source : http://stackoverflow.com/questions/3515877/how-to-print-program-usage-in-perl)
+
+use Getopt::Long::Descriptive;
+
+my ($opt, $usage) = describe_options(
+    'diff_entire_directory.pl file_pattern reference_directory',
+    [ 'help|h',       "print usage message and exit" ],
+);
+
+print($usage->text), exit if $opt->help;
+
+* sollution to matlab blurry imagesc :
+
+eps2eps in_fig.eps out_fig.eps
+* mac os x : halt and resume processes :
+kill -STOP PID
+kill -CONT PID
+* remove a huge buggy directory with a lot of files that just refuse to be removed  (source : http://serverfault.com/a/215766) :
+
+<?php 
+$dir = '/directory/in/question';
+$dh = opendir($dir)  
+while (($file = readdir($dh)) !== false) { 
+    unlink($dir . '/' . $file); 
+} 
+closedir($dh); 
+?>
+
+* xmgr different types of plots : 
+xmgrace -settype xysize
+
+where the type may be :
+
+XY	       2	 An X-Y scatter and/or line plot, plus (optionally) an annotated value
+XYDX	       3	 Same as XY, but with error bars (either one- or two-sided) along X axis
+XYDY	       3	 Same as XYDX, but error bars are along Y axis
+XYDXDX	       4	 Same as XYDX, but left and right error bars are defined separately
+XYDYDY	       4	 Same as XYDXDX, but error bars are along Y axis
+XYDXDY	       4	 Same as XY, but with X and Y error bars (either one- or two-sided)
+XYDXDXDYDY     6	 Same as XYDXDY, but left/right and upper/lower error bars are defined separately
+BAR	       2	 Same as XY, but vertical bars are used instead of symbols
+BARDY	       3	 Same as BAR, but with error bars (either one- or two-sided) along Y axis
+BARDYDY	       4	 Same as BARDY, but lower and upper error bars are defined separately
+XYHILO	       5	 Hi/Low/Open/Close plot
+XYZ	       3     	 Same as XY; makes no sense unless the annotated value is Z
+XYR	       3	 X, Y, Radius. Only allowed in Fixed graphs
+XYSIZE	       3	 Same as XY, but symbol size is variable
+XYCOLOR	       3	 X, Y, color index (of the symbol fill)
+XYCOLPAT       4	 X, Y, color index, pattern index (currently used for Pie charts only)
+XYVMAP	       4	 Vector map
+XYBOXPLOT      6	 Box plot (X, median, upper/lower limit, upper/lower whisker)
+* xmgr
+produce eps file without gui
+ 
+gracebat -settype xydy gyre_anticyc_yz_year_1_season_1_exp23acont.txt gyre_cyc_yz_year_1_season_1_exp23acont.txt -param ../vert_gyres.par -printfile vert_gyres_exp23a.eps
+* matlab slice mat - file without reading all of it : 
+(source : )
+
+file=matfile(filename);
+r=file.r(1:4,200,8);
+sz_q=size(file,q);
+vars=fieldnames(file); 
+plot(file.r(1:3,5)); 
+
+etc...
+
+when indexing a variable in matfile (e.g. file.r(1:3,1))
+it is important 
+
+* number of threads matlab uses for calculations :
+(source : http://stackoverflow.com/questions/20648360/how-can-i-determine-the-number-of-threads-matlab-is-using )
+
+maxNumCompThreads
+
+* linux number of threads used by a program :
+(source : http://stackoverflow.com/questions/20648360/how-can-i-determine-the-number-of-threads-matlab-is-using )
+
+
+ps uH p <PID> | wc -l
+
+* checking a paper:
+- spell check
+- read abstract
+- general look at figures
+- format of references
+- order of references
+- structure : 
+abstract
+intro: general view, problem, several people who tackled it, new approach, outline of the paper
+methods
+results
+discussion
+acknowledgement
+refs
+- graphs : good captions
+- graphs : good legends, and axis labels that include units
+- graphs : big fonts (around 16), big line widths (around 2), big symbols, grid lines
+* matlab cycle through colors when plotting in a loop
+(source : http://www.mathworks.com/matlabcentral/answers/25831-plot-multiple-colours-automatically-in-a-for-loop)
+
+use "hold all" instead of "hold on"
+
+* emacs assign file suffix to certain mode (here I use cuda in c++ mode):
+(source : http://stackoverflow.com/questions/8632325/start-c-syntax-highlighting-for-cu-cuda-files)
+
+(add-to-list 'auto-mode-alist '("\\.cu\\'" . c++-mode))
+* emacs put backupfile in a dedicated directory.
+(source : http://www.emacswiki.org/emacs/BackupDirectory)
+
+(setq
+   backup-by-copying t      ; don't clobber symlinks
+   backup-directory-alist
+    '(("." . "~/.saves"))    ; don't litter my fs tree
+   delete-old-versions t
+   kept-new-versions 6
+   kept-old-versions 2
+   version-control t)       ; use versioned backups
+
+* c++ precision of operator<< :
+
+  std::cerr.setf(std::ios_base::scientific, std::ios_base::floatfield);
+  cerr.precision(4);
+
+"scientific" can be replaced by "fixed"
+
+another possibility:
+
+    cerr<<"stam mashehu"<<std::scientific  <<somedouble<<endl;
+
+to always show signs :
+  cerr<<std::showpos;
+
+* org mode inline code switches:
+http://orgmode.org/org.html#session
+* mitgcm convergence criteria:
+inertial oscillations:
+
+f^2*dt^2<0.5
+
+ACFL :
+u*dt/dx<0.5
+* matlab modulo (almost) symmetric around zero :
+
+mod(x+L/2,L)-L/2
+
+
+
+
+* youtube download an entire list with automatical numbering : 
+youtube-dl -i PLNiWLB_wsOg5urbUQZHdnRXw7KEO-FTie -o "earth%(autonumber)s.%(ext)s"
+
+* libreoffice openoffice change formatting of all sheets :
+(source : http://www.oooforum.org/forum/viewtopic.phtml?t=49217)
+
+right click on a sheet, select all sheets, and change whatever you want
+* mac os x libreoffice calc , switch between sheets 
+(source  : http://ask.libreoffice.org/en/question/470/what-keyboard-shortcuts-are-used-to-switch-through-sheets-on-a-mac/)
+
+cmd+pageup (or on a laptop : Fn + Command + up arrow / down arrow)
+
+* GMT pen attributes:
+
+width,color,style
+
+width = faint default thinnest thinner thin thick thicker thickest fat fatter fattest obese
+
+this can also be indicated in numbers in the range [0 18p]
+
+The color can be specified using:
+1. Gray. Specify a gray shade in the range 0–255 (linearly going from black [0] to white
+[255]).
+2. RGB. Specify r/g/b, each ranging from 0–255. Here 0/0/0 is black, 255/255/255 is white, 255/0/0 is red, etc.
+3. Name. Specify one of 663 valid color names. Use man gmtcolors to list all valid names. A very small yet versatile subset consists of the 29 choices white, black, and [light:|dark]{red, orange, yellow, green, cyan, blue, magenta, gray|grey, brown}. The color names are case-insensitive, so mixed upper and lower case can be used (like DarkGreen).
+
+* xclip equivalent in mac os x:
+(source : http://stackoverflow.com/questions/3482289/easiest-way-to-strip-newline-character-from-input-string-in-pasteboard)
+
+pbcopy
+
+so to remove \n, and send to clipboard we'd do :
+alias xcn="tr -d '\n' | pbcopy"
+* grep with or operator : 
+grep  "hist\|frac_larg" 
+
+* to know which temp files are openned by a program : 
+
+sudo opensnoop -n Emacs
+
+* extract page range from a pdf file : 
+(source : http://www.linuxjournal.com/content/tech-tip-extract-pages-pdf)
+
+pdftk A=100p-inputfile.pdf cat A22-36 output outfile_p22-p36.pdf
+
+* make emacs work with an octave shell :
+(source http://stackoverflow.com/questions/24971756/emacs-stops-responding-when-i-run-run-octave)
+
+insert:
+
+ PS1(">> ")
+
+to your .octaverc
+* mitgcm, phihyd and phihydlow units:
+
+(taken from http://mitgcm.org/pipermail/mitgcm-support/2004-August/002438.html)
+
+\frac{\partial\phi}{\partial r} = b
+b is the SCALED density g\rho/\rho_{0}. (In fact, it's the scaled 
+density anomaly g(\rho-rho_{0})/\rho_{0}).  
+
+So when you backout pressure from phiHyd, you have to multiply by \rho_{0}
+
+For the full pressure, you'll have to add 
+the constant density contribution -g\rho_{0}z.
+
+P_{b} = phiHydLow*rhoConst + g*rhoConst*H
+
+* python read mat files (using the hdf5 capabilities)
+
+(source: http://stackoverflow.com/questions/17316880/reading-v-7-3-mat-file-in-python)
+
+import h5py
+f = h5py.File('test.mat')
+
+f.keys() should give you the names of the variables stored in 'test.mat'.
+you can access f['s'][0] etc.. 
+
+for mat files that were not saved with the option '-v7.3' :
+
+from scipy.io import loadmat
+mat = loadmat('measured_data.mat') 
+
+* echo without new line
+(source : http://www.unix.com/unix-for-dummies-questions-and-answers/88784-echo-without-newline-character.html)
+
+echo -n "text "
+* diff between multiple files
+(source : http://unix.stackexchange.com/questions/33638/diff-several-files-true-if-all-not-equal)
+
+/usr/bin/diff -qs --from-file ../code/packages.conf_cont40 ../code/packages.conf_cont40_0*
+* slurm number of cpus ("allocated/idle/other/total")
+
+sinfo -o "%C"
+* cvs adopt the repo version (revert to repo version and discard your own's
+(resource : http://stackoverflow.com/questions/15704945/how-to-revert-the-file-in-cvs)
+cvs update -C utils/matlab/rdmds.m
+
+* missing libraries in compilation : 
+(source : http://prefetch.net/articles/linkers.badldlibrary.html)
+
+to deal with this kind of error : 
+$ curl
+ld.so.1: curl: fatal: libgcc_s.so.1: open failed: No such file or directory
+Killed
+
+run : ldd curl
+
+and add the missing libraries to ld_library_path
+* emacs orgmode bibliography
+
+in .emacs :
+(custom-set-variables
+...
+...
+ '(org-latex-pdf-process
+  '("latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"))
+
+in the org file : 
+#+LaTeX_HEADER: \usepackage[backend=bibtex,sorting=none]{biblatex}
+#+LaTeX_HEADER: \addbibresource{chi_ref.bib}  %% point at your bib file
+
+* blogofile basics :
+(source : http://docs.blogofile.com/en/latest/index.html)
+** Initialize a blog site in a directory call mysite:
+>> blogofile init mysite blog
+** Build the site:
+>> blogofile build -s mysite
+** Serve the site:
+>> blogofile serve -s mysite
+** help 
+>> blogofile help
+#+OPTIONS:   ^:nil 

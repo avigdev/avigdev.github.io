@@ -7,7 +7,7 @@
   <title type="text">Avi Gozolchiani אבי גוזולצני</title>
   <subtitle type="text">Environmental Physics at Ben Gurion University</subtitle>
 
-  <updated>2015-01-11T11:15:28Z</updated>
+  <updated>2015-01-11T12:27:32Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://avigdev.github.io/blog" />
@@ -114,7 +114,7 @@ The "savefigs" function is non standard. Its aim is to save images in fig/eps/pn
     <title type="html"><![CDATA[ncdump -h for matlab]]></title>
     <link rel="alternate" type="text/html" href="http://avigdev.github.io/blog/20141230/2014-12-30-ncdump-h-for-matlab-html" />
     <id>http://avigdev.github.io/blog/20141230/2014-12-30-ncdump-h-for-matlab-html</id>
-    <updated>2015-01-11T13:05:35Z</updated>
+    <updated>2015-01-11T14:01:22Z</updated>
     <published>2014-12-30T13:16:00Z</published>
     <category scheme="http://avigdev.github.io/blog" term="matlab" />
     <category scheme="http://avigdev.github.io/blog" term="octave" />
