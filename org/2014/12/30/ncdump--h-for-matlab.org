@@ -1,0 +1,13 @@
+* ncdump -h for matlab
+  :PROPERTIES:
+  :date:     2014/12/30 13:16:00
+  :categories: matlab,octave
+  :updated:  2015/01/11 14:01:22
+  :END:
+
+I launch "ncdump -h" many times during my workflow. It gives you all the meta-data you need for netcdf files, without the hassle of opening a more serious program like [[http://ferret.pmel.noaa.gov/Ferret/][ferret]]. I figured out that I need the same for mat files. You will need [[https://www.gnu.org/software/octave/][octave]] to make it work...
+
+#+BEGIN_SRC matlab -n 
+#!/usr/local/bin/octave -q
+whos('-file',argv(){1})
+#+END_SRC

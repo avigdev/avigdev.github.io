@@ -1,0 +1,9 @@
+* matlab subplots packed densly together, and remove the tick labels from the x-axis
+  :PROPERTIES:
+  :date:     2015/01/01 07:15:21
+  :updated:  2015/01/01 07:15:21
+  :END:
+
+h=subplot(6,1,1);p = get(h, 'pos');
+set(gca,'fontsize',16,'XTickLabelMode', 'Manual','XTickLabel', []);
+set(h,'pos',[p(1) p(2) p(3) p(4)+0.035]);
