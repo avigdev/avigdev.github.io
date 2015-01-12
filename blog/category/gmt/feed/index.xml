@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+     >
+  <channel>
+    <title>Avi Gozolchiani אבי גוזולצני</title>
+    <link>http://avigdev.github.io/blog</link>
+    <description>Environmental Physics at Ben Gurion University</description>
+    <pubDate>Mon, 12 Jan 2015 18:03:44 GMT</pubDate>
+    <generator>Blogofile</generator>
+    <sy:updatePeriod>hourly</sy:updatePeriod>
+    <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>matlab subplots packed densely together</title>
+      <link>http://avigdev.github.io/blog/20150111/2015-01-11-matlab-subplots-packed-densely-together-html</link>
+      <pubDate>Sun, 11 Jan 2015 07:15:21 IST</pubDate>
+      <category><![CDATA[xmgr]]></category>
+      <category><![CDATA[matlab]]></category>
+      <category><![CDATA[octave]]></category>
+      <category><![CDATA[gmt]]></category>
+      <guid isPermaLink="false">MStTt6t6FhRFSnRujHesXW7u4rE=</guid>
+      <description>matlab subplots packed densely together</description>
+      <content:encoded><![CDATA[
+
+
+
+<p>
+During significant portion of my grad-school I had to travel a lot. I therefore couldn't rely on hooking to the university matlab license, so I searched for free alternatives. While you could use a lot of good projects, such as <a href="https://www.gnu.org/software/octave/">octave</a> to crunch your numbers, it seems to me that making beautiful figures is not so easy.
+</p>
+
+<p>
+I got used to plotting with the excellent packages of <a href="http://gmt.soest.hawaii.edu">GMT</a> . I even wrote <a href="https://sourceforge.net/projects/octgmt/">some little octave wrapper functions</a> around GMT, since it's easy to get intimidated by their too elaborate man pages. You could still try them out, though GMT has been working lately on an official <a href="http://gmt.soest.hawaii.edu/projects/gmt-matlab-octave-api">matlab API</a> for you (they do have mature API for c++/Fortran). I didn't try it myself, yet. Another option is good old <a href="http://plasma-gate.weizmann.ac.il/Grace/">xmgr</a> . Both of them produce great imagery, but they have their limitations at times. 
+</p>
+
+<p>
+The one point where matlab excels is <i>better set of default parameters</i>. You don't have to worry so much about the line thicknesses, page width etc., as much as in the other options mentioned above. The cons side, obviously, is when you don't want the defaults. Easy things like packing your subplots close are not so easy in matlab. It's of course, nevertheless, still possible. Mainly with axis/plot handles.
+</p>
+
+<p>
+Here's how you do it : 
+first let's create our figs:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-matlab"><span class="linenr">1: </span>nsubs=3;
+<span class="linenr">2: </span><span style="color: #932092;">for</span> <span style="color: #a0522d;">isub</span>=<span style="color: #008b8b;">1:nsubs</span>
+<span class="linenr">3: </span> subplot(nsubs,1,isub);
+<span class="linenr">4: </span> plot(rands(3,100)');
+<span class="linenr">5: </span> <span style="color: #228b22;">set</span>(<span style="color: #a0522d;">gca</span>,<span style="color: #8b2252;">'fontsize'</span>,16);
+<span class="linenr">6: </span><span style="color: #932092;">end</span> <span style="color: #b22222;">% for </span><span style="color: #b22222;">i</span><span style="color: #b22222;">=</span><span style="color: #b22222;">1:nsubs</span>
+<span class="linenr">7: </span>savefigs(<span style="color: #8b2252;">'nopack_subplots'</span>,<span style="color: #8b2252;">'save demo of packed graphs'</span>,[]);
+</pre>
+</div>
+
+<p>
+that's the result: 
+</p>
+
+
+<div id="fig:nopack" class="figure">
+<p><img src="/media/2015-01-11-matlab-subplots-packed-densely-together/nopack_subplots.png" width="80%"> 
+</p>
+<p><span class="figure-number">Figure 1:</span> before</p>
+</div>
+
+<p>
+now , lets pack them:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-matlab"><span class="linenr"> 1: </span>packing_const=0.06
+<span class="linenr"> 2: </span><span style="color: #932092;">for</span> <span style="color: #a0522d;">isub</span>=<span style="color: #008b8b;">1:nsubs</span>
+<span class="linenr"> 3: </span> h=subplot(nsubs,1,isub);p = <span style="color: #228b22;">get</span>(<span style="color: #a0522d;">h</span>, <span style="color: #8b2252;">'pos'</span>);
+<span class="linenr"> 4: </span> <span style="color: #932092;">if</span>(isub<span style="color: #228b22;">&lt;</span>nsubs)
+<span class="linenr"> 5: </span>  <span style="color: #228b22;">set</span>(<span style="color: #a0522d;">gca</span>,<span style="color: #8b2252;">'fontsize'</span>,16,<span style="color: #8b2252;">'XTickLabelMode'</span>, <span style="color: #8b2252;">'Manual'</span>,<span style="color: #8b2252;">'XTickLabel'</span>, []);
+<span class="linenr"> 6: </span> <span style="color: #932092;">else</span> <span style="color: #b22222;">%  if(isub&lt;nsubs)</span>
+<span class="linenr"> 7: </span>  <span style="color: #228b22;">set</span>(<span style="color: #a0522d;">gca</span>,<span style="color: #8b2252;">'fontsize'</span>,16);
+<span class="linenr"> 8: </span> <span style="color: #932092;">end</span> <span style="color: #b22222;">%  if(isub&lt;nsubs) ... else ...</span>
+<span class="linenr"> 9: </span> <span style="color: #228b22;">set</span>(<span style="color: #a0522d;">h</span>,<span style="color: #8b2252;">'pos'</span>,[p(<span style="color: #a0522d;">1</span>) p(<span style="color: #a0522d;">2</span>) p(<span style="color: #a0522d;">3</span>) p(<span style="color: #a0522d;">4</span>)<span style="color: #228b22;">+</span>packing_const]);
+<span class="linenr">10: </span><span style="color: #932092;">end</span> <span style="color: #b22222;">% for </span><span style="color: #b22222;">isub</span><span style="color: #b22222;">=</span><span style="color: #b22222;">1:nsubs</span>
+<span class="linenr">11: </span>savefigs(<span style="color: #8b2252;">'pack_subplots'</span>,<span style="color: #8b2252;">'save demo of packed graphs'</span>,[]);
+</pre>
+</div>
+
+<p>
+that's our "after" exhibit : 
+</p>
+
+
+<div id="fig:pack" class="figure">
+<p><img src="/media/2015-01-11-matlab-subplots-packed-densely-together/pack_subplots.png" width="80%"> 
+</p>
+<p><span class="figure-number">Figure 2:</span> after</p>
+</div>
+
+<p>
+The "savefigs" function is non standard. Its aim is to save images in fig/eps/png formats at once, and generate README file and a mat file on the fly, with consistent names. 
+</p>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/11/matlab-subplots-packed-densely-together.org">org-mode source</a><p>]]></content:encoded>
+    </item>
+  </channel>
+</rss>

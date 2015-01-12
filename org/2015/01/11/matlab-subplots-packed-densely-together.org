@@ -2,7 +2,7 @@
   :PROPERTIES:
   :date:     2015/01/11 07:15:21
   :categories: matlab,octave,GMT,xmgr
-  :updated:  2015/01/11 13:05:45
+  :updated:  2015/01/12 20:03:08
   :END:
 
 During significant portion of my grad-school I had to travel a lot. I therefore couldn't rely on hooking to the university matlab license, so I searched for free alternatives. While you could use a lot of good projects, such as [[https://www.gnu.org/software/octave/][octave]] to crunch your numbers, it seems to me that making beautiful figures is not so easy.

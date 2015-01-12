@@ -1,7 +1,7 @@
 * matlab discrete colorbar
   :PROPERTIES:
   :date:     2015/01/12 07:15:34
-  :updated:  2015/01/12 16:28:40
+  :updated:  2015/01/12 20:03:14
   :categories: matlab,octave
   :END:
 You shouldn't use the default "smooth" gradients of imagesc. The aesthetic side set aside, imagesc gives the wrong impression of an infinite resolution. While we are at it, let's get rid of the default nonesense y-axis opposite direction, and enable masking (whoaa. crazy.). 

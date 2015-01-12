@@ -2,7 +2,7 @@
   :PROPERTIES:
   :date:     2014/12/28 18:48:02
   :categories: slurm,qsub,orgmode
-  :updated:  2015/01/11 13:14:38
+  :updated:  2015/01/12 20:02:52
   :END:
 
 [[http://slurm.schedmd.com][slurm]] and qsub (link anyone?) are beautiful cluster schedulers. If you work on a cluster, you probably use one. I use both, as well as some old computers which don't have schedulers. I manage my runs from an [[http://orgmode.org][orgmode]] "notebook", with a table that tells my scripts which resource uses which scheduler. 
@@ -90,7 +90,7 @@ The "-x n03" part in slurm_run.pl was added since our system admin asked me to n
   :PROPERTIES:
   :date:     2014/12/30 13:16:00
   :categories: matlab,octave
-  :updated:  2015/01/11 14:01:22
+  :updated:  2015/01/12 20:02:56
   :END:
 
 I launch "ncdump -h" many times during my workflow. It gives you all the meta-data you need for netcdf files, without the hassle of opening a more serious program like [[http://ferret.pmel.noaa.gov/Ferret/][ferret]]. I figured out that I need the same for mat files. You will need [[https://www.gnu.org/software/octave/][octave]] to make it work...
@@ -104,7 +104,7 @@ whos('-file',argv(){1})
   :PROPERTIES:
   :date:     2015/1/7 20:42:00
   :categories: latex,workflow
-  :updated:  2015/01/11 13:05:40
+  :updated:  2015/01/12 20:03:02
   :END:
 
 A part of the scientific workflow is creating images and categorizing them into directories. In our little parties, we scientist show these images to each other and brag about our ability to create more. It is therefore very useful to have bundles of these in pdf or html files (depending on the kind of party).
@@ -188,7 +188,7 @@ where /LATEXTMPL/ is an environment variable, telling your script the location o
   :PROPERTIES:
   :date:     2015/01/11 07:15:21
   :categories: matlab,octave,GMT,xmgr
-  :updated:  2015/01/11 13:05:45
+  :updated:  2015/01/12 20:03:08
   :END:
 
 During significant portion of my grad-school I had to travel a lot. I therefore couldn't rely on hooking to the university matlab license, so I searched for free alternatives. While you could use a lot of good projects, such as [[https://www.gnu.org/software/octave/][octave]] to crunch your numbers, it seems to me that making beautiful figures is not so easy.
@@ -247,7 +247,7 @@ The "savefigs" function is non standard. Its aim is to save images in fig/eps/pn
 * matlab discrete colorbar
   :PROPERTIES:
   :date:     2015/01/12 07:15:34
-  :updated:  2015/01/12 16:28:40
+  :updated:  2015/01/12 20:03:14
   :categories: matlab,octave
   :END:
 You shouldn't use the default "smooth" gradients of imagesc. The aesthetic side set aside, imagesc gives the wrong impression of an infinite resolution. While we are at it, let's get rid of the default nonesense y-axis opposite direction, and enable masking (whoaa. crazy.). 

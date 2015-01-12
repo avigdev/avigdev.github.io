@@ -2,7 +2,7 @@
   :PROPERTIES:
   :date:     2015/1/7 20:42:00
   :categories: latex,workflow
-  :updated:  2015/01/11 13:05:40
+  :updated:  2015/01/12 20:03:02
   :END:
 
 A part of the scientific workflow is creating images and categorizing them into directories. In our little parties, we scientist show these images to each other and brag about our ability to create more. It is therefore very useful to have bundles of these in pdf or html files (depending on the kind of party).

@@ -2,7 +2,7 @@
   :PROPERTIES:
   :date:     2014/12/28 18:48:02
   :categories: slurm,qsub,orgmode
-  :updated:  2015/01/11 13:14:38
+  :updated:  2015/01/12 20:02:52
   :END:
 
 [[http://slurm.schedmd.com][slurm]] and qsub (link anyone?) are beautiful cluster schedulers. If you work on a cluster, you probably use one. I use both, as well as some old computers which don't have schedulers. I manage my runs from an [[http://orgmode.org][orgmode]] "notebook", with a table that tells my scripts which resource uses which scheduler. 
