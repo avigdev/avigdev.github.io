@@ -10,10 +10,55 @@
     <title>Avi Gozolchiani אבי גוזולצני</title>
     <link>http://avigdev.github.io/blog</link>
     <description>Environmental Physics at Ben Gurion University</description>
-    <pubDate>Mon, 12 Jan 2015 18:05:48 GMT</pubDate>
+    <pubDate>Wed, 14 Jan 2015 16:42:54 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>GMT's mysterious page dimension</title>
+      <link>http://avigdev.github.io/blog/20150114/2015-01-14-gmt-s-mysterious-page-dimension-html</link>
+      <pubDate>Wed, 14 Jan 2015 18:40:56 IST</pubDate>
+      <category><![CDATA[matlab]]></category>
+      <category><![CDATA[octave]]></category>
+      <guid isPermaLink="false">SKqKa1GnOJ4TfKLBT4hs6YaleoU=</guid>
+      <description>GMT's mysterious page dimension</description>
+      <content:encoded><![CDATA[
+
+
+<p>
+<a href="http://gmt.soest.hawaii.edu">GMT</a> has been around for some time now. Their <a href="http://gmt.soest.hawaii.edu/gmt/map_geoip_all.png">"world domination map"</a> is a nice demonstration of its scripting capabilities and quality rendering. They only suffer from one disease. Well actually two. 
+</p>
+
+<ol class="org-ol">
+<li>GMT doesn't allow gradual step-by-step fine tuning. While in matlab/octave you would use "plot(x,y)" just to see what happens, and afterwards play with the axis limits until you are satisfied, and so on - in GMT you have to worry about axis and the physical figure width and height from the very beginning. Quite a barrier I would say. That's where <a href="http://sourceforge.net/projects/octgmt/">octgmt</a> might come handy. It's an interface between octave and GMT that will create for you an initial script. 
+</li>
+<li>When you try to use the package, you are likely to just produce blank pages. That's because of the heavy dependence on some default printing page size, which is hidden from the user. Your plot should just fit in this mysterious default. This was actually discussed in their <a href="http://comments.gmane.org/gmane.comp.gis.gmt.user/13819">mailgroup</a> . Anyhow, you probably want to try the flag "&#x2013;PAPER_MEDIA=Custom_550x580" or "&#x2013;PS_MEDIA=Custom_550x580" (depending on the GMT version). 
+</li>
+</ol>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/14/GMT's-mysterious-page-dimension.org">org-mode source</a><p>]]></content:encoded>
+    </item>
+    <item>
+      <title>GMT custom page dimensions</title>
+      <link>http://avigdev.github.io/blog/20150114/2015-01-14-gmt-custom-page-dimensions-html</link>
+      <pubDate>Wed, 14 Jan 2015 18:40:56 IST</pubDate>
+      <category><![CDATA[uncategorized]]></category>
+      <guid isPermaLink="false">AulOwVOtR2d6YAYFUP155W8xLpM=</guid>
+      <description>GMT custom page dimensions</description>
+      <content:encoded><![CDATA[
+
+
+<p>
+<a href="http://gmt.soest.hawaii.edu">GMT</a> has been around for some time now. Their <a href="http://gmt.soest.hawaii.edu/gmt/map_geoip_all.png">"world domination map"</a> is a nice demonstration of its scripting capabilities and quality rendering. They only suffer from one disease. Well actually two. 
+</p>
+
+<ol class="org-ol">
+<li>GMT doesn't allow gradual step-by-step fine tuning. While in matlab/octave you would use "plot(x,y)" just to see what happens, and afterwards play with the axis limits until you are satisfied, and so on - in GMT you have to worry about axis and the physical figure width and height from the very beginning. Quite a barrier I would say. That's where <a href="http://sourceforge.net/projects/octgmt/">octgmt</a> might come handy. It's an interface between octave and GMT that will create for you an initial script. 
+</li>
+<li>When you try to use the package, you are likely to just produce blank pages. That's because of the heavy dependence on some default printing page size, which is hidden from the user. Your plot should just fit in this mysterious default. This was actually discussed in their <a href="http://comments.gmane.org/gmane.comp.gis.gmt.user/13819">mailgroup</a> . Anyhow, you probably want to try the flag "&#x2013;PAPER_MEDIA=Custom_550x580" or "&#x2013;PS_MEDIA=Custom_550x580" (depending on the GMT version). 
+</li>
+</ol>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/14/GMT-custom-page-dimensions.org">org-mode source</a><p>]]></content:encoded>
+    </item>
     <item>
       <title>matlab discrete colorbar</title>
       <link>http://avigdev.github.io/blog/20150112/2015-01-12-matlab-discrete-colorbar-html</link>

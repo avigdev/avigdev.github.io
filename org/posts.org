@@ -1,4 +1,4 @@
-* simplify slurm and qsub  
+* COMMENT simplify slurm and qsub  
   :PROPERTIES:
   :date:     2014/12/28 18:48:02
   :categories: slurm,qsub,orgmode
@@ -86,7 +86,7 @@ the "%.50j" is important, since we want to know the full job names.
 
 The "-x n03" part in slurm_run.pl was added since our system admin asked me to not use node 03. Is there a better way to consistently do it?
 
-* ncdump -h for matlab
+* COMMENT ncdump -h for matlab
   :PROPERTIES:
   :date:     2014/12/30 13:16:00
   :categories: matlab,octave
@@ -100,7 +100,7 @@ I launch "ncdump -h" many times during my workflow. It gives you all the meta-da
 whos('-file',argv(){1})
 #+END_SRC
 
-* create a document from your figures 
+* COMMENT create a document from your figures 
   :PROPERTIES:
   :date:     2015/1/7 20:42:00
   :categories: latex,workflow
@@ -184,7 +184,7 @@ while(<TMPL>){
  
 where /LATEXTMPL/ is an environment variable, telling your script the location of your template. I like templates, and I clutter quite a bit as hidden files in my home directory. Do you do it differently ? 
 
-* matlab subplots packed densely together
+* COMMENT matlab subplots packed densely together
   :PROPERTIES:
   :date:     2015/01/11 07:15:21
   :categories: matlab,octave,GMT,xmgr
@@ -244,7 +244,7 @@ that's our "after" exhibit :
 
 The "savefigs" function is non standard. Its aim is to save images in fig/eps/png formats at once, and generate README file and a mat file on the fly, with consistent names. 
 
-* matlab discrete colorbar
+* COMMENT matlab discrete colorbar
   :PROPERTIES:
   :date:     2015/01/12 07:15:34
   :updated:  2015/01/12 20:03:14
@@ -362,8 +362,16 @@ verbose_disp(flag_verbos,'myimagesc : invert the y-axis');
 set(gca,'YDir','normal');
 #+END_SRC
 
-* GMT custom page dimensions
---PAPER_MEDIA=Custom_550x580
+* GMT's mysterious page dimension 
+  :PROPERTIES:
+  :date:     2015/01/14 18:40:56
+  :updated:  2015/01/14 18:42:45
+  :categories: matlab,octave
+  :END:
+ [[http://gmt.soest.hawaii.edu][GMT]] has been around for some time now. Their [[http://gmt.soest.hawaii.edu/gmt/map_geoip_all.png]["world domination map"]] is a nice demonstration of its scripting capabilities and quality rendering. They only suffer from one disease. Well actually two. 
+
+1. GMT doesn't allow gradual step-by-step fine tuning. While in matlab/octave you would use "plot(x,y)" just to see what happens, and afterwards play with the axis limits until you are satisfied, and so on - in GMT you have to worry about axis and the physical figure width and height from the very beginning. Quite a barrier I would say. That's where [[http://sourceforge.net/projects/octgmt/][octgmt]] might come handy. It's an interface between octave and GMT that will create for you an initial script. 
+2. When you try to use the package, you are likely to just produce blank pages. That's because of the heavy dependence on some default printing page size, which is hidden from the user. Your plot should just fit in this mysterious default. This was actually discussed in their [[http://comments.gmane.org/gmane.comp.gis.gmt.user/13819][mailgroup]]. Anyhow, you probably want to try the flag "--PAPER_MEDIA=Custom_550x580" or "--PS_MEDIA=Custom_550x580" (depending on the GMT version). 
 * matlab see also
 in order to have hyperlinks in the help, it is sufficient to include the line
 % see also func1,func2,...
