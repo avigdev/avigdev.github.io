@@ -7,7 +7,7 @@
   <title type="text">Avi Gozolchiani אבי גוזולצני</title>
   <subtitle type="text">Environmental Physics at Ben Gurion University</subtitle>
 
-  <updated>2015-01-15T10:20:56Z</updated>
+  <updated>2015-01-15T10:22:56Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://avigdev.github.io/blog" />
@@ -18,14 +18,14 @@
       <name></name>
       <uri>http://avigdev.github.io/blog</uri>
     </author>
-    <title type="html"><![CDATA[COMMENT LaTeX - please don't mix bibliography and figures]]></title>
-    <link rel="alternate" type="text/html" href="http://avigdev.github.io/blog/20150115/2015-01-15-comment-latex-please-don-t-mix-bibliography-and-figures-html" />
-    <id>http://avigdev.github.io/blog/20150115/2015-01-15-comment-latex-please-don-t-mix-bibliography-and-figures-html</id>
-    <updated>2015-01-15T12:20:52Z</updated>
+    <title type="html"><![CDATA[LaTeX - please don't mix bibliography and figures]]></title>
+    <link rel="alternate" type="text/html" href="http://avigdev.github.io/blog/20150115/2015-01-15-latex-please-don-t-mix-bibliography-and-figures-html" />
+    <id>http://avigdev.github.io/blog/20150115/2015-01-15-latex-please-don-t-mix-bibliography-and-figures-html</id>
+    <updated>2015-01-15T12:22:42Z</updated>
     <published>2015-01-15T12:03:45Z</published>
     <category scheme="http://avigdev.github.io/blog" term="latex" />
-    <summary type="html"><![CDATA[COMMENT LaTeX - please don't mix bibliography and figures]]></summary>
-    <content type="html" xml:base="http://avigdev.github.io/blog/20150115/2015-01-15-comment-latex-please-don-t-mix-bibliography-and-figures-html"><![CDATA[
+    <summary type="html"><![CDATA[LaTeX - please don't mix bibliography and figures]]></summary>
+    <content type="html" xml:base="http://avigdev.github.io/blog/20150115/2015-01-15-latex-please-don-t-mix-bibliography-and-figures-html"><![CDATA[
 
 
 <p>
@@ -40,7 +40,7 @@ The weird mingling of figs and bibliography which is the default setting in LaTe
 <span class="linenr">5: </span><span style="color: #932092;">\bibliography</span>{<span style="color: #483d8b;">gyre_ref</span>} <span style="color: #b22222;">% your bibtex file is probably named differently</span>
 </pre>
 </div>
-<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/15/COMMENT-LaTeX---please-don't-mix-bibliography-and-figures.org">org-mode source</a><p>]]></content>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/15/LaTeX---please-don't-mix-bibliography-and-figures.org">org-mode source</a><p>]]></content>
   </entry>
   <entry>
     <author>

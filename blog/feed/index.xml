@@ -10,17 +10,17 @@
     <title>Avi Gozolchiani אבי גוזולצני</title>
     <link>http://avigdev.github.io/blog</link>
     <description>Environmental Physics at Ben Gurion University</description>
-    <pubDate>Thu, 15 Jan 2015 10:20:56 GMT</pubDate>
+    <pubDate>Thu, 15 Jan 2015 10:22:56 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
-      <title>COMMENT LaTeX - please don't mix bibliography and figures</title>
-      <link>http://avigdev.github.io/blog/20150115/2015-01-15-comment-latex-please-don-t-mix-bibliography-and-figures-html</link>
+      <title>LaTeX - please don't mix bibliography and figures</title>
+      <link>http://avigdev.github.io/blog/20150115/2015-01-15-latex-please-don-t-mix-bibliography-and-figures-html</link>
       <pubDate>Thu, 15 Jan 2015 12:03:45 IST</pubDate>
       <category><![CDATA[latex]]></category>
-      <guid isPermaLink="false">8yjG_JJEITCNUD750fjsr1O5g5A=</guid>
-      <description>COMMENT LaTeX - please don't mix bibliography and figures</description>
+      <guid isPermaLink="false">tdoQv2ULl_9IyU82w-kyVhuWDvw=</guid>
+      <description>LaTeX - please don't mix bibliography and figures</description>
       <content:encoded><![CDATA[
 
 
@@ -36,7 +36,7 @@ The weird mingling of figs and bibliography which is the default setting in LaTe
 <span class="linenr">5: </span><span style="color: #932092;">\bibliography</span>{<span style="color: #483d8b;">gyre_ref</span>} <span style="color: #b22222;">% your bibtex file is probably named differently</span>
 </pre>
 </div>
-<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/15/COMMENT-LaTeX---please-don't-mix-bibliography-and-figures.org">org-mode source</a><p>]]></content:encoded>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/15/LaTeX---please-don't-mix-bibliography-and-figures.org">org-mode source</a><p>]]></content:encoded>
     </item>
     <item>
       <title>GMT's mysterious page dimension</title>
