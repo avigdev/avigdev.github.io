@@ -362,7 +362,7 @@ verbose_disp(flag_verbos,'myimagesc : invert the y-axis');
 set(gca,'YDir','normal');
 #+END_SRC
 
-* GMT's mysterious page dimension 
+* COMMENT GMT's mysterious page dimension 
   :PROPERTIES:
   :date:     2015/01/14 18:40:56
   :updated:  2015/01/14 18:42:45
@@ -372,35 +372,25 @@ set(gca,'YDir','normal');
 
 1. GMT doesn't allow gradual step-by-step fine tuning. While in matlab/octave you would use "plot(x,y)" just to see what happens, and afterwards play with the axis limits until you are satisfied, and so on - in GMT you have to worry about axis and the physical figure width and height from the very beginning. Quite a barrier I would say. That's where [[http://sourceforge.net/projects/octgmt/][octgmt]] might come handy. It's an interface between octave and GMT that will create for you an initial script. 
 2. When you try to use the package, you are likely to just produce blank pages. That's because of the heavy dependence on some default printing page size, which is hidden from the user. Your plot should just fit in this mysterious default. This was actually discussed in their [[http://comments.gmane.org/gmane.comp.gis.gmt.user/13819][mailgroup]]. Anyhow, you probably want to try the flag "--PAPER_MEDIA=Custom_550x580" or "--PS_MEDIA=Custom_550x580" (depending on the GMT version). 
-* matlab see also
-in order to have hyperlinks in the help, it is sufficient to include the line
-% see also func1,func2,...
-
-at the end of the header
-* latex don't mix bibliography and figures:
-\usepackage{placeins} % floatbarrier definition
+* LaTeX - please don't mix bibliography and figures
+  :PROPERTIES:
+  :date:     2015/01/15 12:03:45
+  :updated:  2015/01/15 12:04:49
+  :categories: latex
+  :END:
+The weird mingling of figs and bibliography which is the default setting in LaTeX could be avoided by using the package [[http://www.ctan.org/pkg/placeins]["placeins"]]. You could use several more barriers to make sure that all figures will not leak beyond certain position in text (for example - the end of a section).
+#+BEGIN_SRC latex -n
+\usepackage{placeins} % in the header
 ....
 \FloatBarrier % this forces all figures to be presented before the bibl.
 \bibliographystyle{unsrt}
-\bibliography{gyre_ref}
+\bibliography{gyre_ref} % your bibtex file is probably named differently
+#+END_SRC
 * latex:
 disable automatic rotation in ps2pdf. 
 source http://textricks.blogspot.co.il/2010/01/ps2pdf-autorotate-switch-off.html
 
 ps2pdf -dAutoRotatePages=/None
-* matlab plot heat map with discrete color bins
-
-example:
-
-bin=1e4;minval=-8e4;maxval=8e4;
-x=0.1:0.1:100;
-y=0:200;
-[xx,yy]=ndgrid(x,y);
-w=sin(xx).*xx.^2.*exp(0.01*yy);
-w(:,195:198)=-70000;
-w(15:18,:)=70000;
-myimagesc(x,y,w,minval,maxval,bin)
-
 * linux copy to clipboard with (xc) and without (xcn) the trailing endline
 #+BEGIN_SRC sh -n
 alias xc='xclip -selection clipboard'
@@ -454,9 +444,6 @@ if(flag_verb)
 end % if(flag_verb)
 #+END_SRC
 
-* emacs org mode
-recurring event example:
-SCHEDULED: <2013-02-10 Sun 05:30-07:00 +1w>
 * xmgr annotation:
 (source : http://blog.louic.nl/?p=249)
 

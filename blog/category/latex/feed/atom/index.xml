@@ -7,12 +7,32 @@
   <title type="text">Avi Gozolchiani אבי גוזולצני</title>
   <subtitle type="text">Environmental Physics at Ben Gurion University</subtitle>
 
-  <updated>2015-01-14T16:42:54Z</updated>
+  <updated>2015-01-15T10:04:52Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://avigdev.github.io/blog" />
   <id>http://avigdev.github.io/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://avigdev.github.io/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://avigdev.github.io/blog</uri>
+    </author>
+    <title type="html"><![CDATA[LaTeX - please don't mix bibliography and figures]]></title>
+    <link rel="alternate" type="text/html" href="http://avigdev.github.io/blog/20150115/2015-01-15-latex-please-don-t-mix-bibliography-and-figures-html" />
+    <id>http://avigdev.github.io/blog/20150115/2015-01-15-latex-please-don-t-mix-bibliography-and-figures-html</id>
+    <updated>2015-01-15T12:04:49Z</updated>
+    <published>2015-01-15T12:03:45Z</published>
+    <category scheme="http://avigdev.github.io/blog" term="latex" />
+    <summary type="html"><![CDATA[LaTeX - please don't mix bibliography and figures]]></summary>
+    <content type="html" xml:base="http://avigdev.github.io/blog/20150115/2015-01-15-latex-please-don-t-mix-bibliography-and-figures-html"><![CDATA[
+
+
+<p>
+The weird mingling of figs and bibliography which is the default setting in LaTeX could be avoided by using the package <a href="http://www.ctan.org/pkg/placeins">"placeins"</a> . You could use several more barriers to make sure that all figures will not leak beyond certain position in text (for example - the end of a section).
+</p>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/15/LaTeX---please-don't-mix-bibliography-and-figures.org">org-mode source</a><p>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>

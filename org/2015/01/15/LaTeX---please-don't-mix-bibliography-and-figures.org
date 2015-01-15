@@ -1,0 +1,14 @@
+* LaTeX - please don't mix bibliography and figures
+  :PROPERTIES:
+  :date:     2015/01/15 12:03:45
+  :updated:  2015/01/15 12:04:49
+  :categories: latex
+  :END:
+The weird mingling of figs and bibliography which is the default setting in LaTeX could be avoided by using the package [[http://www.ctan.org/pkg/placeins]["placeins"]]. You could use several more barriers to make sure that all figures will not leak beyond certain position in text (for example - the end of a section).
+#+BEGIN_SRC latex -n
+\usepackage{placeins} % in the header
+....
+\FloatBarrier % this forces all figures to be presented before the bibl.
+\bibliographystyle{unsrt}
+\bibliography{gyre_ref} % your bibtex file is probably named differently
+#+END_SRC

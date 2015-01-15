@@ -10,10 +10,25 @@
     <title>Avi Gozolchiani אבי גוזולצני</title>
     <link>http://avigdev.github.io/blog</link>
     <description>Environmental Physics at Ben Gurion University</description>
-    <pubDate>Wed, 14 Jan 2015 16:42:54 GMT</pubDate>
+    <pubDate>Thu, 15 Jan 2015 10:04:52 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>LaTeX - please don't mix bibliography and figures</title>
+      <link>http://avigdev.github.io/blog/20150115/2015-01-15-latex-please-don-t-mix-bibliography-and-figures-html</link>
+      <pubDate>Thu, 15 Jan 2015 12:03:45 IST</pubDate>
+      <category><![CDATA[latex]]></category>
+      <guid isPermaLink="false">tdoQv2ULl_9IyU82w-kyVhuWDvw=</guid>
+      <description>LaTeX - please don't mix bibliography and figures</description>
+      <content:encoded><![CDATA[
+
+
+<p>
+The weird mingling of figs and bibliography which is the default setting in LaTeX could be avoided by using the package <a href="http://www.ctan.org/pkg/placeins">"placeins"</a> . You could use several more barriers to make sure that all figures will not leak beyond certain position in text (for example - the end of a section).
+</p>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/15/LaTeX---please-don't-mix-bibliography-and-figures.org">org-mode source</a><p>]]></content:encoded>
+    </item>
     <item>
       <title>create a document from your figures</title>
       <link>http://avigdev.github.io/blog/20150107/2015-1-7-create-a-document-from-your-figures-html</link>
