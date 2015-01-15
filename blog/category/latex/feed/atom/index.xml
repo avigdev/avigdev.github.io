@@ -7,7 +7,7 @@
   <title type="text">Avi Gozolchiani אבי גוזולצני</title>
   <subtitle type="text">Environmental Physics at Ben Gurion University</subtitle>
 
-  <updated>2015-01-15T10:04:52Z</updated>
+  <updated>2015-01-15T10:20:56Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://avigdev.github.io/blog" />
@@ -18,20 +18,29 @@
       <name></name>
       <uri>http://avigdev.github.io/blog</uri>
     </author>
-    <title type="html"><![CDATA[LaTeX - please don't mix bibliography and figures]]></title>
-    <link rel="alternate" type="text/html" href="http://avigdev.github.io/blog/20150115/2015-01-15-latex-please-don-t-mix-bibliography-and-figures-html" />
-    <id>http://avigdev.github.io/blog/20150115/2015-01-15-latex-please-don-t-mix-bibliography-and-figures-html</id>
-    <updated>2015-01-15T12:04:49Z</updated>
+    <title type="html"><![CDATA[COMMENT LaTeX - please don't mix bibliography and figures]]></title>
+    <link rel="alternate" type="text/html" href="http://avigdev.github.io/blog/20150115/2015-01-15-comment-latex-please-don-t-mix-bibliography-and-figures-html" />
+    <id>http://avigdev.github.io/blog/20150115/2015-01-15-comment-latex-please-don-t-mix-bibliography-and-figures-html</id>
+    <updated>2015-01-15T12:20:52Z</updated>
     <published>2015-01-15T12:03:45Z</published>
     <category scheme="http://avigdev.github.io/blog" term="latex" />
-    <summary type="html"><![CDATA[LaTeX - please don't mix bibliography and figures]]></summary>
-    <content type="html" xml:base="http://avigdev.github.io/blog/20150115/2015-01-15-latex-please-don-t-mix-bibliography-and-figures-html"><![CDATA[
+    <summary type="html"><![CDATA[COMMENT LaTeX - please don't mix bibliography and figures]]></summary>
+    <content type="html" xml:base="http://avigdev.github.io/blog/20150115/2015-01-15-comment-latex-please-don-t-mix-bibliography-and-figures-html"><![CDATA[
 
 
 <p>
 The weird mingling of figs and bibliography which is the default setting in LaTeX could be avoided by using the package <a href="http://www.ctan.org/pkg/placeins">"placeins"</a> . You could use several more barriers to make sure that all figures will not leak beyond certain position in text (for example - the end of a section).
 </p>
-<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/15/LaTeX---please-don't-mix-bibliography-and-figures.org">org-mode source</a><p>]]></content>
+<div class="org-src-container">
+
+<pre class="src src-latex"><span class="linenr">1: </span><span style="color: #932092;">\usepackage</span>{<span style="color: #483d8b;">placeins</span>} <span style="color: #b22222;">% in the header</span>
+<span class="linenr">2: </span>....
+<span class="linenr">3: </span><span style="color: #932092;">\FloatBarrier</span> <span style="color: #b22222;">% this forces all figures to be presented before the bibl.</span>
+<span class="linenr">4: </span><span style="color: #932092;">\bibliographystyle</span>{unsrt}
+<span class="linenr">5: </span><span style="color: #932092;">\bibliography</span>{<span style="color: #483d8b;">gyre_ref</span>} <span style="color: #b22222;">% your bibtex file is probably named differently</span>
+</pre>
+</div>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/15/COMMENT-LaTeX---please-don't-mix-bibliography-and-figures.org">org-mode source</a><p>]]></content>
   </entry>
   <entry>
     <author>
