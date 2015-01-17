@@ -10,10 +10,35 @@
     <title>Avi Gozolchiani אבי גוזולצני</title>
     <link>http://avigdev.github.io/blog</link>
     <description>Environmental Physics at Ben Gurion University</description>
-    <pubDate>Thu, 15 Jan 2015 10:22:56 GMT</pubDate>
+    <pubDate>Sat, 17 Jan 2015 15:43:09 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>latex automatic rotation</title>
+      <link>http://avigdev.github.io/blog/20150117/2015-01-17-latex-automatic-rotation-html</link>
+      <pubDate>Sat, 17 Jan 2015 17:43:02 IST</pubDate>
+      <category><![CDATA[latex]]></category>
+      <guid isPermaLink="false">MarF1PRi3Ug5Hc0qXteVFQ317dY=</guid>
+      <description>latex automatic rotation</description>
+      <content:encoded><![CDATA[
+
+
+<p>
+The usual workflow with a latex document is latex-&gt;bibtex-&gt;latex-&gt;dvips-&gt;ps2pdf. There are some variations, on this theme. Anyway - when you use ps2pdf it tries to optimize space and sometimes rotates the figures. There's a whole story about how dvi includes figures as links to files and how dvips,ps2pdf plant this file inside the document. <b>Bottom line is</b> - we don't like automatic orientation of figures. Once we got it right, we want it to behave the same even if the document has changed. 
+</p>
+
+<p>
+So&#x2026; 
+to disable automatic rotation in ps2pdf (the source for this tip is <a href="http://textricks.blogspot.co.il/2010/01/ps2pdf-autorotate-switch-off.html">over here</a> ):
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="linenr">1: </span>ps2pdf -dAutoRotatePages=/None
+</pre>
+</div>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/17/latex-automatic-rotation.org">org-mode source</a><p>]]></content:encoded>
+    </item>
     <item>
       <title>LaTeX - please don't mix bibliography and figures</title>
       <link>http://avigdev.github.io/blog/20150115/2015-01-15-latex-please-don-t-mix-bibliography-and-figures-html</link>

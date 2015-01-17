@@ -386,11 +386,19 @@ The weird mingling of figs and bibliography which is the default setting in LaTe
 \bibliographystyle{unsrt}
 \bibliography{gyre_ref} % your bibtex file is probably named differently
 #+END_SRC
-* latex:
-disable automatic rotation in ps2pdf. 
-source http://textricks.blogspot.co.il/2010/01/ps2pdf-autorotate-switch-off.html
+* latex automatic rotation
+  :PROPERTIES:
+  :categories: latex
+  :date:     2015/01/17 17:43:02
+  :updated:  2015/01/17 17:43:02
+  :END:
+The usual workflow with a latex document is latex->bibtex->latex->dvips->ps2pdf. There are some variations, on this theme. Anyway - when you use ps2pdf it tries to optimize space and sometimes rotates the figures. There's a whole story about how dvi includes figures as links to files and how dvips,ps2pdf plant this file inside the document. *Bottom line is* - we don't like automatic orientation of figures. Once we got it right, we want it to behave the same even if the document has changed. 
 
+So... 
+to disable automatic rotation in ps2pdf (the source for this tip is [[http://textricks.blogspot.co.il/2010/01/ps2pdf-autorotate-switch-off.html][over here]]):
+#+BEGIN_SRC sh -n
 ps2pdf -dAutoRotatePages=/None
+#+END_SRC
 * linux copy to clipboard with (xc) and without (xcn) the trailing endline
 #+BEGIN_SRC sh -n
 alias xc='xclip -selection clipboard'
