@@ -7,12 +7,76 @@
   <title type="text">Avi Gozolchiani אבי גוזולצני</title>
   <subtitle type="text">Environmental Physics at Ben Gurion University</subtitle>
 
-  <updated>2015-01-17T15:43:09Z</updated>
+  <updated>2015-01-18T22:13:58Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://avigdev.github.io/blog" />
   <id>http://avigdev.github.io/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://avigdev.github.io/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://avigdev.github.io/blog</uri>
+    </author>
+    <title type="html"><![CDATA[linux copy to clipboard]]></title>
+    <link rel="alternate" type="text/html" href="http://avigdev.github.io/blog/20150119/2015-01-19-linux-copy-to-clipboard-html" />
+    <id>http://avigdev.github.io/blog/20150119/2015-01-19-linux-copy-to-clipboard-html</id>
+    <updated>2015-01-19T00:10:05Z</updated>
+    <published>2015-01-19T00:08:45Z</published>
+    <category scheme="http://avigdev.github.io/blog" term="alias" />
+    <category scheme="http://avigdev.github.io/blog" term="workflow" />
+    <category scheme="http://avigdev.github.io/blog" term="osx" />
+    <category scheme="http://avigdev.github.io/blog" term="linux" />
+    <summary type="html"><![CDATA[linux copy to clipboard]]></summary>
+    <content type="html" xml:base="http://avigdev.github.io/blog/20150119/2015-01-19-linux-copy-to-clipboard-html"><![CDATA[
+
+
+
+<p>
+Is it true that you have to give names to things to really appreciate and understand them? It's really one of these questions that are just too gross for answering a straight yes or no. 
+</p>
+
+<p>
+When you think of this question, math comes to mind. I have little doubt that you must internalize dozens of definitions and the relations between them before you master differential geometry, or group theory. But do you need language to understand subtraction? The answer is - <a href="http://ocw.mit.edu/courses/brain-and-cognitive-sciences/9-00-introduction-to-psychology-fall-2004/lecture-notes/9-cognitive-development-how-do-children-think/">NO</a> . Babies do it intuitively. So there is some border beyond which things become too abstract, and we've got to give them names. But isn't my answer a tautology? Isn't "abstract" just the name of this phenomena of having to name something in order to understand it? Sure enough, if we were not so used to giving names to everything, we would have found lots of things "abstract". Helen Keller <a href="http://digital.library.upenn.edu/women/keller/life/life.html">writes</a> :
+</p>
+
+<p class="verse">
+"my teacher placed my hand under the spout. As the cool stream gushed over one hand she spelled into the other the word water, first slowly, then rapidly. I stood still, my whole attention fixed upon the motions of her fingers. Suddenly I felt a misty consciousness as of something forgotten - a thrill of returning thought; and somehow the mystery of language was revealed to me. I knew then that "w-a-t-e-r" meant the wonderful cool something that was flowing over my hand"<br  />
+</p>
+
+<p>
+Most of us don't think of the notion of water as abstract, but it's just a matter of experience. 
+</p>
+
+<p>
+SO&#x2026; It didn't occur to me that I need to copy linux outputs to the clipboard, until I found out about xclip (keep your comments about the long intro to yourself, by the way&#x2026;). Now that I know about it, I also care about cases where I want the trailing '\n', and cases where I don't.
+</p>
+
+<p>
+Here are my aliases for linux:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="linenr">1: </span><span style="color: #483d8b;">alias</span> <span style="color: #a0522d;">xc</span>=<span style="color: #8b2252;">'xclip -selection clipboard'</span>
+<span class="linenr">2: </span><span style="color: #483d8b;">alias</span> <span style="color: #a0522d;">xcn</span>=<span style="color: #8b2252;">'perl -ne "chomp();print" |xclip -selection clipboard'</span>
+</pre>
+</div>
+
+<p>
+And here they are for mac osx : 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="linenr">1: </span><span style="color: #483d8b;">alias</span> <span style="color: #a0522d;">xc</span>=<span style="color: #8b2252;">"pbcopy"</span>
+<span class="linenr">2: </span><span style="color: #483d8b;">alias</span> <span style="color: #a0522d;">xcn</span>=<span style="color: #8b2252;">"tr -d '\n' | pbcopy"</span>
+</pre>
+</div>
+
+<p>
+The two approaches for removing the newlines work equivalently on both systems.
+</p>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/19/linux-copy-to-clipboard.org">org-mode source</a><p>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>

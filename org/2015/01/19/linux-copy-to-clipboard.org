@@ -1,0 +1,33 @@
+* linux copy to clipboard 
+  :PROPERTIES:
+  :categories: alias,linux,osx,workflow
+  :date:     2015/01/19 00:08:45
+  :updated:  2015/01/19 00:10:05
+  :END:
+
+Is it true that you have to give names to things to really appreciate and understand them? It's really one of these questions that are just too gross for answering a straight yes or no. 
+
+When you think of this question, math comes to mind. I have little doubt that you must internalize dozens of definitions and the relations between them before you master differential geometry, or group theory. But do you need language to understand subtraction? The answer is - [[http://ocw.mit.edu/courses/brain-and-cognitive-sciences/9-00-introduction-to-psychology-fall-2004/lecture-notes/9-cognitive-development-how-do-children-think/][NO]]. Babies do it intuitively. So there is some border beyond which things become too abstract, and we've got to give them names. But isn't my answer a tautology? Isn't "abstract" just the name of this phenomena of having to name something in order to understand it? Sure enough, if we were not so used to giving names to everything, we would have found lots of things "abstract". Helen Keller [[http://digital.library.upenn.edu/women/keller/life/life.html][writes]] :
+
+#+BEGIN_VERSE
+ "my teacher placed my hand under the spout. As the cool stream gushed over one hand she spelled into the other the word water, first slowly, then rapidly. I stood still, my whole attention fixed upon the motions of her fingers. Suddenly I felt a misty consciousness as of something forgotten - a thrill of returning thought; and somehow the mystery of language was revealed to me. I knew then that "w-a-t-e-r" meant the wonderful cool something that was flowing over my hand"
+#+END_VERSE
+
+Most of us don't think of the notion of water as abstract, but it's just a matter of experience. 
+
+SO... It didn't occur to me that I need to copy linux outputs to the clipboard, until I found out about xclip (keep your comments about the long intro to yourself, by the way...). Now that I know about it, I also care about cases where I want the trailing '\n', and cases where I don't.
+
+Here are my aliases for linux:
+#+BEGIN_SRC sh -n :exports code :eval never-export :session
+alias xc='xclip -selection clipboard'
+alias xcn='perl -ne "chomp();print" |xclip -selection clipboard'
+#+END_SRC
+
+And here they are for mac osx : 
+#+BEGIN_SRC sh -n :exports code :eval never-export :session
+alias xc="pbcopy"
+alias xcn="tr -d '\n' | pbcopy"
+#+END_SRC
+
+The two approaches for removing the newlines work equivalently on both systems.
+ 
