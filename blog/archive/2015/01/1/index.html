@@ -97,6 +97,126 @@
 <article>
   <div class="blog_post">
     <header>
+      <div id="the-best-of-all-worlds-disp-+-sprintf"></div>
+      <h2 class="blog_post_title"><a href="/blog/20150125/2015-01-25-the-best-of-all-worlds-disp-+-sprintf-html/" rel="bookmark" title="Permanent Link to The best of all worlds - disp + sprintf">The best of all worlds - disp + sprintf</a></h2>
+      <p><small><span class="blog_post_date">January 25, 2015 at 08:30 PM</span> | categories: 
+        <span class="blog_post_categories"><a href='/blog/category/matlab/'>matlab</a>, <a href='/blog/category/octave/'>octave</a></span>
+        | <a href="http://avigdev.github.io/blog/20150125/2015-01-25-the-best-of-all-worlds-disp-+-sprintf-html#disqus_thread">View Comments</a>
+      </small></p>
+    </header>
+    <div class="post_prose">
+      
+
+
+
+
+<p>
+Going through loops you would often find yourself writing something ugly like : 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-matlab"><span class="linenr">1: </span>n=10;
+<span class="linenr">2: </span>is_verbose=true;
+<span class="linenr">3: </span><span style="color: #932092;">if</span>(is_verbose)
+<span class="linenr">4: </span> <span style="color: #932092;">for</span> <span style="color: #a0522d;">i</span>=<span style="color: #008b8b;">1:n</span>
+<span class="linenr">5: </span>  disp(sprintf(<span style="color: #8b2252;">'DBG: %d/%d'</span>,<span style="color: #008b8b;">i</span>,n));
+<span class="linenr">6: </span>  <span style="color: #b22222;">% some interesting stuff here....</span>
+<span class="linenr">7: </span> <span style="color: #932092;">end</span>
+<span class="linenr">8: </span><span style="color: #932092;">end</span>
+</pre>
+</div>
+
+<pre class="example">
+&gt;&gt; &gt;&gt; DBG: 1/10
+DBG: 2/10
+DBG: 3/10
+DBG: 4/10
+DBG: 5/10
+DBG: 6/10
+DBG: 7/10
+DBG: 8/10
+DBG: 9/10
+DBG: 10/10
+&gt;&gt;
+</pre>
+
+<p>
+While, if you had disp and sprintf combined, you could have written a beautiful code like this : 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-matlab"><span class="linenr">1: </span>is_verbose=true;
+<span class="linenr">2: </span>n=10;
+<span class="linenr">3: </span><span style="color: #932092;">for</span> <span style="color: #a0522d;">i</span>=<span style="color: #008b8b;">1:n</span>
+<span class="linenr">4: </span> verbose_disp(is_verbose,<span style="color: #8b2252;">'DBG: %d/%d'</span>,<span style="color: #008b8b;">i</span>,n);
+<span class="linenr">5: </span> <span style="color: #b22222;">% some interesting stuff here....</span>
+<span class="linenr">6: </span><span style="color: #932092;">end</span>
+</pre>
+</div>
+
+<p>
+Thanks to Matlab's <i>varargin</i> this little gem could be very close to <i>sprintf</i> in syntax. 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-matlab"><span class="linenr"> 1: </span><span style="color: #b22222;">% purpose display only if the script is in verbose mode + include sprintf </span>
+<span class="linenr"> 2: </span><span style="color: #b22222;">% capabilities in disp.</span>
+<span class="linenr"> 3: </span><span style="color: #b22222;">% syntax : verbose_disp(flag_verb,form,[variable_list])</span>
+<span class="linenr"> 4: </span><span style="color: #b22222;">% flag_verb=1 if you want to display, and 0 if you don't want to</span>
+<span class="linenr"> 5: </span><span style="color: #b22222;">% display</span>
+<span class="linenr"> 6: </span><span style="color: #b22222;">% form = string including formatting directions for sprintf </span>
+<span class="linenr"> 7: </span><span style="color: #b22222;">% variable_list = more parameters which include variables fitting</span>
+<span class="linenr"> 8: </span><span style="color: #b22222;">% into the format "form".</span>
+<span class="linenr"> 9: </span><span style="color: #b22222;">%</span>
+<span class="linenr">10: </span><span style="color: #b22222;">% see also : disp, sprintf</span>
+<span class="linenr">11: </span>
+<span class="linenr">12: </span><span style="color: #b22222;">% Copyright 2013 Avi Gozolchiani (http://tiny.cc/avigoz)</span>
+<span class="linenr">13: </span><span style="color: #b22222;">% This program is free software: you can redistribute it and/or modify</span>
+<span class="linenr">14: </span><span style="color: #b22222;">% it under the terms of the GNU General Public License as published by</span>
+<span class="linenr">15: </span><span style="color: #b22222;">% the Free Software Foundation, either version 3 of the License, or</span>
+<span class="linenr">16: </span><span style="color: #b22222;">% (at your option) any later version.</span>
+<span class="linenr">17: </span><span style="color: #b22222;">%</span>
+<span class="linenr">18: </span><span style="color: #b22222;">% This program is distributed in the hope that it will be useful,</span>
+<span class="linenr">19: </span><span style="color: #b22222;">% but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="linenr">20: </span><span style="color: #b22222;">% </span><span style="color: #008b8b;">MERCHANTABILITY </span><span style="color: #b22222;">or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="linenr">21: </span><span style="color: #b22222;">% </span><span style="color: #008b8b;">GNU </span><span style="color: #b22222;">General Public License for more details.</span>
+<span class="linenr">22: </span><span style="color: #b22222;">%</span>
+<span class="linenr">23: </span><span style="color: #b22222;">% You should have received a copy of the GNU General Public License</span>
+<span class="linenr">24: </span><span style="color: #b22222;">% along with this program.  If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</span>
+<span class="linenr">25: </span>
+<span class="linenr">26: </span><span style="color: #b22222;">% $Log$</span>
+<span class="linenr">27: </span><span style="color: #932092;">function</span> <span style="color: #0000ff;">verbose_disp</span>(<span style="color: #a0522d;">flag_verb</span>,<span style="color: #a0522d;">form</span>,<span style="color: #a0522d;">varargin</span>)
+<span class="linenr">28: </span><span style="color: #b22222;">% little input checking</span>
+<span class="linenr">29: </span><span style="color: #932092;">if</span>(nargin<span style="color: #228b22;">&lt;</span>2)
+<span class="linenr">30: </span>    error(<span style="color: #8b2252;">'verbose_disp : wrong number of arguments'</span>);
+<span class="linenr">31: </span><span style="color: #932092;">end</span>                                     <span style="color: #b22222;">% if(nargin&lt;2)</span>
+<span class="linenr">32: </span><span style="color: #932092;">if</span>(<span style="color: #228b22;">~</span>ischar(form))
+<span class="linenr">33: </span>    error(<span style="color: #8b2252;">'second argument should be a character string'</span>);
+<span class="linenr">34: </span><span style="color: #932092;">end</span>                                 <span style="color: #b22222;">% if(~ischar(form))</span>
+<span class="linenr">35: </span><span style="color: #b22222;">% if mode=verbose display the formatted string</span>
+<span class="linenr">36: </span><span style="color: #932092;">if</span>(flag_verb)
+<span class="linenr">37: </span>  s=sprintf(form,varargin{<span style="color: #228b22;">:</span>});
+<span class="linenr">38: </span>  disp(s);
+<span class="linenr">39: </span><span style="color: #932092;">end</span> <span style="color: #b22222;">% if(flag_verb)</span>
+</pre>
+</div>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/25/The-best-of-all-worlds---disp-+-sprintf.org">org-mode source</a><p>
+
+    </div>
+  </div>
+</article>
+
+
+
+  <div class="after_post"><a href="http://avigdev.github.io/blog/20150125/2015-01-25-the-best-of-all-worlds-disp-+-sprintf-html#disqus_thread">Read and Post Comments</a></div>
+  <hr class="interblog" />
+  
+
+
+
+<article>
+  <div class="blog_post">
+    <header>
       <div id="linux-copy-to-clipboard"></div>
       <h2 class="blog_post_title"><a href="/blog/20150119/2015-01-19-linux-copy-to-clipboard-html/" rel="bookmark" title="Permanent Link to linux copy to clipboard">linux copy to clipboard</a></h2>
       <p><small><span class="blog_post_date">January 19, 2015 at 12:08 AM</span> | categories: 
@@ -285,152 +405,6 @@ The weird mingling of figs and bibliography which is the default setting in LaTe
 
   <div class="after_post"><a href="http://avigdev.github.io/blog/20150114/2015-01-14-gmt-s-mysterious-page-dimension-html#disqus_thread">Read and Post Comments</a></div>
   <hr class="interblog" />
-  
-
-
-
-<article>
-  <div class="blog_post">
-    <header>
-      <div id="matlab-discrete-colorbar"></div>
-      <h2 class="blog_post_title"><a href="/blog/20150112/2015-01-12-matlab-discrete-colorbar-html/" rel="bookmark" title="Permanent Link to matlab discrete colorbar">matlab discrete colorbar</a></h2>
-      <p><small><span class="blog_post_date">January 12, 2015 at 07:15 AM</span> | categories: 
-        <span class="blog_post_categories"><a href='/blog/category/matlab/'>matlab</a>, <a href='/blog/category/octave/'>octave</a></span>
-        | <a href="http://avigdev.github.io/blog/20150112/2015-01-12-matlab-discrete-colorbar-html#disqus_thread">View Comments</a>
-      </small></p>
-    </header>
-    <div class="post_prose">
-      
-
-
-
-<p>
-You shouldn't use the default "smooth" gradients of imagesc. The aesthetic side set aside, imagesc gives the wrong impression of an infinite resolution. While we are at it, let's get rid of the default nonesense y-axis opposite direction, and enable masking (whoaa. crazy.). 
-</p>
-
-<p>
-verbose_disp is my version of disp/sprintf, combining the goods of both of them. You can safely remove these lines, or make up your own version of "verbosity" function. 
-</p>
-
-<div class="org-src-container">
-
-<pre class="src src-matlab"><span class="linenr">  1: </span><span style="color: #b22222;">% purpose : interface for imagesc for producing good </span>
-<span class="linenr">  2: </span><span style="color: #b22222;">% heat maps</span>
-<span class="linenr">  3: </span><span style="color: #b22222;">% syntax : myimagesc(x,y,w,minval,maxval,bin,[mask],[flag_verbose])</span>
-<span class="linenr">  4: </span><span style="color: #b22222;">% x,y = vectors, representing the range of x and y axis.</span>
-<span class="linenr">  5: </span><span style="color: #b22222;">% w = typically, a  field which depends on both x and y.</span>
-<span class="linenr">  6: </span><span style="color: #b22222;">% minval, maxval = first and last values of w  which are color coded.</span>
-<span class="linenr">  7: </span><span style="color: #b22222;">% values of w which go beyond minval and maxval will be represented by the</span>
-<span class="linenr">  8: </span><span style="color: #b22222;">% same colorcoding like minval and maxval</span>
-<span class="linenr">  9: </span><span style="color: #b22222;">% bin - an interval of values of w which has a unique color coding</span>
-<span class="linenr"> 10: </span><span style="color: #b22222;">% mask - binary matrix for pixels that myimagesc grays out</span>
-<span class="linenr"> 11: </span><span style="color: #b22222;">% flag_verbose - work in verbose mode</span>
-<span class="linenr"> 12: </span><span style="color: #b22222;">% </span>
-<span class="linenr"> 13: </span><span style="color: #b22222;">% dependencies : verbose_disp</span>
-<span class="linenr"> 14: </span><span style="color: #b22222;">% </span>
-<span class="linenr"> 15: </span><span style="color: #b22222;">% see also: imagesc</span>
-<span class="linenr"> 16: </span>
-<span class="linenr"> 17: </span>
-<span class="linenr"> 18: </span><span style="color: #b22222;">% Copyright 2012 Avi Gozolchiani (http://tiny.cc/avigoz)</span>
-<span class="linenr"> 19: </span><span style="color: #b22222;">% This program is free software: you can redistribute it and/or modify</span>
-<span class="linenr"> 20: </span><span style="color: #b22222;">% it under the terms of the GNU General Public License as published by</span>
-<span class="linenr"> 21: </span><span style="color: #b22222;">% the Free Software Foundation, either version 3 of the License, or</span>
-<span class="linenr"> 22: </span><span style="color: #b22222;">% (at your option) any later version.</span>
-<span class="linenr"> 23: </span><span style="color: #b22222;">%</span>
-<span class="linenr"> 24: </span><span style="color: #b22222;">% This program is distributed in the hope that it will be useful,</span>
-<span class="linenr"> 25: </span><span style="color: #b22222;">% but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class="linenr"> 26: </span><span style="color: #b22222;">% </span><span style="color: #008b8b;">MERCHANTABILITY </span><span style="color: #b22222;">or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
-<span class="linenr"> 27: </span><span style="color: #b22222;">% </span><span style="color: #008b8b;">GNU </span><span style="color: #b22222;">General Public License for more details.</span>
-<span class="linenr"> 28: </span><span style="color: #b22222;">%</span>
-<span class="linenr"> 29: </span><span style="color: #b22222;">% You should have received a copy of the GNU General Public License</span>
-<span class="linenr"> 30: </span><span style="color: #b22222;">% along with this program.  If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</span>
-<span class="linenr"> 31: </span>
-<span class="linenr"> 32: </span><span style="color: #b22222;">% $Log$</span>
-<span class="linenr"> 33: </span><span style="color: #932092;">function</span> <span style="color: #a0522d;">h</span>=<span style="color: #0000ff;">myimagesc</span>(<span style="color: #a0522d;">x</span>,<span style="color: #a0522d;">y</span>,<span style="color: #a0522d;">w</span>,<span style="color: #a0522d;">minval</span>,<span style="color: #a0522d;">maxval</span>,<span style="color: #a0522d;">bin</span>,<span style="color: #a0522d;">varargin</span>)
-<span class="linenr"> 34: </span><span style="color: #b22222;">%test case</span>
-<span class="linenr"> 35: </span><span style="color: #b22222;">% bin=1e4;minval=-8e4;maxval=8e4;</span>
-<span class="linenr"> 36: </span><span style="color: #b22222;">% x=0.1:0.1:100;</span>
-<span class="linenr"> 37: </span><span style="color: #b22222;">% y=0:200;</span>
-<span class="linenr"> 38: </span><span style="color: #b22222;">% [xx,yy]=ndgrid(x,y);</span>
-<span class="linenr"> 39: </span><span style="color: #b22222;">% w=sin(xx).*xx.^2.*exp(0.01*yy);</span>
-<span class="linenr"> 40: </span><span style="color: #b22222;">% w(:,195:198)=-70000;</span>
-<span class="linenr"> 41: </span><span style="color: #b22222;">% w(15:18,:)=70000;</span>
-<span class="linenr"> 42: </span><span style="color: #b22222;">% myimagesc(x,y,w,minval,maxval,bin)</span>
-<span class="linenr"> 43: </span>accur=1e<span style="color: #228b22;">-</span>6; <span style="color: #b22222;">% to avoid roundoff problems when interpolating the colormap</span>
-<span class="linenr"> 44: </span><span style="color: #b22222; font-weight: bold; text-decoration: overline;">%% check the inputs</span>
-<span class="linenr"> 45: </span><span style="color: #932092;">if</span>(<span style="color: #228b22;">~</span>isempty(nargchk(6,8,nargin)))
-<span class="linenr"> 46: </span>  error(<span style="color: #8b2252;">'esyntax : myimagesc(x,y,w,minval,maxval,bin,[mask],[flag_verbose])'</span>);
-<span class="linenr"> 47: </span><span style="color: #932092;">end</span>
-<span class="linenr"> 48: </span>nxx=length(x);
-<span class="linenr"> 49: </span>nyy=length(y);
-<span class="linenr"> 50: </span>[nxw,nyw]=size(w);
-<span class="linenr"> 51: </span><span style="color: #932092;">if</span>(nxx<span style="color: #228b22;">~=</span>nxw <span style="color: #228b22;">||</span> nyy<span style="color: #228b22;">~=</span>nyw)
-<span class="linenr"> 52: </span>    error(<span style="color: #8b2252;">'dimension mismatch'</span>);
-<span class="linenr"> 53: </span><span style="color: #932092;">end</span> <span style="color: #b22222;">% if(nxx~=nxw || nyy~=nyw)</span>
-<span class="linenr"> 54: </span><span style="color: #932092;">if</span>(minval<span style="color: #228b22;">&gt;=</span>maxval)
-<span class="linenr"> 55: </span>    error(<span style="color: #8b2252;">'minval&gt;=maxval'</span>);
-<span class="linenr"> 56: </span><span style="color: #932092;">end</span> <span style="color: #b22222;">% if(minval&gt;=maxval)</span>
-<span class="linenr"> 57: </span><span style="color: #932092;">if</span>(bin<span style="color: #228b22;">&gt;=</span>(maxval<span style="color: #228b22;">-</span>minval)<span style="color: #228b22;">/</span>2.0)
-<span class="linenr"> 58: </span>    error(<span style="color: #8b2252;">'color range spans less than two colors'</span>);
-<span class="linenr"> 59: </span><span style="color: #932092;">end</span> <span style="color: #b22222;">% if(bin&gt;=(maxval-minval)/2.0)</span>
-<span class="linenr"> 60: </span>mask=zeros(nxx,nyy);
-<span class="linenr"> 61: </span>flag_mask=false;
-<span class="linenr"> 62: </span><span style="color: #932092;">if</span>(nargin<span style="color: #228b22;">&gt;</span>6)
-<span class="linenr"> 63: </span>    flag_mask=true;
-<span class="linenr"> 64: </span>    mask=varargin{1};
-<span class="linenr"> 65: </span>    <span style="color: #932092;">if</span>(<span style="color: #228b22;">~</span>all([nxx,nyy]<span style="color: #228b22;">==</span>size(mask)))
-<span class="linenr"> 66: </span>        error(<span style="color: #8b2252;">'mask dimension does not match the other matrices'</span>);
-<span class="linenr"> 67: </span>    <span style="color: #932092;">end</span> <span style="color: #b22222;">% if(~all([nxx,nyy]==size(mask)))</span>
-<span class="linenr"> 68: </span><span style="color: #932092;">end</span> <span style="color: #b22222;">% if(nargin&gt;6)</span>
-<span class="linenr"> 69: </span><span style="color: #b22222; font-weight: bold; text-decoration: overline;">%% parameters</span>
-<span class="linenr"> 70: </span>flag_verbos=false;
-<span class="linenr"> 71: </span><span style="color: #932092;">if</span>(nargin<span style="color: #228b22;">==</span>8)
-<span class="linenr"> 72: </span>    flag_verbos=varargin{2};
-<span class="linenr"> 73: </span><span style="color: #932092;">end</span> <span style="color: #b22222;">% if(nargin==8)</span>
-<span class="linenr"> 74: </span>accur=1e<span style="color: #228b22;">-</span>5;
-<span class="linenr"> 75: </span><span style="color: #b22222; font-weight: bold; text-decoration: overline;">%% prepare colormap</span>
-<span class="linenr"> 76: </span>verbose_disp(flag_verbos,<span style="color: #8b2252;">'myimagesc : prepare colormap'</span>);
-<span class="linenr"> 77: </span>colormap(<span style="color: #8b2252;">'default'</span>);
-<span class="linenr"> 78: </span>cmap=colormap;
-<span class="linenr"> 79: </span>n_origbins=size(cmap,1);
-<span class="linenr"> 80: </span>W_bins=minval<span style="color: #228b22;">:</span>bin<span style="color: #228b22;">:</span>maxval;
-<span class="linenr"> 81: </span>W_bins_ext=(minval<span style="color: #228b22;">-</span>bin<span style="color: #228b22;">/</span>2)<span style="color: #228b22;">:</span>bin<span style="color: #228b22;">:</span>(maxval<span style="color: #228b22;">+</span>(1<span style="color: #228b22;">+</span>accur)<span style="color: #228b22;">*</span>bin<span style="color: #228b22;">/</span>2);
-<span class="linenr"> 82: </span>cscal=(minval<span style="color: #228b22;">:</span>(maxval<span style="color: #228b22;">-</span>minval)<span style="color: #228b22;">/</span>(n_origbins<span style="color: #228b22;">-</span>1)<span style="color: #228b22;">:</span>maxval)';
-<span class="linenr"> 83: </span>newcmap=interp1(cscal,cmap,W_bins);
-<span class="linenr"> 84: </span>newcmap=fix((newcmap<span style="color: #228b22;">-</span>0.5)<span style="color: #228b22;">/</span>accur<span style="color: #228b22;">-</span>sign(newcmap))<span style="color: #228b22;">*</span>accur<span style="color: #228b22;">+</span>0.5; <span style="color: #b22222;">%take care that we don't get out of the [0,1] range</span>
-<span class="linenr"> 85: </span>colormap(newcmap);
-<span class="linenr"> 86: </span><span style="color: #b22222; font-weight: bold; text-decoration: overline;">%% plot the heat map</span>
-<span class="linenr"> 87: </span>verbose_disp(flag_verbos,<span style="color: #8b2252;">'myimagesc : plot the heat map'</span>);
-<span class="linenr"> 88: </span>h=imagesc(x,y,w',W_bins_ext([1 length(W_bins_ext)]));hh=colorbar;grid on;
-<span class="linenr"> 89: </span><span style="color: #228b22;">set</span>(<span style="color: #a0522d;">hh</span>,<span style="color: #8b2252;">'ytick'</span>,W_bins);
-<span class="linenr"> 90: </span><span style="color: #b22222; font-weight: bold; text-decoration: overline;">%% plot the mask, if necessary</span>
-<span class="linenr"> 91: </span>verbose_disp(flag_verbos,<span style="color: #8b2252;">'myimagesc : plot the mask, if necessary'</span>);
-<span class="linenr"> 92: </span><span style="color: #932092;">if</span>(flag_mask)
-<span class="linenr"> 93: </span>    <span style="color: #b22222;">% see</span>
-<span class="linenr"> 94: </span>    <span style="color: #b22222;">% http://blogs.mathworks.com/steve/2009/02/18/image-overlay-using-transparency/</span>
-<span class="linenr"> 95: </span>    <span style="color: #b22222;">% for details</span>
-<span class="linenr"> 96: </span>    gray_lev=0.5<span style="color: #228b22;">*</span>ones(size(w')); <span style="color: #b22222;">% gray level for masking</span>
-<span class="linenr"> 97: </span>    hold on;
-<span class="linenr"> 98: </span>    gray=cat(3,gray_lev,gray_lev,gray_lev);
-<span class="linenr"> 99: </span>    hh=imagesc(x,y,gray);
-<span class="linenr">100: </span>    hold off;
-<span class="linenr">101: </span>    <span style="color: #228b22;">set</span>(<span style="color: #a0522d;">hh</span>,<span style="color: #8b2252;">'alphadata'</span>,<span style="color: #228b22;">~</span>mask');
-<span class="linenr">102: </span><span style="color: #932092;">end</span> <span style="color: #b22222;">% if(flag_mask)</span>
-<span class="linenr">103: </span><span style="color: #b22222; font-weight: bold; text-decoration: overline;">%% invert the y-axis</span>
-<span class="linenr">104: </span>verbose_disp(flag_verbos,<span style="color: #8b2252;">'myimagesc : invert the y-axis'</span>);
-<span class="linenr">105: </span><span style="color: #228b22;">set</span>(<span style="color: #a0522d;">gca</span>,<span style="color: #8b2252;">'YDir'</span>,<span style="color: #8b2252;">'normal'</span>);
-</pre>
-</div>
-<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/12/matlab-discrete-colorbar.org">org-mode source</a><p>
-
-    </div>
-  </div>
-</article>
-
-
-
-  <div class="after_post"><a href="http://avigdev.github.io/blog/20150112/2015-01-12-matlab-discrete-colorbar-html#disqus_thread">Read and Post Comments</a></div>
-  <hr class="interblog" />
  <a href="../2">Next Page »</a>
 
           </div>
@@ -450,11 +424,11 @@ verbose_disp is my version of disp/sprintf, combining the goods of both of them.
   <section>
     <h1 class="post_header_gradient theme_font">Latest Posts</h1>
     <ul>
+      <li><a href="/blog/20150125/2015-01-25-the-best-of-all-worlds-disp-+-sprintf-html/">The best of all worlds - disp + sprintf</a></li>
       <li><a href="/blog/20150119/2015-01-19-linux-copy-to-clipboard-html/">linux copy to clipboard</a></li>
       <li><a href="/blog/20150117/2015-01-17-latex-automatic-rotation-html/">latex automatic rotation</a></li>
       <li><a href="/blog/20150115/2015-01-15-latex-please-don-t-mix-bibliography-and-figures-html/">LaTeX - please don't mix bibliography and figures</a></li>
       <li><a href="/blog/20150114/2015-01-14-gmt-s-mysterious-page-dimension-html/">GMT's mysterious page dimension</a></li>
-      <li><a href="/blog/20150112/2015-01-12-matlab-discrete-colorbar-html/">matlab discrete colorbar</a></li>
     </ul>
   </section>
   <section>

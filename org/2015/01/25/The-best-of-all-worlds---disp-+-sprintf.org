@@ -1,0 +1,86 @@
+* The best of all worlds - disp + sprintf 
+  :PROPERTIES:
+  :categories: matlab,octave
+  :date:     2015/01/25 20:30:03
+  :updated:  2015/01/25 20:36:06
+  :END:
+
+Going through loops you would often find yourself writing something ugly like : 
+#+BEGIN_SRC matlab -n :exports both :eval never-export :results output
+n=10;
+is_verbose=true;
+if(is_verbose)
+ for i=1:n
+  disp(sprintf('DBG: %d/%d',i,n));
+  % some interesting stuff here....
+ end
+end
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+>> >> DBG: 1/10
+DBG: 2/10
+DBG: 3/10
+DBG: 4/10
+DBG: 5/10
+DBG: 6/10
+DBG: 7/10
+DBG: 8/10
+DBG: 9/10
+DBG: 10/10
+>> 
+#+end_example
+
+While, if you had disp and sprintf combined, you could have written a beautiful code like this : 
+#+BEGIN_SRC matlab -n :exports both :eval never-export :results output
+is_verbose=true;
+n=10;
+for i=1:n
+ verbose_disp(is_verbose,'DBG: %d/%d',i,n);
+ % some interesting stuff here....
+end
+#+END_SRC
+
+Thanks to Matlab's /varargin/ this little gem could be very close to /sprintf/ in syntax. 
+#+BEGIN_SRC matlab -n
+% purpose display only if the script is in verbose mode + include sprintf 
+% capabilities in disp.
+% syntax : verbose_disp(flag_verb,form,[variable_list])
+% flag_verb=1 if you want to display, and 0 if you don't want to
+% display
+% form = string including formatting directions for sprintf 
+% variable_list = more parameters which include variables fitting
+% into the format "form".
+%
+% see also : disp, sprintf
+
+% Copyright 2013 Avi Gozolchiani (http://tiny.cc/avigoz)
+% This program is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+% $Log$
+function verbose_disp(flag_verb,form,varargin)
+% little input checking
+if(nargin<2)
+    error('verbose_disp : wrong number of arguments');
+end                                     % if(nargin<2)
+if(~ischar(form))
+    error('second argument should be a character string');
+end                                 % if(~ischar(form))
+% if mode=verbose display the formatted string
+if(flag_verb)
+  s=sprintf(form,varargin{:});
+  disp(s);
+end % if(flag_verb)
+#+END_SRC
