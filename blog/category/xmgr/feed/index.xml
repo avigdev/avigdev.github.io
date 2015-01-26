@@ -10,10 +10,83 @@
     <title>Avi Gozolchiani אבי גוזולצני</title>
     <link>http://avigdev.github.io/blog</link>
     <description>Environmental Physics at Ben Gurion University</description>
-    <pubDate>Sun, 25 Jan 2015 18:36:10 GMT</pubDate>
+    <pubDate>Mon, 26 Jan 2015 22:33:43 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>Xmgr annotations</title>
+      <link>http://avigdev.github.io/blog/20150127/2015-01-27-xmgr-annotations-html</link>
+      <pubDate>Tue, 27 Jan 2015 00:32:07 IST</pubDate>
+      <category><![CDATA[xmgr]]></category>
+      <guid isPermaLink="false">2YkhVWPDoUjtAoG71pdRXyBOrxs=</guid>
+      <description>Xmgr annotations</description>
+      <content:encoded><![CDATA[
+
+
+
+<p>
+Frankly, I think that <a href="http://plasma-gate.weizmann.ac.il/Grace/">xmgr</a> is obsolete. It had some grace (pun intended) 10yrs ago, and it still produces very consistent graphs. But it smells like an old cheese, it lacks latex/regexps/modern scripting language/importing of modern binary formats/2D heat maps. Nevertheless, if I happen to have an ascii data file around, I am still tempted to launch it once in every while. <a href="http://gmt.soest.hawaii.edu">GMT</a> will take you further, but xmgr will take you faster (once you get the hang of its awkward arrangement of menus).
+</p>
+
+<p>
+<a href="http://blog.louic.nl/?p=249">This guy</a> summarizes for us some of the very basic subtleties of xmgr's gui. The most important for me are related to special chars:
+</p>
+
+
+<p>
+The old way of including special chars/fonts :
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">What</th>
+<th scope="col" class="left">example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">superscript</td>
+<td class="left">x&sect;2\N</td>
+</tr>
+
+<tr>
+<td class="left">Subscript</td>
+<td class="left">3\s10\N</td>
+</tr>
+
+<tr>
+<td class="left">Greek letters (e.g. theta)</td>
+<td class="left">\f{Symbol}q\f{}</td>
+</tr>
+
+<tr>
+<td class="left">Special symbols (e.g. Angstrom symbol)</td>
+<td class="left">\cE\C</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+The new method to insert special characters in xmgrace is:
+</p>
+
+<p>
+Press ctrl-e while positioned in a text-edit field to bring up the font dialog box, and select whatever you want.
+</p>
+
+<p>
+Thanks <a href="http://blog.louic.nl/">Louic</a> . 
+</p>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/27/Xmgr-annotations.org">org-mode source</a><p>]]></content:encoded>
+    </item>
     <item>
       <title>matlab subplots packed densely together</title>
       <link>http://avigdev.github.io/blog/20150111/2015-01-11-matlab-subplots-packed-densely-together-html</link>
