@@ -2,7 +2,7 @@
   :PROPERTIES:
   :categories: xmgr
   :date:     2015/01/27 00:32:07
-  :updated:  2015/01/27 00:33:39
+  :updated:  2015/01/27 00:40:33
   :END:
 
 Frankly, I think that [[http://plasma-gate.weizmann.ac.il/Grace/][xmgr]] is obsolete. It had some grace (pun intended) 10yrs ago, and it still produces very consistent graphs. But it smells like an old cheese, it lacks latex/regexps/modern scripting language/importing of modern binary formats/2D heat maps. Nevertheless, if I happen to have an ascii data file around, I am still tempted to launch it once in every while. [[http://gmt.soest.hawaii.edu][GMT]] will take you further, but xmgr will take you faster (once you get the hang of its awkward arrangement of menus).
@@ -11,14 +11,14 @@ Frankly, I think that [[http://plasma-gate.weizmann.ac.il/Grace/][xmgr]] is obso
 
 
 The old way of including special chars/fonts :
-|----------------------------------------+-----------------|
-| What                                   | example         |
-|----------------------------------------+-----------------|
-| superscript                            | x\S2\N          |
-| Subscript                              | 3\s10\N         |
-| Greek letters (e.g. theta)             | \f{Symbol}q\f{} |
-| Special symbols (e.g. Angstrom symbol) | \cE\C           |
-|----------------------------------------+-----------------|
+|----------------------------------------+-------------------|
+| What                                   | example           |
+|----------------------------------------+-------------------|
+| superscript                            | =x\S2\N=          |
+| Subscript                              | =3\s10\N=         |
+| Greek letters (e.g. theta)             | =\f{Symbol}q\f{}= |
+| Special symbols (e.g. Angstrom symbol) | =\cE\C=           |
+|----------------------------------------+-------------------|
 
 The new method to insert special characters in xmgrace is:
 
