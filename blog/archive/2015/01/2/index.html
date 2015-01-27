@@ -97,6 +97,47 @@
 <article>
   <div class="blog_post">
     <header>
+      <div id="latex-please-don-t-mix-bibliography-and-figures"></div>
+      <h2 class="blog_post_title"><a href="/blog/20150115/2015-01-15-latex-please-don-t-mix-bibliography-and-figures-html/" rel="bookmark" title="Permanent Link to LaTeX - please don't mix bibliography and figures">LaTeX - please don't mix bibliography and figures</a></h2>
+      <p><small><span class="blog_post_date">January 15, 2015 at 12:03 PM</span> | categories: 
+        <span class="blog_post_categories"><a href='/blog/category/latex/'>latex</a></span>
+        | <a href="http://avigdev.github.io/blog/20150115/2015-01-15-latex-please-don-t-mix-bibliography-and-figures-html#disqus_thread">View Comments</a>
+      </small></p>
+    </header>
+    <div class="post_prose">
+      
+
+
+
+<p>
+The weird mingling of figs and bibliography which is the default setting in LaTeX could be avoided by using the package <a href="http://www.ctan.org/pkg/placeins">"placeins"</a> . You could use several more barriers to make sure that all figures will not leak beyond certain position in text (for example - the end of a section).
+</p>
+<div class="org-src-container">
+
+<pre class="src src-latex"><span class="linenr">1: </span><span style="color: #932092;">\usepackage</span>{<span style="color: #483d8b;">placeins</span>} <span style="color: #b22222;">% in the header</span>
+<span class="linenr">2: </span>....
+<span class="linenr">3: </span><span style="color: #932092;">\FloatBarrier</span> <span style="color: #b22222;">% this forces all figures to be presented before the bibl.</span>
+<span class="linenr">4: </span><span style="color: #932092;">\bibliographystyle</span>{unsrt}
+<span class="linenr">5: </span><span style="color: #932092;">\bibliography</span>{<span style="color: #483d8b;">gyre_ref</span>} <span style="color: #b22222;">% your bibtex file is probably named differently</span>
+</pre>
+</div>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/15/LaTeX---please-don't-mix-bibliography-and-figures.org">org-mode source</a><p>
+
+    </div>
+  </div>
+</article>
+
+
+
+  <div class="after_post"><a href="http://avigdev.github.io/blog/20150115/2015-01-15-latex-please-don-t-mix-bibliography-and-figures-html#disqus_thread">Read and Post Comments</a></div>
+  <hr class="interblog" />
+  
+
+
+
+<article>
+  <div class="blog_post">
+    <header>
       <div id="gmt-s-mysterious-page-dimension"></div>
       <h2 class="blog_post_title"><a href="/blog/20150114/2015-01-14-gmt-s-mysterious-page-dimension-html/" rel="bookmark" title="Permanent Link to GMT's mysterious page dimension">GMT's mysterious page dimension</a></h2>
       <p><small><span class="blog_post_date">January 14, 2015 at 06:40 PM</span> | categories: 
@@ -532,11 +573,11 @@ where <i>LATEXTMPL</i> is an environment variable, telling your script the locat
   <section>
     <h1 class="post_header_gradient theme_font">Latest Posts</h1>
     <ul>
+      <li><a href="/blog/20150127/2015-01-27-consistent-latex-units-in-non-italics-html/">Consistent Latex units in non italics</a></li>
       <li><a href="/blog/20150127/2015-01-27-xmgr-annotations-html/">Xmgr annotations</a></li>
       <li><a href="/blog/20150125/2015-01-25-the-best-of-all-worlds-disp-+-sprintf-html/">The best of all worlds - disp + sprintf</a></li>
       <li><a href="/blog/20150119/2015-01-19-linux-copy-to-clipboard-html/">linux copy to clipboard</a></li>
       <li><a href="/blog/20150117/2015-01-17-latex-automatic-rotation-html/">latex automatic rotation</a></li>
-      <li><a href="/blog/20150115/2015-01-15-latex-please-don-t-mix-bibliography-and-figures-html/">LaTeX - please don't mix bibliography and figures</a></li>
     </ul>
   </section>
   <section>

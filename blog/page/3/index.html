@@ -97,6 +97,46 @@
 <article>
   <div class="blog_post">
     <header>
+      <div id="ncdump-h-for-matlab"></div>
+      <h2 class="blog_post_title"><a href="/blog/20141230/2014-12-30-ncdump-h-for-matlab-html/" rel="bookmark" title="Permanent Link to ncdump -h for matlab">ncdump -h for matlab</a></h2>
+      <p><small><span class="blog_post_date">December 30, 2014 at 01:16 PM</span> | categories: 
+        <span class="blog_post_categories"><a href='/blog/category/matlab/'>matlab</a>, <a href='/blog/category/octave/'>octave</a></span>
+        | <a href="http://avigdev.github.io/blog/20141230/2014-12-30-ncdump-h-for-matlab-html#disqus_thread">View Comments</a>
+      </small></p>
+    </header>
+    <div class="post_prose">
+      
+
+
+
+
+<p>
+I launch "ncdump -h" many times during my workflow. It gives you all the meta-data you need for netcdf files, without the hassle of opening a more serious program like <a href="http://ferret.pmel.noaa.gov/Ferret/">ferret</a> . I figured out that I need the same for mat files. You will need <a href="https://www.gnu.org/software/octave/">octave</a> to make it work&#x2026;
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-matlab"><span class="linenr">1: </span>#<span style="color: #228b22;">!/</span>usr<span style="color: #228b22;">/</span>local<span style="color: #228b22;">/</span>bin<span style="color: #228b22;">/</span>octave <span style="color: #228b22;">-</span>q
+<span class="linenr">2: </span>whos(<span style="color: #8b2252;">'-file'</span>,argv(){1})
+</pre>
+</div>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2014/12/30/ncdump--h-for-matlab.org">org-mode source</a><p>
+
+    </div>
+  </div>
+</article>
+
+
+
+  <div class="after_post"><a href="http://avigdev.github.io/blog/20141230/2014-12-30-ncdump-h-for-matlab-html#disqus_thread">Read and Post Comments</a></div>
+  <hr class="interblog" />
+  
+
+
+
+<article>
+  <div class="blog_post">
+    <header>
       <div id="simplify-slurm-and-qsub"></div>
       <h2 class="blog_post_title"><a href="/blog/20141228/2014-12-28-simplify-slurm-and-qsub-html/" rel="bookmark" title="Permanent Link to simplify slurm and qsub">simplify slurm and qsub</a></h2>
       <p><small><span class="blog_post_date">December 28, 2014 at 06:48 PM</span> | categories: 
@@ -236,11 +276,11 @@ The "-x n03" part in slurm_run.pl was added since our system admin asked me to n
   <section>
     <h1 class="post_header_gradient theme_font">Latest Posts</h1>
     <ul>
+      <li><a href="/blog/20150127/2015-01-27-consistent-latex-units-in-non-italics-html/">Consistent Latex units in non italics</a></li>
       <li><a href="/blog/20150127/2015-01-27-xmgr-annotations-html/">Xmgr annotations</a></li>
       <li><a href="/blog/20150125/2015-01-25-the-best-of-all-worlds-disp-+-sprintf-html/">The best of all worlds - disp + sprintf</a></li>
       <li><a href="/blog/20150119/2015-01-19-linux-copy-to-clipboard-html/">linux copy to clipboard</a></li>
       <li><a href="/blog/20150117/2015-01-17-latex-automatic-rotation-html/">latex automatic rotation</a></li>
-      <li><a href="/blog/20150115/2015-01-15-latex-please-don-t-mix-bibliography-and-figures-html/">LaTeX - please don't mix bibliography and figures</a></li>
     </ul>
   </section>
   <section>

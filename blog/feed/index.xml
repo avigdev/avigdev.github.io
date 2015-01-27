@@ -10,10 +10,62 @@
     <title>Avi Gozolchiani אבי גוזולצני</title>
     <link>http://avigdev.github.io/blog</link>
     <description>Environmental Physics at Ben Gurion University</description>
-    <pubDate>Mon, 26 Jan 2015 22:41:13 GMT</pubDate>
+    <pubDate>Tue, 27 Jan 2015 17:24:50 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>Consistent Latex units in non italics</title>
+      <link>http://avigdev.github.io/blog/20150127/2015-01-27-consistent-latex-units-in-non-italics-html</link>
+      <pubDate>Tue, 27 Jan 2015 19:23:23 IST</pubDate>
+      <category><![CDATA[latex]]></category>
+      <guid isPermaLink="false">EweFAep8SEIgcJoTKBebpuPnX1s=</guid>
+      <description>Consistent Latex units in non italics</description>
+      <content:encoded><![CDATA[
+
+
+
+<p>
+Yet another latex tidbit. Its purpose - remove <i>italics</i> from the units inside math mode.
+</p>
+
+<p>
+in the header :
+</p>
+<div class="org-src-container">
+
+<pre class="src src-latex"><span class="linenr">1: </span><span style="color: #932092;">\newcommand</span>{<span style="color: #0000ff;">\unit</span>}[1]{<span style="color: #932092;">\ensuremath</span>{<span style="color: #932092;">\,</span> <span style="color: #932092;">\mathrm</span>{#1}}}
+</pre>
+</div>
+
+<p>
+in the body :
+</p>
+<div class="org-src-container">
+
+<pre class="src src-latex"><span class="linenr">1: </span><span style="color: #8b2252;">$\tau=0.0257\left[\unit{N\cdot m^</span><span style="color: #8b2252;">{-2}</span><span style="color: #8b2252;">}\right]$</span>
+</pre>
+</div>
+
+<p>
+If you want to take this approach to the very extreme, you could have the units of every var defined in the header : 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-latex"><span class="linenr">1: </span><span style="color: #932092;">\newcommand</span>{<span style="color: #0000ff;">\tauunit</span>}{<span style="color: #932092;">\unit</span>{N}<span style="color: #932092;">\cdot\unit</span>{m}^{-2}}
+</pre>
+</div>
+
+<p>
+And use them consistently without silly unit mistakes inside your manuscript : 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-latex"><span class="linenr">1: </span><span style="color: #8b2252;">$\tau=0.4\tauunit$</span>
+</pre>
+</div>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/27/Consistent-Latex-units-in-non-italics.org">org-mode source</a><p>]]></content:encoded>
+    </item>
     <item>
       <title>Xmgr annotations</title>
       <link>http://avigdev.github.io/blog/20150127/2015-01-27-xmgr-annotations-html</link>
@@ -659,30 +711,6 @@ and substitute your created latex code into the <b>TEXT</b> part, using perl aga
 where <i>LATEXTMPL</i> is an environment variable, telling your script the location of your template. I like templates, and I clutter quite a bit as hidden files in my home directory. Do you do it differently ? 
 </p>
 <p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/1/7/create-a-document-from-your-figures.org">org-mode source</a><p>]]></content:encoded>
-    </item>
-    <item>
-      <title>ncdump -h for matlab</title>
-      <link>http://avigdev.github.io/blog/20141230/2014-12-30-ncdump-h-for-matlab-html</link>
-      <pubDate>Tue, 30 Dec 2014 13:16:00 IST</pubDate>
-      <category><![CDATA[matlab]]></category>
-      <category><![CDATA[octave]]></category>
-      <guid isPermaLink="false">HvingZzj5fUehC5EIezA4xPA6cc=</guid>
-      <description>ncdump -h for matlab</description>
-      <content:encoded><![CDATA[
-
-
-
-<p>
-I launch "ncdump -h" many times during my workflow. It gives you all the meta-data you need for netcdf files, without the hassle of opening a more serious program like <a href="http://ferret.pmel.noaa.gov/Ferret/">ferret</a> . I figured out that I need the same for mat files. You will need <a href="https://www.gnu.org/software/octave/">octave</a> to make it work&#x2026;
-</p>
-
-<div class="org-src-container">
-
-<pre class="src src-matlab"><span class="linenr">1: </span>#<span style="color: #228b22;">!/</span>usr<span style="color: #228b22;">/</span>local<span style="color: #228b22;">/</span>bin<span style="color: #228b22;">/</span>octave <span style="color: #228b22;">-</span>q
-<span class="linenr">2: </span>whos(<span style="color: #8b2252;">'-file'</span>,argv(){1})
-</pre>
-</div>
-<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2014/12/30/ncdump--h-for-matlab.org">org-mode source</a><p>]]></content:encoded>
     </item>
   </channel>
 </rss>

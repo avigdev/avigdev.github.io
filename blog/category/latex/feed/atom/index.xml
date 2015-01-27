@@ -7,12 +7,69 @@
   <title type="text">Avi Gozolchiani אבי גוזולצני</title>
   <subtitle type="text">Environmental Physics at Ben Gurion University</subtitle>
 
-  <updated>2015-01-26T22:41:13Z</updated>
+  <updated>2015-01-27T17:24:50Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://avigdev.github.io/blog" />
   <id>http://avigdev.github.io/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://avigdev.github.io/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://avigdev.github.io/blog</uri>
+    </author>
+    <title type="html"><![CDATA[Consistent Latex units in non italics]]></title>
+    <link rel="alternate" type="text/html" href="http://avigdev.github.io/blog/20150127/2015-01-27-consistent-latex-units-in-non-italics-html" />
+    <id>http://avigdev.github.io/blog/20150127/2015-01-27-consistent-latex-units-in-non-italics-html</id>
+    <updated>2015-01-27T19:24:35Z</updated>
+    <published>2015-01-27T19:23:23Z</published>
+    <category scheme="http://avigdev.github.io/blog" term="latex" />
+    <summary type="html"><![CDATA[Consistent Latex units in non italics]]></summary>
+    <content type="html" xml:base="http://avigdev.github.io/blog/20150127/2015-01-27-consistent-latex-units-in-non-italics-html"><![CDATA[
+
+
+
+<p>
+Yet another latex tidbit. Its purpose - remove <i>italics</i> from the units inside math mode.
+</p>
+
+<p>
+in the header :
+</p>
+<div class="org-src-container">
+
+<pre class="src src-latex"><span class="linenr">1: </span><span style="color: #932092;">\newcommand</span>{<span style="color: #0000ff;">\unit</span>}[1]{<span style="color: #932092;">\ensuremath</span>{<span style="color: #932092;">\,</span> <span style="color: #932092;">\mathrm</span>{#1}}}
+</pre>
+</div>
+
+<p>
+in the body :
+</p>
+<div class="org-src-container">
+
+<pre class="src src-latex"><span class="linenr">1: </span><span style="color: #8b2252;">$\tau=0.0257\left[\unit{N\cdot m^</span><span style="color: #8b2252;">{-2}</span><span style="color: #8b2252;">}\right]$</span>
+</pre>
+</div>
+
+<p>
+If you want to take this approach to the very extreme, you could have the units of every var defined in the header : 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-latex"><span class="linenr">1: </span><span style="color: #932092;">\newcommand</span>{<span style="color: #0000ff;">\tauunit</span>}{<span style="color: #932092;">\unit</span>{N}<span style="color: #932092;">\cdot\unit</span>{m}^{-2}}
+</pre>
+</div>
+
+<p>
+And use them consistently without silly unit mistakes inside your manuscript : 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-latex"><span class="linenr">1: </span><span style="color: #8b2252;">$\tau=0.4\tauunit$</span>
+</pre>
+</div>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/27/Consistent-Latex-units-in-non-italics.org">org-mode source</a><p>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>

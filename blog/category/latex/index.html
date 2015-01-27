@@ -97,6 +97,75 @@
 <article>
   <div class="blog_post">
     <header>
+      <div id="consistent-latex-units-in-non-italics"></div>
+      <h2 class="blog_post_title"><a href="/blog/20150127/2015-01-27-consistent-latex-units-in-non-italics-html/" rel="bookmark" title="Permanent Link to Consistent Latex units in non italics">Consistent Latex units in non italics</a></h2>
+      <p><small><span class="blog_post_date">January 27, 2015 at 07:23 PM</span> | categories: 
+        <span class="blog_post_categories"><a href='/blog/category/latex/'>latex</a></span>
+        | <a href="http://avigdev.github.io/blog/20150127/2015-01-27-consistent-latex-units-in-non-italics-html#disqus_thread">View Comments</a>
+      </small></p>
+    </header>
+    <div class="post_prose">
+      
+
+
+
+
+<p>
+Yet another latex tidbit. Its purpose - remove <i>italics</i> from the units inside math mode.
+</p>
+
+<p>
+in the header :
+</p>
+<div class="org-src-container">
+
+<pre class="src src-latex"><span class="linenr">1: </span><span style="color: #932092;">\newcommand</span>{<span style="color: #0000ff;">\unit</span>}[1]{<span style="color: #932092;">\ensuremath</span>{<span style="color: #932092;">\,</span> <span style="color: #932092;">\mathrm</span>{#1}}}
+</pre>
+</div>
+
+<p>
+in the body :
+</p>
+<div class="org-src-container">
+
+<pre class="src src-latex"><span class="linenr">1: </span><span style="color: #8b2252;">$\tau=0.0257\left[\unit{N\cdot m^</span><span style="color: #8b2252;">{-2}</span><span style="color: #8b2252;">}\right]$</span>
+</pre>
+</div>
+
+<p>
+If you want to take this approach to the very extreme, you could have the units of every var defined in the header : 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-latex"><span class="linenr">1: </span><span style="color: #932092;">\newcommand</span>{<span style="color: #0000ff;">\tauunit</span>}{<span style="color: #932092;">\unit</span>{N}<span style="color: #932092;">\cdot\unit</span>{m}^{-2}}
+</pre>
+</div>
+
+<p>
+And use them consistently without silly unit mistakes inside your manuscript : 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-latex"><span class="linenr">1: </span><span style="color: #8b2252;">$\tau=0.4\tauunit$</span>
+</pre>
+</div>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/27/Consistent-Latex-units-in-non-italics.org">org-mode source</a><p>
+
+    </div>
+  </div>
+</article>
+
+
+
+  <div class="after_post"><a href="http://avigdev.github.io/blog/20150127/2015-01-27-consistent-latex-units-in-non-italics-html#disqus_thread">Read and Post Comments</a></div>
+  <hr class="interblog" />
+  
+
+
+
+<article>
+  <div class="blog_post">
+    <header>
       <div id="latex-automatic-rotation"></div>
       <h2 class="blog_post_title"><a href="/blog/20150117/2015-01-17-latex-automatic-rotation-html/" rel="bookmark" title="Permanent Link to latex automatic rotation">latex automatic rotation</a></h2>
       <p><small><span class="blog_post_date">January 17, 2015 at 05:43 PM</span> | categories: 
@@ -327,11 +396,11 @@ where <i>LATEXTMPL</i> is an environment variable, telling your script the locat
   <section>
     <h1 class="post_header_gradient theme_font">Latest Posts</h1>
     <ul>
+      <li><a href="/blog/20150127/2015-01-27-consistent-latex-units-in-non-italics-html/">Consistent Latex units in non italics</a></li>
       <li><a href="/blog/20150127/2015-01-27-xmgr-annotations-html/">Xmgr annotations</a></li>
       <li><a href="/blog/20150125/2015-01-25-the-best-of-all-worlds-disp-+-sprintf-html/">The best of all worlds - disp + sprintf</a></li>
       <li><a href="/blog/20150119/2015-01-19-linux-copy-to-clipboard-html/">linux copy to clipboard</a></li>
       <li><a href="/blog/20150117/2015-01-17-latex-automatic-rotation-html/">latex automatic rotation</a></li>
-      <li><a href="/blog/20150115/2015-01-15-latex-please-don-t-mix-bibliography-and-figures-html/">LaTeX - please don't mix bibliography and figures</a></li>
     </ul>
   </section>
   <section>

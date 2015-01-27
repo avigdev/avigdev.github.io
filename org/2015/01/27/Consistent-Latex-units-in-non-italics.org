@@ -1,0 +1,28 @@
+* Consistent Latex units in non italics 
+  :PROPERTIES:
+  :categories: latex
+  :date:     2015/01/27 19:23:23
+  :updated:  2015/01/27 19:24:35
+  :END:
+
+Yet another latex tidbit. Its purpose - remove /italics/ from the units inside math mode.
+
+in the header :
+#+BEGIN_SRC latex -n  :exports both :eval never-export :results output
+\newcommand{\unit}[1]{\ensuremath{\, \mathrm{#1}}}
+#+END_SRC
+
+in the body :
+#+BEGIN_SRC latex -n  :exports both :eval never-export :results output
+$\tau=0.0257\left[\unit{N\cdot m^{-2}}\right]$
+#+END_SRC
+
+If you want to take this approach to the very extreme, you could have the units of every var defined in the header : 
+#+BEGIN_SRC latex -n  :exports both :eval never-export :results output
+\newcommand{\tauunit}{\unit{N}\cdot\unit{m}^{-2}}
+#+END_SRC
+
+And use them consistently without silly unit mistakes inside your manuscript : 
+#+BEGIN_SRC latex -n  :exports both :eval never-export :results output
+$\tau=0.4\tauunit$
+#+END_SRC
