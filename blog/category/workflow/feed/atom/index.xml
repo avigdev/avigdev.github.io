@@ -7,12 +7,65 @@
   <title type="text">Avi Gozolchiani אבי גוזולצני</title>
   <subtitle type="text">Environmental Physics at Ben Gurion University</subtitle>
 
-  <updated>2015-01-28T11:21:46Z</updated>
+  <updated>2015-01-28T23:58:41Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://avigdev.github.io/blog" />
   <id>http://avigdev.github.io/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://avigdev.github.io/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://avigdev.github.io/blog</uri>
+    </author>
+    <title type="html"><![CDATA[Screen - unique logs for each run]]></title>
+    <link rel="alternate" type="text/html" href="http://avigdev.github.io/blog/20150129/2015-01-29-screen-unique-logs-for-each-run-html" />
+    <id>http://avigdev.github.io/blog/20150129/2015-01-29-screen-unique-logs-for-each-run-html</id>
+    <updated>2015-01-29T01:58:34Z</updated>
+    <published>2015-01-29T01:58:34Z</published>
+    <category scheme="http://avigdev.github.io/blog" term="workflow" />
+    <category scheme="http://avigdev.github.io/blog" term="linux" />
+    <summary type="html"><![CDATA[Screen - unique logs for each run]]></summary>
+    <content type="html" xml:base="http://avigdev.github.io/blog/20150129/2015-01-29-screen-unique-logs-for-each-run-html"><![CDATA[
+
+
+
+<p>
+<a href="https://wiki.archlinux.org/index.php/GNU_Screen">Screen</a> is a little wrap around linux shell that enables detaching and logging out while the session you created is still running. It could be used for lots of different purposes, and running an intensive computation on a remote computer is an obvious example.
+</p>
+
+<p>
+You would normally do :
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="linenr">1: </span>screen -md -L -S session_name your_program
+</pre>
+</div>
+
+<p>
+-md = detach immediately after running, and return to the current terminal session
+-L = create a log file
+-S = create meaningful name for your session
+</p>
+
+<p>
+To check the stat of your sessions you will use:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="linenr">1: </span>screen -ls
+</pre>
+</div>
+
+<p>
+To have different log files with unique names for different sessions, you need to create a <code>~/.screenrc</code> file, with the following single line
+</p>
+<pre class="example">
+logfile screenlog-%Y%m%d-%c:%s
+</pre>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/29/Screen---unique-logs-for-each-run.org">org-mode source</a><p>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>

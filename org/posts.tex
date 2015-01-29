@@ -1,0 +1,1155 @@
+% Created 2015-01-29 Thu 01:57
+\documentclass[11pt]{article}
+
+\usepackage{minted}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\usepackage[backend=bibtex,sorting=none]{biblatex}
+\addbibresource{chi_ref.bib}  %% point at your bib file
+\author{avigoz}
+\date{\today}
+\title{posts}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs 24.4.1 (Org mode 8.2.10)}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{Screen - unique logs for each run}
+\label{sec-1}
+
+\href{https://wiki.archlinux.org/index.php/GNU_Screen}{Screen} is a little wrap around linux shell that enables detaching and logging out while the session you created is still running. It could be used for lots of different purposes, and running an intensive computation on a remote computer is an obvious example.
+
+You would normally do :
+\begin{minted}[linenos,firstnumber=1]{sh}
+screen -md -L -S session_name your_program
+\end{minted}
+
+-md = detach immediately after running, and return to the current terminal session
+-L = create a log file
+-S = create meaningful name for your session
+
+To check the stat of your sessions you will :
+\begin{minted}[linenos,firstnumber=1]{sh}
+screen -ls
+\end{minted}
+
+To have different log files with unique names for different sessions, you need to create a \texttt{\textasciitilde{}/.screenrc} file, with the following single line
+\begin{verbatim}
+logfile screenlog-%Y%m%d-%c:%s
+\end{verbatim}
+
+
+
+\section{matlab : regridding unequally spaced sampled field, and plotting an imagesc}
+\label{sec-2}
+
+[x1,y1]=ndgrid(x,y);
+I = TriScatteredInterp(x1(:),y1(:),z(:));  
+x1 = linspace(min(x),max(x),5);     \% Define X-grid
+y1 = linspace(min(y),max(y),5);
+[x1,y1]=ndgrid(x1,y1);
+z1=I(x1,y1);
+myimagesc(x1(1,:),y1(:,1),z1,0.55,0.95,0.05);
+\section{matlab : save a plot in png, eps, and fig formats}
+\label{sec-3}
+\%\% in the parameters section
+prints=struct('suff',\{'png','eps','fig'\},\ldots{}
+              'func',\{@(x) print('-dpng',x),@(x) print('-depsc2',x), @hgsave\});
+n\_printfuncs=length(prints);
+\%\% after the plot commands
+filename='stam.';
+for i\_printfunc=1:n\_printfuncs \% fig,png, and eps files
+    prints(i\_printfunc).func([filename,'.',prints(i\_printfunc).suff]);
+end \% for i\_printfunc=1:n\_printfuncs
+
+this is now incorporated in 
+/home/avigoz/Dropbox/oct\_scripts/plotting/savefigs.m
+\section{matlab general slicing syntax :}
+\label{sec-4}
+
+idx.type='()';                  \% indices structure
+idx.subs=\{':',':',':'\};
+idx.subs\{dim\_face\}=1;
+z=subsref(z,idx);
+
+\section{bash shell execute the same program on all the files in the current directory}
+\label{sec-5}
+
+find -exec prog\_name flags \{\} +
+
+\{\} represents the list of filenames that will be appended by find. it must be the last argument since the "+" syntax tells "find" to create a large list and send them all at the same time.
+
+ if we want "find" to run prog\_name for each of the files separately the correct syntax is :
+find -exec prog\_name '\{\}' $\backslash$;
+
+in this case \{\} doesn't need to be the last argument
+
+if we want a more complicated sequence of commands
+
+find -printf "zcat \%p | agrep -dEOE 'grep'\n" | sh
+
+\section{cvs create new repository, add a new directory, and begin working:}
+\label{sec-6}
+\url{http://www-mrsrl.stanford.edu/~brian/cvstutorial/}
+
+\begin{enumerate}
+\item create a new repository in \textasciitilde{}/cvsroot:
+\end{enumerate}
+
+cvs -d \textasciitilde{}/cvsroot init
+
+\begin{enumerate}
+\item env variables used by cvs:
+\end{enumerate}
+
+export CVSROOT=\$HOME/cvsroot
+export CVSEDITOR=emacs
+
+\begin{enumerate}
+\item backup original directory:
+\end{enumerate}
+mkdir cvsexample2
+cp -r cvsexample/* cvsexample2/
+
+\begin{enumerate}
+\item remove the original files:
+\end{enumerate}
+rm -r cvsexample/*
+
+\begin{enumerate}
+\item add the empty directory to cvs:
+\end{enumerate}
+cd \textasciitilde{}/cvsexample
+cvs import -m "dir structure" cvsexample yourname start
+
+this adds a directory cvsexample in the repository, so one can have several projects in the same repository, and checking out only the particular project of interest.
+
+\begin{enumerate}
+\item remove the created directory and check it out from repo (i'm not sure this is necessary\ldots{})
+\end{enumerate}
+cd ..
+rm -r cvsexample
+cvs checkout cvsexample
+
+\begin{enumerate}
+\item add a subdirectory
+\end{enumerate}
+cd \textasciitilde{}/cvsexample
+mkdir cartilage
+cvs add cartilage
+
+\begin{enumerate}
+\item add a file :
+\end{enumerate}
+create a file (or copy from your backups), and then :
+
+cvs add *.tex
+cvs commit -m "original files" *.tex
+
+without -m "blahh", cvs will just launch emacs for your log message
+
+\begin{enumerate}
+\item download updates from repo:
+\end{enumerate}
+cvs update
+
+\begin{enumerate}
+\item see difference between current version and repo version:
+\end{enumerate}
+cvs diff sample.tex
+
+\begin{enumerate}
+\item submit a modified file:
+\end{enumerate}
+
+cvs commit sample.tex
+
+\begin{enumerate}
+\item read log messages :
+\end{enumerate}
+cvs log sample.tex
+
+\begin{enumerate}
+\item when you have a working version, tag it:
+\end{enumerate}
+
+cvs tag Clinical-Release-1.0
+
+now the tagged version can be restored in a new directory if we wish:
+
+mkdir tempstuff
+cd \textasciitilde{}/tempstuff
+cvs checkout -r Clinical-Release-1.0 cvsexample
+
+\section{wget :}
+\label{sec-7}
+
+wget -r -l1 -H -nd -np -A.txt -w5 -erobots=off -i \textasciitilde{}/list.txt
+
+-r recursively
+-H follow links that point away from the website
+-l1 only go one level deep
+-np "no parent"
+-nd save every thing in one directory
+-A.txt tells wget to only download files that end with the .txt extension. 
+-i \textasciitilde{}/list.txt - if we have a list of websites. otherwise we can just add the URL of a specific website
+-w5 wait 5 seconds between downloads
+-erobots=off ignore site policy
+\section{python ginput:}
+\label{sec-8}
+
+example from \url{http://glowingpython.blogspot.co.il/2011/08/how-to-use-ginput.html}
+
+from pylab import plot, ginput, show, axis
+
+axis([-1, 1, -1, 1])
+print "Please click three times"
+pts = ginput(3) \# it will wait for three clicks
+print "The point selected are"
+print pts \# ginput returns points as tuples
+x=map(lambda x: x\footnote{DEFINITION NOT FOUND.},pts) \# map applies the function passed as 
+y=map(lambda x: x\footnote{DEFINITION NOT FOUND.},pts) \# first parameter to each element of pts
+plot(x,y,'-o')
+axis([-1, 1, -1, 1])
+show()
+\section{export from libreoffice :}
+\label{sec-9}
+(source \url{http://www.commandlinefu.com/commands/view/11692/commandline-document-conversion-with-libreoffice})
+
+libreoffice --headless -convert-to odt:"writer8" somefile.docx
+\section{mitgcm alternating checkpoint :}
+\label{sec-10}
+in data, parm03:
+pickupSuff='ckptA'
+\section{python split filename to file+extension}
+\label{sec-11}
+(source : \url{http://stackoverflow.com/questions/541390/extracting-extension-from-filename-in-python})
+
+>>> import os
+>>> fileName, fileExtension = os.path.splitext('/path/to/somefile.ext')
+>>> fileName
+'/path/to/somefile'
+>>> fileExtension
+'.ext'
+\section{python equivalent for importdata}
+\label{sec-12}
+(source \url{http://stackoverflow.com/questions/1057666/using-python-to-replace-matlab-how-to-import-data})
+
+import numpy
+imported\_array = numpy.loadtxt('file.txt',delimiter='\t')  \# assuming tab-delimiter
+print imported\_array.shape
+\section{latex reference ranges of images (other stuff)}
+\label{sec-13}
+(source : \url{http://tex.stackexchange.com/questions/7624/how-to-reference-ranges-rather-than-separate-numbers},
+\url{http://www.howtotex.com/packages/automatic-clever-references-with-cleveref/}
+)
+
+\usepackage{cleveref}
+\crefname{figure}{Fig.}{Figs.}
+
+\cref{winter,fall,christmas,summer,pentecost}
+
+\section{matlab}
+\label{sec-14}
+filenames=fill\_sprintf(index\_array,filename\_pattern) :
+\begin{minted}[linenos,firstnumber=1]{matlab}
+% syntax: filenames=fill_sprintf(index_array,filename_pattern)
+% fill_sprintf is meant to extend sprintf to dealing with cell
+% arrays of strings (e.g. filenames with running indices).
+% the function loops through all indices in index_array, and calls
+% sprintf(filename_pattern,ind). filenames is a cell array of all 
+% filenames.
+%
+% see also : sprintf
+%
+% no special dependencies
+
+% $Log$
+function filenames=fill_sprintf(index_array,filename_pattern)
+% some input checking
+if(length(index_array)<1)
+    filenames={};
+    return;
+end
+[s,er]=sprintf(filename_pattern ,index_array(1));       % this check doesnt work in octave
+if(~isempty(er))
+    error('wrong filename pattern');
+end                                     % if(~isempty(er))
+index_array=num2cell(index_array);
+filenames=cellfun(@(x)sprintf(filename_pattern,x),index_array, ...
+		   'uniformoutput',false);
+\end{minted}
+creates a cell array of filenames with running indices
+\section{latex small horizontal space between figs}
+\label{sec-15}
+(source \url{http://tex.stackexchange.com/questions/41476/lengths-and-when-to-use-them})
+\enskip
+
+\section{latex code snippets}
+\label{sec-16}
+(source \url{http://stackoverflow.com/questions/3175105/how-to-insert-code-into-a-latex-doc})
+
+in the header : 
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true
+  tabsize=3
+}
+
+in the body text :
+\begin{lstlisting}
+// Hello.java
+import javax.swing.JApplet;
+import java.awt.Graphics;
+
+public class Hello extends JApplet {
+    public void paintComponent(Graphics g) {
+        g.drawString("Hello, world!", 65, 95);
+    }    
+}
+\end{lstlisting}
+
+\section{extract data from csv (in non trivial cases):}
+\label{sec-17}
+
+(source : \url{http://stackoverflow.com/questions/1641519/reading-date-and-time-from-csv-file-in-matlab})
+
+fid = fopen(filename, 'rt');
+a = textscan(fid, '\%f/\%f/\%f \%f:\%f \%f \%f', \ldots{}
+      'Delimiter',',', 'CollectOutput',1, 'HeaderLines',4);
+fclose(fid);
+t=datenum(a\{1\}(:,3)+2000, a\{1\}(:,2), a\{1\}(:,1), a\{1\}(:,4), a\{1\}(:,5),zeros(length(a\{1\}(:,1)),1));
+directions=a\{1\}(:,6);
+speeds=a\{1\}(:,7);
+
+\section{python argument line parser}
+\label{sec-18}
+(source : \url{http://docs.python.org/dev/library/argparse.html})
+
+import argparse
+parser = argparse.ArgumentParser(description='create encoded longitude-latitude list')
+parser.add\_argument('lon\_file', help='longitudes file')
+parser.add\_argument('lat\_file', help='latitudes file')
+parser.add\_argument('out\_file', help='out file')
+args = parser.parse\_args()
+
+the different fields are in a data structure args.lon\_file args.lat\_file args.out\_file
+\section{svn sourceforge username not recognized :}
+\label{sec-19}
+(source \url{http://highlevelbits.com/2007/04/svn-over-ssh-prompts-for-wrong-username.html})
+
+just include the file config in \textasciitilde{}/.ssh with the following content:
+Host svn.code.sf.net
+  User youruser
+
+\section{checking out from sourceforge :}
+\label{sec-20}
+
+(note the +ssh in the protocol prefix)
+
+svn --username avigdev checkout svn+ssh://svn.code.sf.net/p/panet/code ./
+\section{gdb mode of emacs 24 has a bug. a way around it :}
+\label{sec-21}
+(clue from \url{http://stackoverflow.com/questions/13959747/using-gdb-i-mi-integration-in-emacs-24})
+
+M-x gdb
+gdb -i=mi --annotate=0 PANet
+\section{awk multiple types of delimiters:}
+\label{sec-22}
+awk -F[\_.] '\{print \$3\}'
+\section{mitgcm numeric stability criteria}
+\label{sec-23}
+
+The stability criterion for the horizontal laplacian friction is 
+4*Ah*delta\_t/delta\_x\^{}2<0.3 (pp. 123 in the manual)
+Stability for inertial oscillations (although we don't expect such a thing)
+f\^{}2*delta\_t\^{}2<0.5 (pp. 123 in the manual)
+Advective Courant-Friedrichs-Lewy criterion (pp. 123 in the manual)
+max\_u*delta\_t/delta\_x<0.5
+
+\section{compiling large array :}
+\label{sec-24}
+
+FFLAGS="\$FFLAGS -g -convert big\_endian -assume byterecl -mcmodel=large"
+
+\section{sync folders to hd}
+\label{sec-25}
+
+rsync --force --ignore-errors --delete --exclude \emph{home/avigoz}.opera/*cach* --backup-dir=`date +\%Y-\%m` -avb \emph{home/avigoz} /media/linux\_part/backups/home\_64
+
+\section{setting up a (mac) computer checklist}
+\label{sec-26}
+\begin{itemize}
+\item $\square$ d/l home directory from external hd
+\item $\square$ make .profile speak with .bashrc
+\item $\square$ echo "logfile screenlog-\%Y\%m\%d-\%c:\%s" > \textasciitilde{}/.screenrc
+\item $\square$ d/l homebrew
+\item $\square$ d/l and setup Dropbox, Ubuntu one
+\item $\square$ d/l skype
+\item $\square$ d/l XCode
+\item $\square$ for compilers - enter xcode->preferences->components->command line tools->install
+\item $\square$ d/l (using the command "brew install") cvs,git ??
+\item $\square$ d/l latest version of emacs (brew install --cocoa emacs)
+\item\relax [ ]see \url{http://stackoverflow.com/questions/10171280/how-to-launch-gui-emacs-from-command-line-in-osx})
+\item\relax [ ]>link it to Applications :
+\item\relax [ ]n -s /opt/boxen/homebrew/Cellar/emacs/24.3/Emacs.app /Applications
+\item\relax [ ]> prepare a bash script somewhere with the following script :
+\item $\square$ 
+\item\relax [ ]!/bin/sh
+\item\relax [ ]Applications/Emacs.app/Contents/MacOS/Emacs -Q "\$@"
+\item $\square$ 
+\item\relax [ ]>include
+\item\relax [ ](setq mac-function-modifier 'control)  in .emacs (to avoid ctrl-space problems)
+\item $\square$ 
+\item $\square$ to d/l xmgr , first d/l xquartz (\url{https://xquartz.macosforge.org}). afterwards use "brew install grace" .
+\item $\square$ 
+\item $\square$ to d/l octave run (see \url{http://wiki.octave.org/Octave_for_MacOS_X}):
+\item\relax [ ]rew tap homebrew/science
+\item\relax [ ]rew update \&\& brew upgrade
+\item\relax [ ]rew install gfortran
+\item\relax [ ]rew install octave
+\item\relax [ ]rew install gnuplot
+\item\relax [ ]n -s /usr/local/Cellar/gnuplot/4.6.3/bin/gnuplot /Applications/gnuplot
+\item $\square$ 
+\item\relax [ ]> edit /usr/local/share/octave/site/m/startup/octaverc to be :
+\item $\square$ 
+\item\relax [ ]\# System-wide startup file for Octave.
+\item\relax [ ]\#
+\item\relax [ ]\# This file should contain any commands that should be executed each
+\item\relax [ ]\# time Octave starts for every user at this site.
+\item\relax [ ]etenv ("GNUTERM", "X11")
+\item\relax [ ]nuplot\_binary("/Applications/gnuplot")
+\item $\square$ 
+\item\relax [ ]> create a small shell script with :
+\item\relax [ ]!/bin/sh
+\item $\square$ 
+\item\relax [ ]C\_CTYPE="en\_US.UTF-8"
+\item $\square$ 
+\item $\square$ Replace the following line with the result in step 3 (where your octave is located)
+\item\relax [ ]usr/local/bin/octave
+\item $\square$ 
+\item\relax [ ]> in .bash\_aliases : alias octave="path\_to\_your\_file"
+\item $\square$ 
+\item $\square$ for python  scientific packages (and upgrading python):
+\end{itemize}
+sudo easy\_install pip
+brew install swig
+sudo pip install scipy
+
+-> run "brew doctor" to see whether anything wrong is going on. 
+
+->put the following in .bashrc:
+export PATH=/usr/local/bin:\$PATH
+export PATH=/usr/local/share/python:\$PATH
+
+-> continue with python \ldots{}. following \url{http://iknownothingaboutcoding.blogspot.co.il/2012/04/mac-os-x-lion-install-of-python-numpy.html} :
+
+brew install readline sqlite gdbm pkg-config --universal
+brew install python --framework --universal
+cd /System/Library/Frameworks/Python.framework/Versions
+sudo rm Current
+sudo ln -s /usr/local/Cellar/python/***version***/Frameworks/Python.framework/Versions/Current
+Now install pip, by using:
+
+?
+\$ easy\_install pip
+To test the installation of pip type:
+
+?
+\$ which pip
+and you should see the following returned:
+
+?
+/usr/local/share/python/pip
+Next use pip to install virtualenv and virtualenvwrapper:
+
+?
+\$ pip install virtualenv
+\$ pip install virtualenvwrapper
+\$ source /usr/local/share/python/virtualenvwrapper.sh
+Install Numpy via:
+
+?
+\$ pip install numpy
+Install SciPy also using pip - the “green room” link installs SciPy using the github.egg however, they’ve fixed things now so you can use the method below. The first command gets the required Fortran compiler:
+
+?
+\$ brew install gfortran
+\$ pip install scipy
+Pip Install Matplotlib
+
+?
+
+(i had to also do : \$ sudo pip install --upgrade six)
+
+\$ pip install -e git+\url{https://github.com/matplotlib/matplotlib.git#egg=matplotlib-dev}
+iPython, Pandas, SciKits, \& Nose
+Pip Install iPython
+
+?
+\$ pip install ipython
+then:
+
+?
+\$ brew install pyqt
+append your \textasciitilde{}/.bash\_profile with the appropriate statement given to you at the END of the pyqt installation, for me it was:
+
+?
+export PYTHONPATH=/usr/local/lib/python2.7/site-packages:\$PYTHONPATH
+Then:
+
+?
+\$ brew install zmq
+\$ pip install pyzmq
+\$ pip install pygments
+Install Pandas:
+
+?
+\$ pip install pandas
+Install Scikits.Statsmodels
+
+?
+\$ pip install scikits.statsmodels        
+Lastly, to ensure that we have the necessary testing suites to check the packages that we’ve just installed. The testing suite that (conveniently) all of these packages is called nose.
+
+?
+\$ pip install nose
+And we are finished with the installation!
+
+Installation Testing
+Numpy Testing
+First, let’s check the installations of Numpy and SciPy, as is provided on their documentation
+
+In terminal, here is what to type, along with the output that I get back:
+
+?
+\$ python
+Python 2.7.3 (default, Apr 20 2012, 17:20:12)
+[GCC 4.2.1 Compatible Apple Clang 3.1 (tags/Apple/clang-318.0.58)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+
+>>> import numpy
+>>> numpy.test('full')
+\ldots{}
+[lots of text]
+\ldots{}
+[final lines]
+
+\rule{\linewidth}{0.5pt}
+Ran 3552 tests in 35.886s
+
+FAILED (KNOWNFAIL=3, SKIP=1, failures=9)
+Although it’s not perfect with 0 failures, I’ll definitely take it. One issue of many that prompted me to reinstall Python and these libraries is that when I would run this test, my Terminal would crash and quit (for both Numpy and Scipy)… yeah, not good.
+
+SciPy Testing
+Now let’s test SciPy.
+
+?
+>>> import scipy
+>>> scipy.test()
+\ldots{}
+[lots of text]
+\ldots{}
+[final lines]
+
+\rule{\linewidth}{0.5pt}
+Ran 5101 tests in 56.231s
+
+FAILED (KNOWNFAIL=12, SKIP=42, failures=9)
+Again, not batting 1000, but I’m definitely satisfied.
+
+Pandas Testing
+And lastly, let’s make sure that Pandas is working properly.
+
+?
+>>> exit()
+\$ nosetests pandas
+
+…..
+[lots of periods, S's and other things]
+…
+Ran 1509 tests in 70.357s
+
+OK (SKIP=11)
+
+
+\begin{itemize}
+\item $\square$ to install gmt : brew install gmt
+\item $\square$ to install maxima : brew install maxima
+\item $\square$ d/l MITgcm
+\item $\square$ d/l ferret
+\item $\square$ d/l AUTO
+\end{itemize}
+
+\section{take a column of numbers and put them in a row with a "+" delimiter :}
+\label{sec-27}
+paste -sd+
+on a mac os x :
+paste -sd+ -
+(where the last dash indicates that we take standard input instead of a filename)
+\section{installing emacs on MAC}
+\label{sec-28}
+(after getting brew, XCode etc.)
+>> brew install emacs
+create a text file with the following :
+
+\#!/bin/sh
+/Applications/Emacs.app/Contents/MacOS/Emacs -Q "\$@" 
+
+and PATH it.
+
+remove previous vers from \emph{usr/bin}
+
+\section{MITGCM recipee for building a package (the name of the example package is diffus2):}
+\label{sec-29}
+
+\begin{enumerate}
+\item prepare an empty package that does nothing
+\end{enumerate}
+
+the minimal list of files (which can be coppied, with necessary name changes of files/variables/parameters/functions, from MYPACKAGE) is:
+diffus2\_calc.F
+diffus2\_diagnostics\_init.F
+DIFFUS2\_OPTIONS.h
+DIFFUS2\_PARAMS.h
+DIFFUS2.h
+diffus2\_output.F
+diffus2\_routines.F
+diffus2\_check.F
+diffus2\_init\_varia.F
+diffus2\_readparms.F
+
+their description :
+\begin{center}
+\begin{tabular}{ll}
+\hline
+file & description\\
+\hline
+headers & \\
+\hline
+DIFFUS2.h & define pkg variables, and their common blocks\\
+DIFFUS2\_OPTIONS.h & package specific MACRO option defs\\
+DIFFUS2\_PARAMS.h & package parameters and their common block  (read from data.diffus2)\\
+\hline
+code & \\
+\hline
+diffus2\_calc.F & interface for mitgcnuv (this is what the model's core calls)\\
+diffus2\_check.F & check dependencies/conflicts with other packages\\
+diffus2\_diagnostics\_init.F & define diagnostics related to the package\\
+diffus2\_init\_varia.F & initialize DIFFUS2 parameters and variables\\
+diffus2\_output.F & create diagnostic outputs\\
+diffus2\_readparms.F & parse data.diffus2\\
+diffus2\_routines.F & routines that implement double diffusion parametrization schemes\\
+\hline
+\end{tabular}
+\end{center}
+
+they should be under a new directory of the rootdir (in diffus2 case \textasciitilde{}/MITgcm/model/pkg/diffus2 )
+
+the input file data.pkg should include the entry "useDiffus2=.TRUE.," under the namelist "\&PACKAGES"
+
+this parameter should be declared (with the type LOGICAL), and included in the common block \emph{PARM\_PACKAGES} under \textasciitilde{}/MITgcm/model/inc/PARAMS.h .  it should also be included under the namelist "PACKAGES" in \textasciitilde{}/MITgcm/model/src/packages\_boot.F , and its default value should usually declared in this file to be .FALSE..
+
+\begin{enumerate}
+\item parse user parameters
+\end{enumerate}
+
+in diffus2\_readparms - create a separate NAMELIST for each namelist that should appear in data.diffus2 .
+then give the parameters default conditions.  (e.g.       diffus2\_scheme    = 'kunze' )
+then try to read them    (e.g.   READ(UNIT=iUnit,NML=DIFFUS2\_SCHEME,IOSTAT=errIO) ) and monitor events where errIO<0 :
+
+ READ(UNIT=iUnit,NML=DIFFUS2\_SCHEME,IOSTAT=errIO)
+ IF ( errIO .LT. 0 ) THEN
+  WRITE(msgBuf,'(A)')
+\&  'S/R INI\_PARMS'
+  CALL PRINT\_ERROR( msgBuf , 1)
+  WRITE(msgBuf,'(A)')
+\&  'Error reading numerical model '
+  CALL PRINT\_ERROR( msgBuf , 1)
+  WRITE(msgBuf,'(A)')
+\&  'parameter file "data.diffus2"'
+  CALL PRINT\_ERROR( msgBuf , 1)
+  WRITE(msgBuf,'(A)')
+\&  'Problem in namelist DIFFUS2\_SCHEME'
+  CALL PRINT\_ERROR( msgBuf , 1)
+  STOP 'ABNORMAL END: S/R DIFFUS2\_INIT'
+ ENDIF
+
+CLOSE(iUnit)
+
+finally tell STDOUT.* that you're finished
+      WRITE(msgBuf,'(A)') ' DIFFUS2\_INIT: finished reading data.diffus2'
+
+declare these variables in DIFFUS2\_PARAMS.h
+
+these subroutines are run from the model file "packages\_readparms.F". these are the needed lines in packages\_readparms.F:
+
+C--   Initialize Diffus2 parameters
+      IF (useDiffus2) CALL DIFFUS2\_READPARMS( myThid )
+\#endif
+
+\section{ssh tunnel through proxy :}
+\label{sec-30}
+
+in: .ssh/config:
+
+Host tsia
+Hostname tsia.boker
+User avigoz
+ForwardAgent yes
+Port 22
+ProxyCommand ssh avigoz@sansana.bgu.ac.il nc \%h \%p
+
+to make it passwordless :
+
+on the local machine :
+>> ssh-keygen -t rsa
+
+on the remote machine : 
+>> mkdir -p .ssh
+
+on the local machine :
+cat .ssh/id\_rsa.pub | ssh b@B 'cat >> .ssh/authorized\_keys'
+
+repeat these for logging to a->b->c , for the pairs  a->b, a->c .
+\section{get a list of links from a website, using the textual web browser lynx :}
+\label{sec-31}
+(source : \url{http://tips.webdesign10.com/general/lynx-browser} )
+
+lynx -dump -listonly "\url{http://www.example.com/}"
+
+\section{define a remote directory}
+\label{sec-32}
+in fstab :
+sshfs\#avigoz@132.64.144.245:/data/avigoz /data1 fuse defaults,allow\_other 0 0
+
+in /etc/fuse.conf , uncomment :
+user\_allow\_other
+\section{to umount sshfs directory :}
+\label{sec-33}
+fusermount -u \emph{data\_sedeboker}
+\section{sshfs on mac :}
+\label{sec-34}
+(source : \url{http://superuser.com/questions/134140/mount-an-sshfs-via-macfuse-at-boot} )
+
+brew install sshfs
+brew install fuse4x
+sudo \emph{bin/cp -rfX /usr/local/Cellar/fuse4x-kext/0.9.2/Library/Extensions/fuse4x.kext /Library/Extensions}
+sudo chmod +s /Library/Extensions/Support/load\_fuse4x
+
+sudo mkdir -p /mnt/tsia
+sudo chown avigoz /mnt /mnt/tsia
+sudo chmod a+rwx /mnt /mnt/tsia
+
+now you should be able to manually mount the remote drive: 
+sshfs tsia:/home/avigoz \emph{mnt/tsia} -oreconnect,allow\_other,volname=tsia,sshfs\_debug
+
+so now /mnt/tsia includes files from the remote source.  unmount it:
+umount /mnt/tsia
+
+
+the following does not work properly for me. I do see the files but I don't have permissions to change them
+
+if this works, pursue : 
+
+mkdir -p progs/sshfs/
+cat <<END > progs/sshfs/sshfs-authsock
+\#!/bin/bash
+export SSH\_AUTH\_SOCK=\$( ls -t /tmp/launch-*/Listeners | head -1)
+/usr/local/bin/sshfs \$*
+END
+
+check the location of sshfs in the last line, since it might vary between versions of OS X .
+
+chmod a+rwx progs/sshfs/sshfs-authsock
+
+sudo emacs   /Library/LaunchAgents/tsia.home.plist  
+
+and therein : 
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "\url{http://www.apple.com/DTDs/PropertyList-1.0.dtd}">
+<plist version="1.0">
+<dict>
+        <key>Label</key>
+        <string>tsia.home.sshfs</string>
+        <key>ProgramArguments</key>
+        <array>
+                <string>/Users/avigoz/progs/sshfs/sshfs-authsock</string>
+                <string>avigoz@tsia:</string>
+                <string>/mnt/tsia</string>
+                <string>-oreconnect,allow\_other,volname=tsia</string>
+        </array>
+        <key>RunAtLoad</key>
+        <true/>
+</dict>
+</plist>
+
+
+with the obvious modifications of directory/file/user/host names . 
+
+launchctl load /Library/LaunchAgents/tsia.home.plist
+\% launchctl start tsia.home.sshfs --> does not seem relevant
+
+
+\section{perl command line arguments :}
+\label{sec-35}
+
+(source : \url{http://stackoverflow.com/questions/3515877/how-to-print-program-usage-in-perl})
+
+use Getopt::Long::Descriptive;
+
+my (\$opt, \$usage) = describe\_options(
+    'diff\_entire\_directory.pl file\_pattern reference\_directory',
+    [ 'help|h',       "print usage message and exit" ],
+);
+
+print(\$usage->text), exit if \$opt->help;
+
+\section{sollution to matlab blurry imagesc :}
+\label{sec-36}
+
+eps2eps in\_fig.eps out\_fig.eps
+\section{mac os x : halt and resume processes :}
+\label{sec-37}
+kill -STOP PID
+kill -CONT PID
+\section{remove a huge buggy directory with a lot of files that just refuse to be removed  (source : \url{http://serverfault.com/a/215766}) :}
+\label{sec-38}
+
+<?php 
+\$dir = '/directory/in/question';
+\$dh = opendir(\$dir)  
+while ((\$file = readdir(\$dh)) !== false) \{ 
+    unlink(\$dir . '/' . \$file); 
+\} 
+closedir(\$dh); 
+?>
+
+\section{xmgr different types of plots :}
+\label{sec-39}
+xmgrace -settype xysize
+
+where the type may be :
+
+XY               2         An X-Y scatter and/or line plot, plus (optionally) an annotated value
+XYDX               3         Same as XY, but with error bars (either one- or two-sided) along X axis
+XYDY               3         Same as XYDX, but error bars are along Y axis
+XYDXDX               4         Same as XYDX, but left and right error bars are defined separately
+XYDYDY               4         Same as XYDXDX, but error bars are along Y axis
+XYDXDY               4         Same as XY, but with X and Y error bars (either one- or two-sided)
+XYDXDXDYDY     6         Same as XYDXDY, but left/right and upper/lower error bars are defined separately
+BAR               2         Same as XY, but vertical bars are used instead of symbols
+BARDY               3         Same as BAR, but with error bars (either one- or two-sided) along Y axis
+BARDYDY               4         Same as BARDY, but lower and upper error bars are defined separately
+XYHILO               5         Hi/Low/Open/Close plot
+XYZ               3              Same as XY; makes no sense unless the annotated value is Z
+XYR               3         X, Y, Radius. Only allowed in Fixed graphs
+XYSIZE               3         Same as XY, but symbol size is variable
+XYCOLOR               3         X, Y, color index (of the symbol fill)
+XYCOLPAT       4         X, Y, color index, pattern index (currently used for Pie charts only)
+XYVMAP               4         Vector map
+XYBOXPLOT      6         Box plot (X, median, upper/lower limit, upper/lower whisker)
+\section{xmgr}
+\label{sec-40}
+produce eps file without gui
+
+gracebat -settype xydy gyre\_anticyc\_yz\_year\_1\_season\_1\_exp23acont.txt gyre\_cyc\_yz\_year\_1\_season\_1\_exp23acont.txt -param ../vert\_gyres.par -printfile vert\_gyres\_exp23a.eps
+\section{matlab slice mat - file without reading all of it :}
+\label{sec-41}
+(source : )
+
+file=matfile(filename);
+r=file.r(1:4,200,8);
+sz\_q=size(file,q);
+vars=fieldnames(file); 
+plot(file.r(1:3,5)); 
+
+etc\ldots{}
+
+when indexing a variable in matfile (e.g. file.r(1:3,1))
+it is important 
+
+\section{number of threads matlab uses for calculations :}
+\label{sec-42}
+(source : \url{http://stackoverflow.com/questions/20648360/how-can-i-determine-the-number-of-threads-matlab-is-using} )
+
+maxNumCompThreads
+
+\section{linux number of threads used by a program :}
+\label{sec-43}
+(source : \url{http://stackoverflow.com/questions/20648360/how-can-i-determine-the-number-of-threads-matlab-is-using} )
+
+
+ps uH p <PID> | wc -l
+
+\section{checking a paper:}
+\label{sec-44}
+\begin{itemize}
+\item spell check
+\item read abstract
+\item general look at figures
+\item format of references
+\item order of references
+\item structure :
+\end{itemize}
+abstract
+intro: general view, problem, several people who tackled it, new approach, outline of the paper
+methods
+results
+discussion
+acknowledgement
+refs
+\begin{itemize}
+\item graphs : good captions
+\item graphs : good legends, and axis labels that include units
+\item graphs : big fonts (around 16), big line widths (around 2), big symbols, grid lines
+\end{itemize}
+\section{matlab cycle through colors when plotting in a loop}
+\label{sec-45}
+(source : \url{http://www.mathworks.com/matlabcentral/answers/25831-plot-multiple-colours-automatically-in-a-for-loop})
+
+use "hold all" instead of "hold on"
+
+\section{emacs assign file suffix to certain mode (here I use cuda in c++ mode):}
+\label{sec-46}
+(source : \url{http://stackoverflow.com/questions/8632325/start-c-syntax-highlighting-for-cu-cuda-files})
+
+(add-to-list 'auto-mode-alist '("\\.cu\\'" . c++-mode))
+\section{emacs put backupfile in a dedicated directory.}
+\label{sec-47}
+(source : \url{http://www.emacswiki.org/emacs/BackupDirectory})
+
+(setq
+   backup-by-copying t      ; don't clobber symlinks
+   backup-directory-alist
+    '(("." . "\textasciitilde{}/.saves"))    ; don't litter my fs tree
+   delete-old-versions t
+   kept-new-versions 6
+   kept-old-versions 2
+   version-control t)       ; use versioned backups
+
+\section{c++ precision of operator<< :}
+\label{sec-48}
+
+std::cerr.setf(std::ios\_base::scientific, std::ios\_base::floatfield);
+cerr.precision(4);
+
+"scientific" can be replaced by "fixed"
+
+another possibility:
+
+cerr<<"stam mashehu"<<std::scientific  <<somedouble<<endl;
+
+to always show signs :
+  cerr<<std::showpos;
+
+\section{org mode inline code switches:}
+\label{sec-49}
+\url{http://orgmode.org/org.html#session}
+\section{mitgcm convergence criteria:}
+\label{sec-50}
+inertial oscillations:
+
+f\^{}2*dt\^{}2<0.5
+
+ACFL :
+u*dt/dx<0.5
+\section{matlab modulo (almost) symmetric around zero :}
+\label{sec-51}
+
+mod(x+L/2,L)-L/2
+
+
+
+
+\section{youtube download an entire list with automatical numbering :}
+\label{sec-52}
+youtube-dl -i PLNiWLB\_wsOg5urbUQZHdnRXw7KEO-FTie -o "earth\%(autonumber)s.\%(ext)s"
+
+\section{libreoffice openoffice change formatting of all sheets :}
+\label{sec-53}
+(source : \url{http://www.oooforum.org/forum/viewtopic.phtml?t=49217})
+
+right click on a sheet, select all sheets, and change whatever you want
+\section{mac os x libreoffice calc , switch between sheets}
+\label{sec-54}
+(source  : \url{http://ask.libreoffice.org/en/question/470/what-keyboard-shortcuts-are-used-to-switch-through-sheets-on-a-mac/})
+
+cmd+pageup (or on a laptop : Fn + Command + up arrow / down arrow)
+
+\section{GMT pen attributes:}
+\label{sec-55}
+
+width,color,style
+
+width = faint default thinnest thinner thin thick thicker thickest fat fatter fattest obese
+
+this can also be indicated in numbers in the range [0 18p]
+
+The color can be specified using:
+\begin{enumerate}
+\item Gray. Specify a gray shade in the range 0–255 (linearly going from black \footnotemark[1]{} to white
+\end{enumerate}
+
+\section{xclip equivalent in mac os x:}
+\label{sec-56}
+(source : \url{http://stackoverflow.com/questions/3482289/easiest-way-to-strip-newline-character-from-input-string-in-pasteboard})
+
+pbcopy
+
+so to remove \n, and send to clipboard we'd do :
+alias xcn="tr -d '\n' | pbcopy"
+\section{grep with or operator :}
+\label{sec-57}
+grep  "hist$\backslash$|frac\_larg" 
+
+\section{to know which temp files are openned by a program :}
+\label{sec-58}
+
+sudo opensnoop -n Emacs
+
+\section{extract page range from a pdf file :}
+\label{sec-59}
+(source : \url{http://www.linuxjournal.com/content/tech-tip-extract-pages-pdf})
+
+pdftk A=100p-inputfile.pdf cat A22-36 output outfile\_p22-p36.pdf
+
+\section{make emacs work with an octave shell :}
+\label{sec-60}
+(source \url{http://stackoverflow.com/questions/24971756/emacs-stops-responding-when-i-run-run-octave})
+
+insert:
+
+PS1(">> ")
+
+to your .octaverc
+\section{mitgcm, phihyd and phihydlow units:}
+\label{sec-61}
+
+(taken from \url{http://mitgcm.org/pipermail/mitgcm-support/2004-August/002438.html})
+
+\frac{\partial\phi}{\partial r} = b
+b is the SCALED density g$\rho$/$\rho$\_\{0\}. (In fact, it's the scaled 
+density anomaly g($\rho$-rho\_\{0\})/$\rho$\_\{0\}).  
+
+So when you backout pressure from phiHyd, you have to multiply by $\rho$\_\{0\}
+
+For the full pressure, you'll have to add 
+the constant density contribution -g$\rho$\_\{0\}z.
+
+P\_\{b\} = phiHydLow*rhoConst + g*rhoConst*H
+
+\section{python read mat files (using the hdf5 capabilities)}
+\label{sec-62}
+
+(source: \url{http://stackoverflow.com/questions/17316880/reading-v-7-3-mat-file-in-python})
+
+import h5py
+f = h5py.File('test.mat')
+
+f.keys() should give you the names of the variables stored in 'test.mat'.
+you can access f['s']\footnotemark[1]{} etc.. 
+
+for mat files that were not saved with the option '-v7.3' :
+
+from scipy.io import loadmat
+mat = loadmat('measured\_data.mat') 
+
+\section{echo without new line}
+\label{sec-63}
+(source : \url{http://www.unix.com/unix-for-dummies-questions-and-answers/88784-echo-without-newline-character.html})
+
+echo -n "text "
+\section{diff between multiple files}
+\label{sec-64}
+(source : \url{http://unix.stackexchange.com/questions/33638/diff-several-files-true-if-all-not-equal})
+
+/usr/bin/diff -qs --from-file ../code/packages.conf\_cont40 ../code/packages.conf\_cont40\_0*
+\section{slurm number of cpus ("allocated/idle/other/total")}
+\label{sec-65}
+
+sinfo -o "\%C"
+\section{cvs adopt the repo version (revert to repo version and discard your own's}
+\label{sec-66}
+(resource : \url{http://stackoverflow.com/questions/15704945/how-to-revert-the-file-in-cvs})
+cvs update -C utils/matlab/rdmds.m
+
+\section{missing libraries in compilation :}
+\label{sec-67}
+(source : \url{http://prefetch.net/articles/linkers.badldlibrary.html})
+
+to deal with this kind of error : 
+\$ curl
+ld.so.1: curl: fatal: libgcc\_s.so.1: open failed: No such file or directory
+Killed
+
+run : ldd curl
+
+and add the missing libraries to ld\_library\_path
+\section{emacs orgmode bibliography}
+\label{sec-68}
+
+in .emacs :
+(custom-set-variables
+\ldots{}
+\ldots{}
+ '(org-latex-pdf-process
+  '("latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f \%f"))
+
+in the org file : 
+
+\section{blogofile basics :}
+\label{sec-69}
+(source : \url{http://docs.blogofile.com/en/latest/index.html})
+\subsection{Initialize a blog site in a directory call mysite:}
+\label{sec-69-1}
+>> blogofile init mysite blog
+\subsection{Build the site:}
+\label{sec-69-2}
+>> blogofile build -s mysite
+\subsection{Serve the site:}
+\label{sec-69-3}
+>> blogofile serve -s mysite
+\subsection{help}
+\label{sec-69-4}
+>> blogofile help
+% Emacs 24.4.1 (Org mode 8.2.10)
+\end{document}

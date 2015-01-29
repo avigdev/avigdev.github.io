@@ -97,6 +97,70 @@
 <article>
   <div class="blog_post">
     <header>
+      <div id="screen-unique-logs-for-each-run"></div>
+      <h2 class="blog_post_title"><a href="/blog/20150129/2015-01-29-screen-unique-logs-for-each-run-html/" rel="bookmark" title="Permanent Link to Screen - unique logs for each run">Screen - unique logs for each run</a></h2>
+      <p><small><span class="blog_post_date">January 29, 2015 at 01:58 AM</span> | categories: 
+        <span class="blog_post_categories"><a href='/blog/category/workflow/'>workflow</a>, <a href='/blog/category/linux/'>linux</a></span>
+        | <a href="http://avigdev.github.io/blog/20150129/2015-01-29-screen-unique-logs-for-each-run-html#disqus_thread">View Comments</a>
+      </small></p>
+    </header>
+    <div class="post_prose">
+      
+
+
+
+
+<p>
+<a href="https://wiki.archlinux.org/index.php/GNU_Screen">Screen</a> is a little wrap around linux shell that enables detaching and logging out while the session you created is still running. It could be used for lots of different purposes, and running an intensive computation on a remote computer is an obvious example.
+</p>
+
+<p>
+You would normally do :
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="linenr">1: </span>screen -md -L -S session_name your_program
+</pre>
+</div>
+
+<p>
+-md = detach immediately after running, and return to the current terminal session
+-L = create a log file
+-S = create meaningful name for your session
+</p>
+
+<p>
+To check the stat of your sessions you will use:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="linenr">1: </span>screen -ls
+</pre>
+</div>
+
+<p>
+To have different log files with unique names for different sessions, you need to create a <code>~/.screenrc</code> file, with the following single line
+</p>
+<pre class="example">
+logfile screenlog-%Y%m%d-%c:%s
+</pre>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/29/Screen---unique-logs-for-each-run.org">org-mode source</a><p>
+
+    </div>
+  </div>
+</article>
+
+
+
+  <div class="after_post"><a href="http://avigdev.github.io/blog/20150129/2015-01-29-screen-unique-logs-for-each-run-html#disqus_thread">Read and Post Comments</a></div>
+  <hr class="interblog" />
+  
+
+
+
+<article>
+  <div class="blog_post">
+    <header>
       <div id="linux-copy-to-clipboard"></div>
       <h2 class="blog_post_title"><a href="/blog/20150119/2015-01-19-linux-copy-to-clipboard-html/" rel="bookmark" title="Permanent Link to linux copy to clipboard">linux copy to clipboard</a></h2>
       <p><small><span class="blog_post_date">January 19, 2015 at 12:08 AM</span> | categories: 
@@ -181,11 +245,11 @@ The two approaches for removing the newlines work equivalently on both systems.
   <section>
     <h1 class="post_header_gradient theme_font">Latest Posts</h1>
     <ul>
+      <li><a href="/blog/20150129/2015-01-29-screen-unique-logs-for-each-run-html/">Screen - unique logs for each run</a></li>
       <li><a href="/blog/20150127/2015-01-27-consistent-latex-units-in-non-italics-html/">Consistent Latex units in non italics</a></li>
       <li><a href="/blog/20150127/2015-01-27-xmgr-annotations-html/">Xmgr annotations</a></li>
       <li><a href="/blog/20150125/2015-01-25-the-best-of-all-worlds-disp-+-sprintf-html/">The best of all worlds - disp + sprintf</a></li>
       <li><a href="/blog/20150119/2015-01-19-linux-copy-to-clipboard-html/">linux copy to clipboard</a></li>
-      <li><a href="/blog/20150117/2015-01-17-latex-automatic-rotation-html/">latex automatic rotation</a></li>
     </ul>
   </section>
   <section>

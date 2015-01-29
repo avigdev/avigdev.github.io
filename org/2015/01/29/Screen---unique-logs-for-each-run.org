@@ -1,0 +1,28 @@
+* Screen - unique logs for each run 
+  :PROPERTIES:
+  :categories: linux,workflow
+  :date:     2015/01/29 01:58:34
+  :updated:  2015/01/29 01:58:34
+  :END:
+
+[[https://wiki.archlinux.org/index.php/GNU_Screen][Screen]] is a little wrap around linux shell that enables detaching and logging out while the session you created is still running. It could be used for lots of different purposes, and running an intensive computation on a remote computer is an obvious example.
+
+You would normally do :
+#+BEGIN_SRC sh -n :exports both :eval never-export :results output
+screen -md -L -S session_name your_program
+#+END_SRC
+
+-md = detach immediately after running, and return to the current terminal session
+-L = create a log file
+-S = create meaningful name for your session
+
+To check the stat of your sessions you will use:
+#+BEGIN_SRC sh -n :exports both :eval never-export :results output
+screen -ls
+#+END_SRC
+
+To have different log files with unique names for different sessions, you need to create a =~/.screenrc= file, with the following single line
+#+BEGIN_EXAMPLE
+logfile screenlog-%Y%m%d-%c:%s
+#+END_EXAMPLE
+
