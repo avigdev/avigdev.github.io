@@ -2,18 +2,18 @@
   :PROPERTIES:
   :categories: matlab,octave
   :date:     2015/01/25 20:30:03
-  :updated:  2015/01/25 20:36:06
+  :updated:  2015/02/07 18:55:04
   :END:
 
 Going through loops you would often find yourself writing something ugly like : 
 #+BEGIN_SRC matlab -n :exports both :eval never-export :results output
 n=10;
 is_verbose=true;
-if(is_verbose)
- for i=1:n
+for i=1:n
+ if(is_verbose)
   disp(sprintf('DBG: %d/%d',i,n));
-  % some interesting stuff here....
  end
+  % some interesting stuff here....
 end
 #+END_SRC
 
@@ -43,7 +43,7 @@ end
 #+END_SRC
 
 Thanks to Matlab's /varargin/ this little gem could be very close to /sprintf/ in syntax. 
-#+BEGIN_SRC matlab -n
+#+BEGIN_SRC matlab -n  :exports both :eval never-export :results output
 % purpose display only if the script is in verbose mode + include sprintf 
 % capabilities in disp.
 % syntax : verbose_disp(flag_verb,form,[variable_list])

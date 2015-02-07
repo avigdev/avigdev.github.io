@@ -1,0 +1,20 @@
+* Regridding unequally spaced sampled field, and plotting an imagesc
+  :PROPERTIES:
+  :categories: matlab,octave
+  :date:     2015/02/07 18:48:28
+  :updated:  2015/02/07 18:48:28
+  :END:
+
+In [[http://avigdev.github.io/blog/20150112/2015-01-12-matlab-discrete-colorbar-html/][a previous post]] we discussed a better way for using imagesc, with a more sane colormap. Let's now speak about the grid. Imagesc will happily embed every xy-axis you plug in, without checking whether dimensions fit. If your grid is non-equally spaced - it will just draw the z-axis on a regular axis (i.e. ignoring the xy input), and show the xy-axes as if they genuinely represent the input. My conclusion from this wild behavior is - never use imagesc on non-equally spaced data. Matlab has nice interpolant interfaces to help you get your data equally gridded. 
+
+#+BEGIN_SRC matlab -n :exports both :eval never-export :results output
+[x1,y1]=ndgrid(x,y); % this step is actually not crucial
+I = griddedInterpolant(x1,y1,z);  
+x1 = linspace(min(x),max(x),5);     % Define an equally spaced grid
+y1 = linspace(min(y),max(y),5);
+[x1,y1]=ndgrid(x1,y1);
+z1=I(x1,y1);
+myimagesc(x1(1,:),y1(:,1),z1,0.55,0.95,0.05);
+#+END_SRC
+
+Where your input parameters to [[http://avigdev.github.io/blog/20150112/2015-01-12-matlab-discrete-colorbar-html/][myimagesc]] may vary, and you could replace "5" by whatever division of the equally spaced grids you fancy. 

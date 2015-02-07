@@ -7,12 +7,50 @@
   <title type="text">Avi Gozolchiani אבי גוזולצני</title>
   <subtitle type="text">Environmental Physics at Ben Gurion University</subtitle>
 
-  <updated>2015-01-28T23:58:41Z</updated>
+  <updated>2015-02-07T16:56:40Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://avigdev.github.io/blog" />
   <id>http://avigdev.github.io/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://avigdev.github.io/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://avigdev.github.io/blog</uri>
+    </author>
+    <title type="html"><![CDATA[Regridding unequally spaced sampled field, and plotting an imagesc]]></title>
+    <link rel="alternate" type="text/html" href="http://avigdev.github.io/blog/20150207/2015-02-07-regridding-unequally-spaced-sampled-field-and-plotting-an-imagesc-html" />
+    <id>http://avigdev.github.io/blog/20150207/2015-02-07-regridding-unequally-spaced-sampled-field-and-plotting-an-imagesc-html</id>
+    <updated>2015-02-07T18:48:28Z</updated>
+    <published>2015-02-07T18:48:28Z</published>
+    <category scheme="http://avigdev.github.io/blog" term="matlab" />
+    <category scheme="http://avigdev.github.io/blog" term="octave" />
+    <summary type="html"><![CDATA[Regridding unequally spaced sampled field, and plotting an imagesc]]></summary>
+    <content type="html" xml:base="http://avigdev.github.io/blog/20150207/2015-02-07-regridding-unequally-spaced-sampled-field-and-plotting-an-imagesc-html"><![CDATA[
+
+
+
+<p>
+In <a href="http://avigdev.github.io/blog/20150112/2015-01-12-matlab-discrete-colorbar-html/">a previous post</a> we discussed a better way for using imagesc, with a more sane colormap. Let's now speak about the grid. Imagesc will happily embed every xy-axis you plug in, without checking whether dimensions fit. If your grid is non-equally spaced - it will just draw the z-axis on a regular axis (i.e. ignoring the xy input), and show the xy-axes as if they genuinely represent the input. My conclusion from this wild behavior is - never use imagesc on non-equally spaced data. Matlab has nice interpolant interfaces to help you get your data equally gridded. 
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-matlab"><span class="linenr">1: </span>[x1,y1]=ndgrid(x,y); <span style="color: #b22222;">% this step is actually not crucial</span>
+<span class="linenr">2: </span>I = griddedInterpolant(x1,y1,z);  
+<span class="linenr">3: </span>x1 = linspace(min(x),max(x),5);     <span style="color: #b22222;">% Define an equally spaced grid</span>
+<span class="linenr">4: </span>y1 = linspace(min(y),max(y),5);
+<span class="linenr">5: </span>[x1,y1]=ndgrid(x1,y1);
+<span class="linenr">6: </span>z1=I(x1,y1);
+<span class="linenr">7: </span>myimagesc(x1(1,<span style="color: #228b22;">:</span>),y1(<span style="color: #228b22;">:</span>,1),z1,0.55,0.95,0.05);
+</pre>
+</div>
+
+<p>
+Where your input parameters to <a href="http://avigdev.github.io/blog/20150112/2015-01-12-matlab-discrete-colorbar-html/">myimagesc</a> may vary, and you could replace "5" by whatever division of the equally spaced grids you fancy. 
+</p>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/02/07/Regridding-unequally-spaced-sampled-field,-and-plotting-an-imagesc.org">org-mode source</a><p>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>
@@ -209,7 +247,7 @@ Thanks <a href="http://blog.louic.nl/">Louic</a> .
     <title type="html"><![CDATA[The best of all worlds - disp + sprintf]]></title>
     <link rel="alternate" type="text/html" href="http://avigdev.github.io/blog/20150125/2015-01-25-the-best-of-all-worlds-disp-+-sprintf-html" />
     <id>http://avigdev.github.io/blog/20150125/2015-01-25-the-best-of-all-worlds-disp-+-sprintf-html</id>
-    <updated>2015-01-25T20:36:06Z</updated>
+    <updated>2015-02-07T18:55:04Z</updated>
     <published>2015-01-25T20:30:03Z</published>
     <category scheme="http://avigdev.github.io/blog" term="matlab" />
     <category scheme="http://avigdev.github.io/blog" term="octave" />
@@ -225,11 +263,11 @@ Going through loops you would often find yourself writing something ugly like :
 
 <pre class="src src-matlab"><span class="linenr">1: </span>n=10;
 <span class="linenr">2: </span>is_verbose=true;
-<span class="linenr">3: </span><span style="color: #932092;">if</span>(is_verbose)
-<span class="linenr">4: </span> <span style="color: #932092;">for</span> <span style="color: #a0522d;">i</span>=<span style="color: #008b8b;">1:n</span>
+<span class="linenr">3: </span><span style="color: #932092;">for</span> <span style="color: #a0522d;">i</span>=<span style="color: #008b8b;">1:n</span>
+<span class="linenr">4: </span> <span style="color: #932092;">if</span>(is_verbose)
 <span class="linenr">5: </span>  disp(sprintf(<span style="color: #8b2252;">'DBG: %d/%d'</span>,<span style="color: #008b8b;">i</span>,n));
-<span class="linenr">6: </span>  <span style="color: #b22222;">% some interesting stuff here....</span>
-<span class="linenr">7: </span> <span style="color: #932092;">end</span>
+<span class="linenr">6: </span> <span style="color: #932092;">end</span>
+<span class="linenr">7: </span>  <span style="color: #b22222;">% some interesting stuff here....</span>
 <span class="linenr">8: </span><span style="color: #932092;">end</span>
 </pre>
 </div>
@@ -595,98 +633,5 @@ verbose_disp is my version of disp/sprintf, combining the goods of both of them.
 </pre>
 </div>
 <p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/12/matlab-discrete-colorbar.org">org-mode source</a><p>]]></content>
-  </entry>
-  <entry>
-    <author>
-      <name></name>
-      <uri>http://avigdev.github.io/blog</uri>
-    </author>
-    <title type="html"><![CDATA[matlab subplots packed densely together]]></title>
-    <link rel="alternate" type="text/html" href="http://avigdev.github.io/blog/20150111/2015-01-11-matlab-subplots-packed-densely-together-html" />
-    <id>http://avigdev.github.io/blog/20150111/2015-01-11-matlab-subplots-packed-densely-together-html</id>
-    <updated>2015-01-12T20:03:08Z</updated>
-    <published>2015-01-11T07:15:21Z</published>
-    <category scheme="http://avigdev.github.io/blog" term="xmgr" />
-    <category scheme="http://avigdev.github.io/blog" term="matlab" />
-    <category scheme="http://avigdev.github.io/blog" term="octave" />
-    <category scheme="http://avigdev.github.io/blog" term="gmt" />
-    <summary type="html"><![CDATA[matlab subplots packed densely together]]></summary>
-    <content type="html" xml:base="http://avigdev.github.io/blog/20150111/2015-01-11-matlab-subplots-packed-densely-together-html"><![CDATA[
-
-
-
-<p>
-During significant portion of my grad-school I had to travel a lot. I therefore couldn't rely on hooking to the university matlab license, so I searched for free alternatives. While you could use a lot of good projects, such as <a href="https://www.gnu.org/software/octave/">octave</a> to crunch your numbers, it seems to me that making beautiful figures is not so easy.
-</p>
-
-<p>
-I got used to plotting with the excellent packages of <a href="http://gmt.soest.hawaii.edu">GMT</a> . I even wrote <a href="https://sourceforge.net/projects/octgmt/">some little octave wrapper functions</a> around GMT, since it's easy to get intimidated by their too elaborate man pages. You could still try them out, though GMT has been working lately on an official <a href="http://gmt.soest.hawaii.edu/projects/gmt-matlab-octave-api">matlab API</a> for you (they do have mature API for c++/Fortran). I didn't try it myself, yet. Another option is good old <a href="http://plasma-gate.weizmann.ac.il/Grace/">xmgr</a> . Both of them produce great imagery, but they have their limitations at times. 
-</p>
-
-<p>
-The one point where matlab excels is <i>better set of default parameters</i>. You don't have to worry so much about the line thicknesses, page width etc., as much as in the other options mentioned above. The cons side, obviously, is when you don't want the defaults. Easy things like packing your subplots close are not so easy in matlab. It's of course, nevertheless, still possible. Mainly with axis/plot handles.
-</p>
-
-<p>
-Here's how you do it : 
-first let's create our figs:
-</p>
-<div class="org-src-container">
-
-<pre class="src src-matlab"><span class="linenr">1: </span>nsubs=3;
-<span class="linenr">2: </span><span style="color: #932092;">for</span> <span style="color: #a0522d;">isub</span>=<span style="color: #008b8b;">1:nsubs</span>
-<span class="linenr">3: </span> subplot(nsubs,1,isub);
-<span class="linenr">4: </span> plot(rands(3,100)');
-<span class="linenr">5: </span> <span style="color: #228b22;">set</span>(<span style="color: #a0522d;">gca</span>,<span style="color: #8b2252;">'fontsize'</span>,16);
-<span class="linenr">6: </span><span style="color: #932092;">end</span> <span style="color: #b22222;">% for </span><span style="color: #b22222;">i</span><span style="color: #b22222;">=</span><span style="color: #b22222;">1:nsubs</span>
-<span class="linenr">7: </span>savefigs(<span style="color: #8b2252;">'nopack_subplots'</span>,<span style="color: #8b2252;">'save demo of packed graphs'</span>,[]);
-</pre>
-</div>
-
-<p>
-that's the result: 
-</p>
-
-
-<div id="fig:nopack" class="figure">
-<p><img src="/media/2015-01-11-matlab-subplots-packed-densely-together/nopack_subplots.png" width="80%"> 
-</p>
-<p><span class="figure-number">Figure 1:</span> before</p>
-</div>
-
-<p>
-now , lets pack them:
-</p>
-<div class="org-src-container">
-
-<pre class="src src-matlab"><span class="linenr"> 1: </span>packing_const=0.06
-<span class="linenr"> 2: </span><span style="color: #932092;">for</span> <span style="color: #a0522d;">isub</span>=<span style="color: #008b8b;">1:nsubs</span>
-<span class="linenr"> 3: </span> h=subplot(nsubs,1,isub);p = <span style="color: #228b22;">get</span>(<span style="color: #a0522d;">h</span>, <span style="color: #8b2252;">'pos'</span>);
-<span class="linenr"> 4: </span> <span style="color: #932092;">if</span>(isub<span style="color: #228b22;">&lt;</span>nsubs)
-<span class="linenr"> 5: </span>  <span style="color: #228b22;">set</span>(<span style="color: #a0522d;">gca</span>,<span style="color: #8b2252;">'fontsize'</span>,16,<span style="color: #8b2252;">'XTickLabelMode'</span>, <span style="color: #8b2252;">'Manual'</span>,<span style="color: #8b2252;">'XTickLabel'</span>, []);
-<span class="linenr"> 6: </span> <span style="color: #932092;">else</span> <span style="color: #b22222;">%  if(isub&lt;nsubs)</span>
-<span class="linenr"> 7: </span>  <span style="color: #228b22;">set</span>(<span style="color: #a0522d;">gca</span>,<span style="color: #8b2252;">'fontsize'</span>,16);
-<span class="linenr"> 8: </span> <span style="color: #932092;">end</span> <span style="color: #b22222;">%  if(isub&lt;nsubs) ... else ...</span>
-<span class="linenr"> 9: </span> <span style="color: #228b22;">set</span>(<span style="color: #a0522d;">h</span>,<span style="color: #8b2252;">'pos'</span>,[p(<span style="color: #a0522d;">1</span>) p(<span style="color: #a0522d;">2</span>) p(<span style="color: #a0522d;">3</span>) p(<span style="color: #a0522d;">4</span>)<span style="color: #228b22;">+</span>packing_const]);
-<span class="linenr">10: </span><span style="color: #932092;">end</span> <span style="color: #b22222;">% for </span><span style="color: #b22222;">isub</span><span style="color: #b22222;">=</span><span style="color: #b22222;">1:nsubs</span>
-<span class="linenr">11: </span>savefigs(<span style="color: #8b2252;">'pack_subplots'</span>,<span style="color: #8b2252;">'save demo of packed graphs'</span>,[]);
-</pre>
-</div>
-
-<p>
-that's our "after" exhibit : 
-</p>
-
-
-<div id="fig:pack" class="figure">
-<p><img src="/media/2015-01-11-matlab-subplots-packed-densely-together/pack_subplots.png" width="80%"> 
-</p>
-<p><span class="figure-number">Figure 2:</span> after</p>
-</div>
-
-<p>
-The "savefigs" function is non standard. Its aim is to save images in fig/eps/png formats at once, and generate README file and a mat file on the fly, with consistent names. 
-</p>
-<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/11/matlab-subplots-packed-densely-together.org">org-mode source</a><p>]]></content>
   </entry>
 </feed>
