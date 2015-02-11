@@ -97,6 +97,91 @@
 <article>
   <div class="blog_post">
     <header>
+      <div id="save-a-plot-in-png-eps-and-fig-formats"></div>
+      <h2 class="blog_post_title"><a href="/blog/20150212/2015-02-12-save-a-plot-in-png-eps-and-fig-formats-html/" rel="bookmark" title="Permanent Link to save a plot in png, eps, and fig formats">save a plot in png, eps, and fig formats</a></h2>
+      <p><small><span class="blog_post_date">February 12, 2015 at 01:07 AM</span> | categories: 
+        <span class="blog_post_categories"><a href='/blog/category/matlab/'>matlab</a>, <a href='/blog/category/octave/'>octave</a>, <a href='/blog/category/workflow/'>workflow</a></span>
+        | <a href="http://avigdev.github.io/blog/20150212/2015-02-12-save-a-plot-in-png-eps-and-fig-formats-html#disqus_thread">View Comments</a>
+      </small></p>
+    </header>
+    <div class="post_prose">
+      
+
+
+
+
+<p>
+When you save a figure, what you really want to save is - several formats, a fig file, all relevant data that is needed to reconstruct the fig, and a README that tells you what is there. That's the purpose of my savefigs : 
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-matlab"><span class="linenr"> 1: </span><span style="color: #b22222;">% purpose : save a figure in png,eps, and fig formats</span>
+<span class="linenr"> 2: </span><span style="color: #b22222;">% syntax : savefigs(filename,readme_text,data_str)</span>
+<span class="linenr"> 3: </span><span style="color: #b22222;">% filename - file name without any suffix (savefigs does not check this, so</span>
+<span class="linenr"> 4: </span><span style="color: #b22222;">% if you mistakenly set filename="stam.fig", the output files will </span>
+<span class="linenr"> 5: </span><span style="color: #b22222;">% be stam.fig.fig, stam.fig.eps, stam.fig.png)</span>
+<span class="linenr"> 6: </span><span style="color: #b22222;">% readme_text - a string that describes the figure, and the data.</span>
+<span class="linenr"> 7: </span><span style="color: #b22222;">% data_str - a data structure that contains all needed info in</span>
+<span class="linenr"> 8: </span><span style="color: #b22222;">% order to reconstruct the figure</span>
+<span class="linenr"> 9: </span><span style="color: #b22222;">% </span>
+<span class="linenr">10: </span><span style="color: #b22222;">% see also: print, hgsave</span>
+<span class="linenr">11: </span>
+<span class="linenr">12: </span>
+<span class="linenr">13: </span><span style="color: #b22222;">% Copyright 2013 Avi Gozolchiani (http://tiny.cc/avigoz)</span>
+<span class="linenr">14: </span><span style="color: #b22222;">% This program is free software: you can redistribute it and/or modify</span>
+<span class="linenr">15: </span><span style="color: #b22222;">% it under the terms of the GNU General Public License as published by</span>
+<span class="linenr">16: </span><span style="color: #b22222;">% the Free Software Foundation, either version 3 of the License, or</span>
+<span class="linenr">17: </span><span style="color: #b22222;">% (at your option) any later version.</span>
+<span class="linenr">18: </span><span style="color: #b22222;">%</span>
+<span class="linenr">19: </span><span style="color: #b22222;">% This program is distributed in the hope that it will be useful,</span>
+<span class="linenr">20: </span><span style="color: #b22222;">% but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="linenr">21: </span><span style="color: #b22222;">% </span><span style="color: #008b8b;">MERCHANTABILITY </span><span style="color: #b22222;">or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="linenr">22: </span><span style="color: #b22222;">% </span><span style="color: #008b8b;">GNU </span><span style="color: #b22222;">General Public License for more details.</span>
+<span class="linenr">23: </span><span style="color: #b22222;">%</span>
+<span class="linenr">24: </span><span style="color: #b22222;">% You should have received a copy of the GNU General Public License</span>
+<span class="linenr">25: </span><span style="color: #b22222;">% along with this program.  If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</span>
+<span class="linenr">26: </span>
+<span class="linenr">27: </span><span style="color: #b22222;">% $Log$</span>
+<span class="linenr">28: </span><span style="color: #932092;">function</span> <span style="color: #0000ff;">savefigs</span>(<span style="color: #a0522d;">filename</span>,<span style="color: #a0522d;">readme_text</span>,<span style="color: #a0522d;">data_str</span>)
+<span class="linenr">29: </span>isoctave=(exist(<span style="color: #8b2252;">'OCTAVE_VERSION'</span>,<span style="color: #8b2252;">'builtin'</span>)<span style="color: #228b22;">~=</span>0);
+<span class="linenr">30: </span><span style="color: #932092;">if</span>(isoctave)
+<span class="linenr">31: </span>    prints=struct(<span style="color: #8b2252;">'suff'</span>,{<span style="color: #8b2252;">'png'</span>,<span style="color: #8b2252;">'eps'</span>},<span style="text-decoration: underline;">...</span>
+<span class="linenr">32: </span>                  <span style="color: #8b2252;">'func'</span>,{@(x)print(<span style="color: #8b2252;">'-dpng'</span>,x),@(x)print(<span style="color: #8b2252;">'-depsc2'</span>,x)});    
+<span class="linenr">33: </span><span style="color: #932092;">else</span>
+<span class="linenr">34: </span>    prints=struct(<span style="color: #8b2252;">'suff'</span>,{<span style="color: #8b2252;">'png'</span>,<span style="color: #8b2252;">'eps'</span>,<span style="color: #8b2252;">'fig'</span>},<span style="text-decoration: underline;">...</span>
+<span class="linenr">35: </span>                  <span style="color: #8b2252;">'func'</span>,{@(x)print(<span style="color: #8b2252;">'-dpng'</span>,x),@(x)print(<span style="color: #8b2252;">'-depsc2'</span>,x), <span style="text-decoration: underline;">...</span>
+<span class="linenr">36: </span>                        @hgsave});
+<span class="linenr">37: </span><span style="color: #932092;">end</span>
+<span class="linenr">38: </span>n_printfuncs=length(prints);
+<span class="linenr">39: </span><span style="color: #932092;">for</span> <span style="color: #a0522d;">i_printfunc</span>=<span style="color: #008b8b;">1:n_printfuncs </span><span style="color: #b22222;">% fig,png, and eps files</span>
+<span class="linenr">40: </span>    prints(i_printfunc).func([filename,<span style="color: #8b2252;">'.'</span>,prints(i_printfunc).suff]);
+<span class="linenr">41: </span><span style="color: #932092;">end</span> <span style="color: #b22222;">% for </span><span style="color: #b22222;">i_printfunc</span><span style="color: #b22222;">=</span><span style="color: #b22222;">1:n_printfuncs</span>
+<span class="linenr">42: </span><span style="color: #b22222;">% document what is it</span>
+<span class="linenr">43: </span>fid=fopen([filename,<span style="color: #8b2252;">'_README'</span>,<span style="color: #8b2252;">'.txt'</span>],<span style="color: #8b2252;">'wt'</span>);
+<span class="linenr">44: </span>fprintf(fid,<span style="color: #8b2252;">'%s'</span>,readme_text);
+<span class="linenr">45: </span>fclose(fid);
+<span class="linenr">46: </span><span style="color: #b22222;">% save the vector/matrix for future crunching</span>
+<span class="linenr">47: </span>save([filename,<span style="color: #8b2252;">'_data'</span>,<span style="color: #8b2252;">'.mat'</span>],<span style="color: #8b2252;">'data_str'</span>);
+</pre>
+</div>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/02/12/save-a-plot-in-png,-eps,-and-fig-formats.org">org-mode source</a><p>
+
+    </div>
+  </div>
+</article>
+
+
+
+  <div class="after_post"><a href="http://avigdev.github.io/blog/20150212/2015-02-12-save-a-plot-in-png-eps-and-fig-formats-html#disqus_thread">Read and Post Comments</a></div>
+  <hr class="interblog" />
+  
+
+
+
+<article>
+  <div class="blog_post">
+    <header>
       <div id="regridding-unequally-spaced-sampled-field-and-plotting-an-imagesc"></div>
       <h2 class="blog_post_title"><a href="/blog/20150207/2015-02-07-regridding-unequally-spaced-sampled-field-and-plotting-an-imagesc-html/" rel="bookmark" title="Permanent Link to Regridding unequally spaced sampled field, and plotting an imagesc">Regridding unequally spaced sampled field, and plotting an imagesc</a></h2>
       <p><small><span class="blog_post_date">February 07, 2015 at 06:48 PM</span> | categories: 
@@ -362,126 +447,6 @@ Thanks <a href="http://blog.louic.nl/">Louic</a> .
 
   <div class="after_post"><a href="http://avigdev.github.io/blog/20150127/2015-01-27-xmgr-annotations-html#disqus_thread">Read and Post Comments</a></div>
   <hr class="interblog" />
-  
-
-
-
-<article>
-  <div class="blog_post">
-    <header>
-      <div id="the-best-of-all-worlds-disp-+-sprintf"></div>
-      <h2 class="blog_post_title"><a href="/blog/20150125/2015-01-25-the-best-of-all-worlds-disp-+-sprintf-html/" rel="bookmark" title="Permanent Link to The best of all worlds - disp + sprintf">The best of all worlds - disp + sprintf</a></h2>
-      <p><small><span class="blog_post_date">January 25, 2015 at 08:30 PM</span> | categories: 
-        <span class="blog_post_categories"><a href='/blog/category/matlab/'>matlab</a>, <a href='/blog/category/octave/'>octave</a></span>
-        | <a href="http://avigdev.github.io/blog/20150125/2015-01-25-the-best-of-all-worlds-disp-+-sprintf-html#disqus_thread">View Comments</a>
-      </small></p>
-    </header>
-    <div class="post_prose">
-      
-
-
-
-
-<p>
-Going through loops you would often find yourself writing something ugly like : 
-</p>
-<div class="org-src-container">
-
-<pre class="src src-matlab"><span class="linenr">1: </span>n=10;
-<span class="linenr">2: </span>is_verbose=true;
-<span class="linenr">3: </span><span style="color: #932092;">for</span> <span style="color: #a0522d;">i</span>=<span style="color: #008b8b;">1:n</span>
-<span class="linenr">4: </span> <span style="color: #932092;">if</span>(is_verbose)
-<span class="linenr">5: </span>  disp(sprintf(<span style="color: #8b2252;">'DBG: %d/%d'</span>,<span style="color: #008b8b;">i</span>,n));
-<span class="linenr">6: </span> <span style="color: #932092;">end</span>
-<span class="linenr">7: </span>  <span style="color: #b22222;">% some interesting stuff here....</span>
-<span class="linenr">8: </span><span style="color: #932092;">end</span>
-</pre>
-</div>
-
-<pre class="example">
-&gt;&gt; &gt;&gt; DBG: 1/10
-DBG: 2/10
-DBG: 3/10
-DBG: 4/10
-DBG: 5/10
-DBG: 6/10
-DBG: 7/10
-DBG: 8/10
-DBG: 9/10
-DBG: 10/10
-&gt;&gt;
-</pre>
-
-<p>
-While, if you had disp and sprintf combined, you could have written a beautiful code like this : 
-</p>
-<div class="org-src-container">
-
-<pre class="src src-matlab"><span class="linenr">1: </span>is_verbose=true;
-<span class="linenr">2: </span>n=10;
-<span class="linenr">3: </span><span style="color: #932092;">for</span> <span style="color: #a0522d;">i</span>=<span style="color: #008b8b;">1:n</span>
-<span class="linenr">4: </span> verbose_disp(is_verbose,<span style="color: #8b2252;">'DBG: %d/%d'</span>,<span style="color: #008b8b;">i</span>,n);
-<span class="linenr">5: </span> <span style="color: #b22222;">% some interesting stuff here....</span>
-<span class="linenr">6: </span><span style="color: #932092;">end</span>
-</pre>
-</div>
-
-<p>
-Thanks to Matlab's <i>varargin</i> this little gem could be very close to <i>sprintf</i> in syntax. 
-</p>
-<div class="org-src-container">
-
-<pre class="src src-matlab"><span class="linenr"> 1: </span><span style="color: #b22222;">% purpose display only if the script is in verbose mode + include sprintf </span>
-<span class="linenr"> 2: </span><span style="color: #b22222;">% capabilities in disp.</span>
-<span class="linenr"> 3: </span><span style="color: #b22222;">% syntax : verbose_disp(flag_verb,form,[variable_list])</span>
-<span class="linenr"> 4: </span><span style="color: #b22222;">% flag_verb=1 if you want to display, and 0 if you don't want to</span>
-<span class="linenr"> 5: </span><span style="color: #b22222;">% display</span>
-<span class="linenr"> 6: </span><span style="color: #b22222;">% form = string including formatting directions for sprintf </span>
-<span class="linenr"> 7: </span><span style="color: #b22222;">% variable_list = more parameters which include variables fitting</span>
-<span class="linenr"> 8: </span><span style="color: #b22222;">% into the format "form".</span>
-<span class="linenr"> 9: </span><span style="color: #b22222;">%</span>
-<span class="linenr">10: </span><span style="color: #b22222;">% see also : disp, sprintf</span>
-<span class="linenr">11: </span>
-<span class="linenr">12: </span><span style="color: #b22222;">% Copyright 2013 Avi Gozolchiani (http://tiny.cc/avigoz)</span>
-<span class="linenr">13: </span><span style="color: #b22222;">% This program is free software: you can redistribute it and/or modify</span>
-<span class="linenr">14: </span><span style="color: #b22222;">% it under the terms of the GNU General Public License as published by</span>
-<span class="linenr">15: </span><span style="color: #b22222;">% the Free Software Foundation, either version 3 of the License, or</span>
-<span class="linenr">16: </span><span style="color: #b22222;">% (at your option) any later version.</span>
-<span class="linenr">17: </span><span style="color: #b22222;">%</span>
-<span class="linenr">18: </span><span style="color: #b22222;">% This program is distributed in the hope that it will be useful,</span>
-<span class="linenr">19: </span><span style="color: #b22222;">% but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class="linenr">20: </span><span style="color: #b22222;">% </span><span style="color: #008b8b;">MERCHANTABILITY </span><span style="color: #b22222;">or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
-<span class="linenr">21: </span><span style="color: #b22222;">% </span><span style="color: #008b8b;">GNU </span><span style="color: #b22222;">General Public License for more details.</span>
-<span class="linenr">22: </span><span style="color: #b22222;">%</span>
-<span class="linenr">23: </span><span style="color: #b22222;">% You should have received a copy of the GNU General Public License</span>
-<span class="linenr">24: </span><span style="color: #b22222;">% along with this program.  If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</span>
-<span class="linenr">25: </span>
-<span class="linenr">26: </span><span style="color: #b22222;">% $Log$</span>
-<span class="linenr">27: </span><span style="color: #932092;">function</span> <span style="color: #0000ff;">verbose_disp</span>(<span style="color: #a0522d;">flag_verb</span>,<span style="color: #a0522d;">form</span>,<span style="color: #a0522d;">varargin</span>)
-<span class="linenr">28: </span><span style="color: #b22222;">% little input checking</span>
-<span class="linenr">29: </span><span style="color: #932092;">if</span>(nargin<span style="color: #228b22;">&lt;</span>2)
-<span class="linenr">30: </span>    error(<span style="color: #8b2252;">'verbose_disp : wrong number of arguments'</span>);
-<span class="linenr">31: </span><span style="color: #932092;">end</span>                                     <span style="color: #b22222;">% if(nargin&lt;2)</span>
-<span class="linenr">32: </span><span style="color: #932092;">if</span>(<span style="color: #228b22;">~</span>ischar(form))
-<span class="linenr">33: </span>    error(<span style="color: #8b2252;">'second argument should be a character string'</span>);
-<span class="linenr">34: </span><span style="color: #932092;">end</span>                                 <span style="color: #b22222;">% if(~ischar(form))</span>
-<span class="linenr">35: </span><span style="color: #b22222;">% if mode=verbose display the formatted string</span>
-<span class="linenr">36: </span><span style="color: #932092;">if</span>(flag_verb)
-<span class="linenr">37: </span>  s=sprintf(form,varargin{<span style="color: #228b22;">:</span>});
-<span class="linenr">38: </span>  disp(s);
-<span class="linenr">39: </span><span style="color: #932092;">end</span> <span style="color: #b22222;">% if(flag_verb)</span>
-</pre>
-</div>
-<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/25/The-best-of-all-worlds---disp-+-sprintf.org">org-mode source</a><p>
-
-    </div>
-  </div>
-</article>
-
-
-
-  <div class="after_post"><a href="http://avigdev.github.io/blog/20150125/2015-01-25-the-best-of-all-worlds-disp-+-sprintf-html#disqus_thread">Read and Post Comments</a></div>
-  <hr class="interblog" />
  <a href="../2">Next Page »</a>
 
           </div>
@@ -501,11 +466,11 @@ Thanks to Matlab's <i>varargin</i> this little gem could be very close to <i>spr
   <section>
     <h1 class="post_header_gradient theme_font">Latest Posts</h1>
     <ul>
+      <li><a href="/blog/20150212/2015-02-12-save-a-plot-in-png-eps-and-fig-formats-html/">save a plot in png, eps, and fig formats</a></li>
       <li><a href="/blog/20150207/2015-02-07-regridding-unequally-spaced-sampled-field-and-plotting-an-imagesc-html/">Regridding unequally spaced sampled field, and plotting an imagesc</a></li>
       <li><a href="/blog/20150129/2015-01-29-screen-unique-logs-for-each-run-html/">Screen - unique logs for each run</a></li>
       <li><a href="/blog/20150127/2015-01-27-consistent-latex-units-in-non-italics-html/">Consistent Latex units in non italics</a></li>
       <li><a href="/blog/20150127/2015-01-27-xmgr-annotations-html/">Xmgr annotations</a></li>
-      <li><a href="/blog/20150125/2015-01-25-the-best-of-all-worlds-disp-+-sprintf-html/">The best of all worlds - disp + sprintf</a></li>
     </ul>
   </section>
   <section>

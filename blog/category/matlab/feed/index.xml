@@ -10,10 +10,80 @@
     <title>Avi Gozolchiani אבי גוזולצני</title>
     <link>http://avigdev.github.io/blog</link>
     <description>Environmental Physics at Ben Gurion University</description>
-    <pubDate>Sat, 07 Feb 2015 16:56:40 GMT</pubDate>
+    <pubDate>Wed, 11 Feb 2015 23:08:14 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>save a plot in png, eps, and fig formats</title>
+      <link>http://avigdev.github.io/blog/20150212/2015-02-12-save-a-plot-in-png-eps-and-fig-formats-html</link>
+      <pubDate>Thu, 12 Feb 2015 01:07:53 IST</pubDate>
+      <category><![CDATA[matlab]]></category>
+      <category><![CDATA[octave]]></category>
+      <category><![CDATA[workflow]]></category>
+      <guid isPermaLink="false">XsgIuVpSxa0VS4Ttmq5eF07Wryc=</guid>
+      <description>save a plot in png, eps, and fig formats</description>
+      <content:encoded><![CDATA[
+
+
+
+<p>
+When you save a figure, what you really want to save is - several formats, a fig file, all relevant data that is needed to reconstruct the fig, and a README that tells you what is there. That's the purpose of my savefigs : 
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-matlab"><span class="linenr"> 1: </span><span style="color: #b22222;">% purpose : save a figure in png,eps, and fig formats</span>
+<span class="linenr"> 2: </span><span style="color: #b22222;">% syntax : savefigs(filename,readme_text,data_str)</span>
+<span class="linenr"> 3: </span><span style="color: #b22222;">% filename - file name without any suffix (savefigs does not check this, so</span>
+<span class="linenr"> 4: </span><span style="color: #b22222;">% if you mistakenly set filename="stam.fig", the output files will </span>
+<span class="linenr"> 5: </span><span style="color: #b22222;">% be stam.fig.fig, stam.fig.eps, stam.fig.png)</span>
+<span class="linenr"> 6: </span><span style="color: #b22222;">% readme_text - a string that describes the figure, and the data.</span>
+<span class="linenr"> 7: </span><span style="color: #b22222;">% data_str - a data structure that contains all needed info in</span>
+<span class="linenr"> 8: </span><span style="color: #b22222;">% order to reconstruct the figure</span>
+<span class="linenr"> 9: </span><span style="color: #b22222;">% </span>
+<span class="linenr">10: </span><span style="color: #b22222;">% see also: print, hgsave</span>
+<span class="linenr">11: </span>
+<span class="linenr">12: </span>
+<span class="linenr">13: </span><span style="color: #b22222;">% Copyright 2013 Avi Gozolchiani (http://tiny.cc/avigoz)</span>
+<span class="linenr">14: </span><span style="color: #b22222;">% This program is free software: you can redistribute it and/or modify</span>
+<span class="linenr">15: </span><span style="color: #b22222;">% it under the terms of the GNU General Public License as published by</span>
+<span class="linenr">16: </span><span style="color: #b22222;">% the Free Software Foundation, either version 3 of the License, or</span>
+<span class="linenr">17: </span><span style="color: #b22222;">% (at your option) any later version.</span>
+<span class="linenr">18: </span><span style="color: #b22222;">%</span>
+<span class="linenr">19: </span><span style="color: #b22222;">% This program is distributed in the hope that it will be useful,</span>
+<span class="linenr">20: </span><span style="color: #b22222;">% but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="linenr">21: </span><span style="color: #b22222;">% </span><span style="color: #008b8b;">MERCHANTABILITY </span><span style="color: #b22222;">or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="linenr">22: </span><span style="color: #b22222;">% </span><span style="color: #008b8b;">GNU </span><span style="color: #b22222;">General Public License for more details.</span>
+<span class="linenr">23: </span><span style="color: #b22222;">%</span>
+<span class="linenr">24: </span><span style="color: #b22222;">% You should have received a copy of the GNU General Public License</span>
+<span class="linenr">25: </span><span style="color: #b22222;">% along with this program.  If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</span>
+<span class="linenr">26: </span>
+<span class="linenr">27: </span><span style="color: #b22222;">% $Log$</span>
+<span class="linenr">28: </span><span style="color: #932092;">function</span> <span style="color: #0000ff;">savefigs</span>(<span style="color: #a0522d;">filename</span>,<span style="color: #a0522d;">readme_text</span>,<span style="color: #a0522d;">data_str</span>)
+<span class="linenr">29: </span>isoctave=(exist(<span style="color: #8b2252;">'OCTAVE_VERSION'</span>,<span style="color: #8b2252;">'builtin'</span>)<span style="color: #228b22;">~=</span>0);
+<span class="linenr">30: </span><span style="color: #932092;">if</span>(isoctave)
+<span class="linenr">31: </span>    prints=struct(<span style="color: #8b2252;">'suff'</span>,{<span style="color: #8b2252;">'png'</span>,<span style="color: #8b2252;">'eps'</span>},<span style="text-decoration: underline;">...</span>
+<span class="linenr">32: </span>                  <span style="color: #8b2252;">'func'</span>,{@(x)print(<span style="color: #8b2252;">'-dpng'</span>,x),@(x)print(<span style="color: #8b2252;">'-depsc2'</span>,x)});    
+<span class="linenr">33: </span><span style="color: #932092;">else</span>
+<span class="linenr">34: </span>    prints=struct(<span style="color: #8b2252;">'suff'</span>,{<span style="color: #8b2252;">'png'</span>,<span style="color: #8b2252;">'eps'</span>,<span style="color: #8b2252;">'fig'</span>},<span style="text-decoration: underline;">...</span>
+<span class="linenr">35: </span>                  <span style="color: #8b2252;">'func'</span>,{@(x)print(<span style="color: #8b2252;">'-dpng'</span>,x),@(x)print(<span style="color: #8b2252;">'-depsc2'</span>,x), <span style="text-decoration: underline;">...</span>
+<span class="linenr">36: </span>                        @hgsave});
+<span class="linenr">37: </span><span style="color: #932092;">end</span>
+<span class="linenr">38: </span>n_printfuncs=length(prints);
+<span class="linenr">39: </span><span style="color: #932092;">for</span> <span style="color: #a0522d;">i_printfunc</span>=<span style="color: #008b8b;">1:n_printfuncs </span><span style="color: #b22222;">% fig,png, and eps files</span>
+<span class="linenr">40: </span>    prints(i_printfunc).func([filename,<span style="color: #8b2252;">'.'</span>,prints(i_printfunc).suff]);
+<span class="linenr">41: </span><span style="color: #932092;">end</span> <span style="color: #b22222;">% for </span><span style="color: #b22222;">i_printfunc</span><span style="color: #b22222;">=</span><span style="color: #b22222;">1:n_printfuncs</span>
+<span class="linenr">42: </span><span style="color: #b22222;">% document what is it</span>
+<span class="linenr">43: </span>fid=fopen([filename,<span style="color: #8b2252;">'_README'</span>,<span style="color: #8b2252;">'.txt'</span>],<span style="color: #8b2252;">'wt'</span>);
+<span class="linenr">44: </span>fprintf(fid,<span style="color: #8b2252;">'%s'</span>,readme_text);
+<span class="linenr">45: </span>fclose(fid);
+<span class="linenr">46: </span><span style="color: #b22222;">% save the vector/matrix for future crunching</span>
+<span class="linenr">47: </span>save([filename,<span style="color: #8b2252;">'_data'</span>,<span style="color: #8b2252;">'.mat'</span>],<span style="color: #8b2252;">'data_str'</span>);
+</pre>
+</div>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/02/12/save-a-plot-in-png,-eps,-and-fig-formats.org">org-mode source</a><p>]]></content:encoded>
+    </item>
     <item>
       <title>Regridding unequally spaced sampled field, and plotting an imagesc</title>
       <link>http://avigdev.github.io/blog/20150207/2015-02-07-regridding-unequally-spaced-sampled-field-and-plotting-an-imagesc-html</link>

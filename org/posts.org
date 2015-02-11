@@ -625,19 +625,64 @@ myimagesc(x1(1,:),y1(:,1),z1,0.55,0.95,0.05);
 
 Where your input parameters to [[http://avigdev.github.io/blog/20150112/2015-01-12-matlab-discrete-colorbar-html/][myimagesc]] may vary, and you could replace "5" by whatever division of the equally spaced grids you fancy. 
 
-* matlab : save a plot in png, eps, and fig formats
-%% in the parameters section
-prints=struct('suff',{'png','eps','fig'},...
-              'func',{@(x) print('-dpng',x),@(x) print('-depsc2',x), @hgsave});
+* save a plot in png, eps, and fig formats
+  :PROPERTIES:
+  :categories: matlab,octave,workflow
+  :date:     2015/02/12 01:07:53
+  :updated:  2015/02/12 01:07:53
+  :END:
+
+When you save a figure, what you really want to save is - several formats, a fig file, all relevant data that is needed to reconstruct the fig, and a README that tells you what is there. That's the purpose of my savefigs : 
+
+#+BEGIN_SRC matlab -n :exports both :eval never-export :results output 
+% purpose : save a figure in png,eps, and fig formats
+% syntax : savefigs(filename,readme_text,data_str)
+% filename - file name without any suffix (savefigs does not check this, so
+% if you mistakenly set filename="stam.fig", the output files will 
+% be stam.fig.fig, stam.fig.eps, stam.fig.png)
+% readme_text - a string that describes the figure, and the data.
+% data_str - a data structure that contains all needed info in
+% order to reconstruct the figure
+% 
+% see also: print, hgsave
+
+
+% Copyright 2013 Avi Gozolchiani (http://tiny.cc/avigoz)
+% This program is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+% $Log$
+function savefigs(filename,readme_text,data_str)
+isoctave=(exist('OCTAVE_VERSION','builtin')~=0);
+if(isoctave)
+    prints=struct('suff',{'png','eps'},...
+                  'func',{@(x)print('-dpng',x),@(x)print('-depsc2',x)});    
+else
+    prints=struct('suff',{'png','eps','fig'},...
+                  'func',{@(x)print('-dpng',x),@(x)print('-depsc2',x), ...
+                        @hgsave});
+end
 n_printfuncs=length(prints);
-%% after the plot commands
-filename='stam.';
 for i_printfunc=1:n_printfuncs % fig,png, and eps files
     prints(i_printfunc).func([filename,'.',prints(i_printfunc).suff]);
 end % for i_printfunc=1:n_printfuncs
-
-this is now incorporated in 
-/home/avigoz/Dropbox/oct_scripts/plotting/savefigs.m
+% document what is it
+fid=fopen([filename,'_README','.txt'],'wt');
+fprintf(fid,'%s',readme_text);
+fclose(fid);
+% save the vector/matrix for future crunching
+save([filename,'_data','.mat'],'data_str');
+#+END_SRC
 * matlab general slicing syntax :
 
 idx.type='()';                  % indices structure
