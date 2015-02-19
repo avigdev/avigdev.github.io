@@ -10,10 +10,46 @@
     <title>Avi Gozolchiani אבי גוזולצני</title>
     <link>http://avigdev.github.io/blog</link>
     <description>Environmental Physics at Ben Gurion University</description>
-    <pubDate>Thu, 19 Feb 2015 09:02:38 GMT</pubDate>
+    <pubDate>Thu, 19 Feb 2015 09:16:55 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>A general slicing syntax</title>
+      <link>http://avigdev.github.io/blog/20150219/2015-02-19-a-general-slicing-syntax-html</link>
+      <pubDate>Thu, 19 Feb 2015 11:16:40 IST</pubDate>
+      <category><![CDATA[matlab]]></category>
+      <category><![CDATA[octave]]></category>
+      <guid isPermaLink="false">nMaIR3r2XL7EoLy8YUEgd3nS6rc=</guid>
+      <description>A general slicing syntax</description>
+      <content:encoded><![CDATA[
+
+
+
+<p>
+To slice the 4th cross section of the second dimension of a 3-dimensional array in Matlab/Octave, you would use a code like : 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-matlab"><span class="linenr">1: </span>z=z(<span style="color: #228b22;">:</span>,4,<span style="color: #228b22;">:</span>);
+</pre>
+</div>
+
+<p>
+If you want a bit more flexibility than that, you can have the sliced dimension as a parameter, using <a href="http://www.mathworks.com/help/matlab/ref/subsref.html">subsref</a> : 
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-matlab"><span class="linenr">1: </span>dim=2;
+<span class="linenr">2: </span>idx.type=<span style="color: #8b2252;">'()'</span>;               
+<span class="linenr">3: </span>idx.subs={<span style="color: #8b2252;">':'</span>,<span style="color: #8b2252;">':'</span>,<span style="color: #8b2252;">':'</span>};
+<span class="linenr">4: </span>idx.subs{dim}=4;
+<span class="linenr">5: </span>z=subsref(z,idx);
+</pre>
+</div>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/02/19/A-general-slicing-syntax.org">org-mode source</a><p>]]></content:encoded>
+    </item>
     <item>
       <title>save a plot in png, eps, and fig formats</title>
       <link>http://avigdev.github.io/blog/20150212/2015-02-12-save-a-plot-in-png-eps-and-fig-formats-html</link>
@@ -501,29 +537,6 @@ The weird mingling of figs and bibliography which is the default setting in LaTe
 </pre>
 </div>
 <p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/15/LaTeX---please-don't-mix-bibliography-and-figures.org">org-mode source</a><p>]]></content:encoded>
-    </item>
-    <item>
-      <title>GMT's mysterious page dimension</title>
-      <link>http://avigdev.github.io/blog/20150114/2015-01-14-gmt-s-mysterious-page-dimension-html</link>
-      <pubDate>Wed, 14 Jan 2015 18:40:56 IST</pubDate>
-      <category><![CDATA[matlab]]></category>
-      <category><![CDATA[octave]]></category>
-      <guid isPermaLink="false">SKqKa1GnOJ4TfKLBT4hs6YaleoU=</guid>
-      <description>GMT's mysterious page dimension</description>
-      <content:encoded><![CDATA[
-
-
-<p>
-<a href="http://gmt.soest.hawaii.edu">GMT</a> has been around for some time now. Their <a href="http://gmt.soest.hawaii.edu/gmt/map_geoip_all.png">"world domination map"</a> is a nice demonstration of its scripting capabilities and quality rendering. They only suffer from one disease. Well actually two. 
-</p>
-
-<ol class="org-ol">
-<li>GMT doesn't allow gradual step-by-step fine tuning. While in matlab/octave you would use "plot(x,y)" just to see what happens, and afterwards play with the axis limits until you are satisfied, and so on - in GMT you have to worry about axis and the physical figure width and height from the very beginning. Quite a barrier I would say. That's where <a href="http://sourceforge.net/projects/octgmt/">octgmt</a> might come handy. It's an interface between octave and GMT that will create for you an initial script. 
-</li>
-<li>When you try to use the package, you are likely to just produce blank pages. That's because of the heavy dependence on some default printing page size, which is hidden from the user. Your plot should just fit in this mysterious default. This was actually discussed in their <a href="http://comments.gmane.org/gmane.comp.gis.gmt.user/13819">mailgroup</a> . Anyhow, you probably want to try the flag "&#x2013;PAPER_MEDIA=Custom_550x580" or "&#x2013;PS_MEDIA=Custom_550x580" (depending on the GMT version). 
-</li>
-</ol>
-<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/14/GMT's-mysterious-page-dimension.org">org-mode source</a><p>]]></content:encoded>
     </item>
   </channel>
 </rss>

@@ -1,0 +1,21 @@
+* A general slicing syntax 
+  :PROPERTIES:
+  :categories: matlab,octave
+  :date:     2015/02/19 11:16:40
+  :updated:  2015/02/19 11:16:40
+  :END:
+
+To slice the 4th cross section of the second dimension of a 3-dimensional array in Matlab/Octave, you would use a code like : 
+#+BEGIN_SRC matlab -n
+ z=z(:,4,:);
+#+END_SRC
+
+If you want a bit more flexibility than that, you can have the sliced dimension as a parameter, using [[http://www.mathworks.com/help/matlab/ref/subsref.html][subsref]] : 
+
+#+BEGIN_SRC matlab -n
+dim=2;
+idx.type='()';               
+idx.subs={':',':',':'};
+idx.subs{dim}=4;
+z=subsref(z,idx);
+#+END_SRC

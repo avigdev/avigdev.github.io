@@ -97,11 +97,11 @@
 <article>
   <div class="blog_post">
     <header>
-      <div id="latex-automatic-rotation"></div>
-      <h2 class="blog_post_title"><a href="/blog/20150117/2015-01-17-latex-automatic-rotation-html/" rel="bookmark" title="Permanent Link to latex automatic rotation">latex automatic rotation</a></h2>
-      <p><small><span class="blog_post_date">January 17, 2015 at 05:43 PM</span> | categories: 
-        <span class="blog_post_categories"><a href='/blog/category/latex/'>latex</a></span>
-        | <a href="http://avigdev.github.io/blog/20150117/2015-01-17-latex-automatic-rotation-html#disqus_thread">View Comments</a>
+      <div id="a-general-slicing-syntax"></div>
+      <h2 class="blog_post_title"><a href="/blog/20150219/2015-02-19-a-general-slicing-syntax-html/" rel="bookmark" title="Permanent Link to A general slicing syntax">A general slicing syntax</a></h2>
+      <p><small><span class="blog_post_date">February 19, 2015 at 11:16 AM</span> | categories: 
+        <span class="blog_post_categories"><a href='/blog/category/matlab/'>matlab</a>, <a href='/blog/category/octave/'>octave</a></span>
+        | <a href="http://avigdev.github.io/blog/20150219/2015-02-19-a-general-slicing-syntax-html#disqus_thread">View Comments</a>
       </small></p>
     </header>
     <div class="post_prose">
@@ -109,20 +109,30 @@
 
 
 
-<p>
-The usual workflow with a latex document is latex-&gt;bibtex-&gt;latex-&gt;dvips-&gt;ps2pdf. There are some variations, on this theme. Anyway - when you use ps2pdf it tries to optimize space and sometimes rotates the figures. There's a whole story about how dvi includes figures as links to files and how dvips,ps2pdf plant this file inside the document. <b>Bottom line is</b> - we don't like automatic orientation of figures. Once we got it right, we want it to behave the same even if the document has changed. 
-</p>
 
 <p>
-So&#x2026; 
-to disable automatic rotation in ps2pdf (the source for this tip is <a href="http://textricks.blogspot.co.il/2010/01/ps2pdf-autorotate-switch-off.html">over here</a> ):
+To slice the 4th cross section of the second dimension of a 3-dimensional array in Matlab/Octave, you would use a code like : 
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh"><span class="linenr">1: </span>ps2pdf -dAutoRotatePages=/None
+<pre class="src src-matlab"><span class="linenr">1: </span>z=z(<span style="color: #228b22;">:</span>,4,<span style="color: #228b22;">:</span>);
 </pre>
 </div>
-<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/17/latex-automatic-rotation.org">org-mode source</a><p>
+
+<p>
+If you want a bit more flexibility than that, you can have the sliced dimension as a parameter, using <a href="http://www.mathworks.com/help/matlab/ref/subsref.html">subsref</a> : 
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-matlab"><span class="linenr">1: </span>dim=2;
+<span class="linenr">2: </span>idx.type=<span style="color: #8b2252;">'()'</span>;               
+<span class="linenr">3: </span>idx.subs={<span style="color: #8b2252;">':'</span>,<span style="color: #8b2252;">':'</span>,<span style="color: #8b2252;">':'</span>};
+<span class="linenr">4: </span>idx.subs{dim}=4;
+<span class="linenr">5: </span>z=subsref(z,idx);
+</pre>
+</div>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/02/19/A-general-slicing-syntax.org">org-mode source</a><p>
 
     </div>
   </div>
@@ -132,7 +142,7 @@ to disable automatic rotation in ps2pdf (the source for this tip is <a href="htt
 
 <div id="disqus_thread"></div>
 <script type="text/javascript">
-  var disqus_url = "http://avigdev.github.io/blog/20150117/2015-01-17-latex-automatic-rotation-html";
+  var disqus_url = "http://avigdev.github.io/blog/20150219/2015-02-19-a-general-slicing-syntax-html";
 </script>
 <script type="text/javascript" src="http://disqus.com/forums/avigdev/embed.js"></script>
 <noscript><a href="http://avigdev.disqus.com/?url=ref">View the discussion thread.</a></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>

@@ -1,3 +1,4 @@
+#+PROPERTY: header-args :eval never-export
 * COMMENT simplify slurm and qsub  
   :PROPERTIES:
   :date:     2014/12/28 18:48:02
@@ -199,7 +200,7 @@ The one point where matlab excels is /better set of default parameters/. You don
 
 Here's how you do it : 
 first let's create our figs:
-#+BEGIN_SRC matlab -n :exports code :eval never-export :session
+#+BEGIN_SRC matlab -n :exports code  :session
 nsubs=3;
 for isub=1:nsubs
  subplot(nsubs,1,isub);
@@ -219,7 +220,7 @@ that's the result:
 [[file:nopack_subplots.png]]
 
 now , lets pack them:
-#+BEGIN_SRC matlab -n :exports code :eval never-export :session
+#+BEGIN_SRC matlab -n :exports code  :session
 packing_const=0.06
 for isub=1:nsubs
  h=subplot(nsubs,1,isub);p = get(h, 'pos');
@@ -254,7 +255,7 @@ You shouldn't use the default "smooth" gradients of imagesc. The aesthetic side 
 
 verbose_disp is my version of disp/sprintf, combining the goods of both of them. You can safely remove these lines, or make up your own version of "verbosity" function. 
 
-#+BEGIN_SRC matlab -n :exports code :eval never-export :session
+#+BEGIN_SRC matlab -n :exports code  :session
 % purpose : interface for imagesc for producing good 
 % heat maps
 % syntax : myimagesc(x,y,w,minval,maxval,bin,[mask],[flag_verbose])
@@ -379,7 +380,7 @@ set(gca,'YDir','normal');
   :categories: latex
   :END:
 The weird mingling of figs and bibliography which is the default setting in LaTeX could be avoided by using the package [[http://www.ctan.org/pkg/placeins]["placeins"]]. You could use several more barriers to make sure that all figures will not leak beyond certain position in text (for example - the end of a section).
-#+BEGIN_SRC latex -n :exports code :eval never-export :session
+#+BEGIN_SRC latex -n :exports code  :session
 \usepackage{placeins} % in the header
 ....
 \FloatBarrier % this forces all figures to be presented before the bibl.
@@ -396,7 +397,7 @@ The usual workflow with a latex document is latex->bibtex->latex->dvips->ps2pdf.
 
 So... 
 to disable automatic rotation in ps2pdf (the source for this tip is [[http://textricks.blogspot.co.il/2010/01/ps2pdf-autorotate-switch-off.html][over here]]):
-#+BEGIN_SRC sh -n :exports code :eval never-export :session
+#+BEGIN_SRC sh -n :exports code  :session
 ps2pdf -dAutoRotatePages=/None
 #+END_SRC
 * COMMENT linux copy to clipboard 
@@ -419,13 +420,13 @@ Most of us don't think of the notion of water as abstract, but it's just a matte
 SO... It didn't occur to me that I need to copy linux outputs to the clipboard, until I found out about xclip (keep your comments about the long intro to yourself, by the way...). Now that I know about it, I also care about cases where I want the trailing '\n', and cases where I don't.
 
 Here are my aliases for linux:
-#+BEGIN_SRC sh -n :exports code :eval never-export :session
+#+BEGIN_SRC sh -n :exports code  :session
 alias xc='xclip -selection clipboard'
 alias xcn='perl -ne "chomp();print" |xclip -selection clipboard'
 #+END_SRC
 
 And here they are for mac osx : 
-#+BEGIN_SRC sh -n :exports code :eval never-export :session
+#+BEGIN_SRC sh -n :exports code  :session
 alias xc="pbcopy"
 alias xcn="tr -d '\n' | pbcopy"
 #+END_SRC
@@ -440,7 +441,7 @@ The two approaches for removing the newlines work equivalently on both systems.
   :END:
 
 Going through loops you would often find yourself writing something ugly like : 
-#+BEGIN_SRC matlab -n :exports both :eval never-export :results output
+#+BEGIN_SRC matlab -n :exports both  :results output
 n=10;
 is_verbose=true;
 for i=1:n
@@ -467,7 +468,7 @@ DBG: 10/10
 #+end_example
 
 While, if you had disp and sprintf combined, you could have written a beautiful code like this : 
-#+BEGIN_SRC matlab -n :exports both :eval never-export :results output
+#+BEGIN_SRC matlab -n :exports both  :results output
 is_verbose=true;
 n=10;
 for i=1:n
@@ -477,7 +478,7 @@ end
 #+END_SRC
 
 Thanks to Matlab's /varargin/ this little gem could be very close to /sprintf/ in syntax. 
-#+BEGIN_SRC matlab -n  :exports both :eval never-export :results output
+#+BEGIN_SRC matlab -n  :exports both  :results output
 % purpose display only if the script is in verbose mode + include sprintf 
 % capabilities in disp.
 % syntax : verbose_disp(flag_verb,form,[variable_list])
@@ -557,22 +558,22 @@ Thanks [[http://blog.louic.nl/][Louic]].
 Yet another latex tidbit. Its purpose - remove /italics/ from the units inside math mode.
 
 in the header :
-#+BEGIN_SRC latex -n  :exports both :eval never-export :results output
+#+BEGIN_SRC latex -n  :exports both  :results output
 \newcommand{\unit}[1]{\ensuremath{\, \mathrm{#1}}}
 #+END_SRC
 
 in the body :
-#+BEGIN_SRC latex -n  :exports both :eval never-export :results output
+#+BEGIN_SRC latex -n  :exports both  :results output
 $\tau=0.0257\left[\unit{N\cdot m^{-2}}\right]$
 #+END_SRC
 
 If you want to take this approach to the very extreme, you could have the units of every var defined in the header : 
-#+BEGIN_SRC latex -n  :exports both :eval never-export :results output
+#+BEGIN_SRC latex -n  :exports both  :results output
 \newcommand{\tauunit}{\unit{N}\cdot\unit{m}^{-2}}
 #+END_SRC
 
 And use them consistently without silly unit mistakes inside your manuscript : 
-#+BEGIN_SRC latex -n  :exports both :eval never-export :results output
+#+BEGIN_SRC latex -n  :exports both  :results output
 $\tau=0.4\tauunit$
 #+END_SRC
 
@@ -586,7 +587,7 @@ $\tau=0.4\tauunit$
 [[https://wiki.archlinux.org/index.php/GNU_Screen][Screen]] is a little wrap around linux shell that enables detaching and logging out while the session you created is still running. It could be used for lots of different purposes, and running an intensive computation on a remote computer is an obvious example.
 
 You would normally do :
-#+BEGIN_SRC sh -n :exports both :eval never-export :results output
+#+BEGIN_SRC sh -n :exports both  :results output
 screen -md -L -S session_name your_program
 #+END_SRC
 
@@ -595,7 +596,7 @@ screen -md -L -S session_name your_program
 -S = create meaningful name for your session
 
 To check the stat of your sessions you will use:
-#+BEGIN_SRC sh -n :exports both :eval never-export :results output
+#+BEGIN_SRC sh -n :exports both  :results output
 screen -ls
 #+END_SRC
 
@@ -613,7 +614,7 @@ logfile screenlog-%Y%m%d-%c:%s
 
 In [[http://avigdev.github.io/blog/20150112/2015-01-12-matlab-discrete-colorbar-html/][a previous post]] we discussed a better way for using imagesc, with a more sane colormap. Let's now speak about the grid. Imagesc will happily embed every xy-axis you plug in, without checking whether dimensions fit. If your grid is non-equally spaced - it will just draw the z-axis on a regular axis (i.e. ignoring the xy input), and show the xy-axes as if they genuinely represent the input. My conclusion from this wild behavior is - never use imagesc on non-equally spaced data. Matlab has nice interpolant interfaces to help you get your data equally gridded. 
 
-#+BEGIN_SRC matlab -n :exports both :eval never-export :results output
+#+BEGIN_SRC matlab -n :exports both  :results output
 [x1,y1]=ndgrid(x,y); % this step is actually not crucial
 I = griddedInterpolant(x1,y1,z);  
 x1 = linspace(min(x),max(x),5);     % Define an equally spaced grid
@@ -634,7 +635,7 @@ Where your input parameters to [[http://avigdev.github.io/blog/20150112/2015-01-
 
 When you save a figure, what you really want to save is - several formats, a fig file, all relevant data that is needed to reconstruct the fig, and a README that tells you what is there. That's the purpose of my savefigs : 
 
-#+BEGIN_SRC matlab -n :exports both :eval never-export :results output 
+#+BEGIN_SRC matlab -n :exports both  :results output 
 % purpose : save a figure in png,eps, and fig formats
 % syntax : savefigs(filename,readme_text,data_str)
 % filename - file name without any suffix (savefigs does not check this, so
@@ -683,12 +684,27 @@ fclose(fid);
 % save the vector/matrix for future crunching
 save([filename,'_data','.mat'],'data_str');
 #+END_SRC
-* matlab general slicing syntax :
+* A general slicing syntax 
+  :PROPERTIES:
+  :categories: matlab,octave
+  :date:     2015/02/19 11:16:40
+  :updated:  2015/02/19 11:16:40
+  :END:
 
-idx.type='()';                  % indices structure
+To slice the 4th cross section of the second dimension of a 3-dimensional array in Matlab/Octave, you would use a code like : 
+#+BEGIN_SRC matlab -n
+ z=z(:,4,:);
+#+END_SRC
+
+If you want a bit more flexibility than that, you can have the sliced dimension as a parameter, using [[http://www.mathworks.com/help/matlab/ref/subsref.html][subsref]] : 
+
+#+BEGIN_SRC matlab -n
+dim=2;
+idx.type='()';               
 idx.subs={':',':',':'};
-idx.subs{dim_face}=1;
+idx.subs{dim}=4;
 z=subsref(z,idx);
+#+END_SRC
 
 * bash shell execute the same program on all the files in the current directory
 

@@ -97,6 +97,58 @@
 <article>
   <div class="blog_post">
     <header>
+      <div id="a-general-slicing-syntax"></div>
+      <h2 class="blog_post_title"><a href="/blog/20150219/2015-02-19-a-general-slicing-syntax-html/" rel="bookmark" title="Permanent Link to A general slicing syntax">A general slicing syntax</a></h2>
+      <p><small><span class="blog_post_date">February 19, 2015 at 11:16 AM</span> | categories: 
+        <span class="blog_post_categories"><a href='/blog/category/matlab/'>matlab</a>, <a href='/blog/category/octave/'>octave</a></span>
+        | <a href="http://avigdev.github.io/blog/20150219/2015-02-19-a-general-slicing-syntax-html#disqus_thread">View Comments</a>
+      </small></p>
+    </header>
+    <div class="post_prose">
+      
+
+
+
+
+<p>
+To slice the 4th cross section of the second dimension of a 3-dimensional array in Matlab/Octave, you would use a code like : 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-matlab"><span class="linenr">1: </span>z=z(<span style="color: #228b22;">:</span>,4,<span style="color: #228b22;">:</span>);
+</pre>
+</div>
+
+<p>
+If you want a bit more flexibility than that, you can have the sliced dimension as a parameter, using <a href="http://www.mathworks.com/help/matlab/ref/subsref.html">subsref</a> : 
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-matlab"><span class="linenr">1: </span>dim=2;
+<span class="linenr">2: </span>idx.type=<span style="color: #8b2252;">'()'</span>;               
+<span class="linenr">3: </span>idx.subs={<span style="color: #8b2252;">':'</span>,<span style="color: #8b2252;">':'</span>,<span style="color: #8b2252;">':'</span>};
+<span class="linenr">4: </span>idx.subs{dim}=4;
+<span class="linenr">5: </span>z=subsref(z,idx);
+</pre>
+</div>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/02/19/A-general-slicing-syntax.org">org-mode source</a><p>
+
+    </div>
+  </div>
+</article>
+
+
+
+  <div class="after_post"><a href="http://avigdev.github.io/blog/20150219/2015-02-19-a-general-slicing-syntax-html#disqus_thread">Read and Post Comments</a></div>
+  <hr class="interblog" />
+  
+
+
+
+<article>
+  <div class="blog_post">
+    <header>
       <div id="save-a-plot-in-png-eps-and-fig-formats"></div>
       <h2 class="blog_post_title"><a href="/blog/20150212/2015-02-12-save-a-plot-in-png-eps-and-fig-formats-html/" rel="bookmark" title="Permanent Link to save a plot in png, eps, and fig formats">save a plot in png, eps, and fig formats</a></h2>
       <p><small><span class="blog_post_date">February 12, 2015 at 01:07 AM</span> | categories: 
@@ -242,11 +294,11 @@ Where your input parameters to <a href="http://avigdev.github.io/blog/20150112/2
   <section>
     <h1 class="post_header_gradient theme_font">Latest Posts</h1>
     <ul>
+      <li><a href="/blog/20150219/2015-02-19-a-general-slicing-syntax-html/">A general slicing syntax</a></li>
       <li><a href="/blog/20150212/2015-02-12-save-a-plot-in-png-eps-and-fig-formats-html/">save a plot in png, eps, and fig formats</a></li>
       <li><a href="/blog/20150207/2015-02-07-regridding-unequally-spaced-sampled-field-and-plotting-an-imagesc-html/">Regridding unequally spaced sampled field, and plotting an imagesc</a></li>
       <li><a href="/blog/20150129/2015-01-29-screen-unique-logs-for-each-run-html/">Screen - unique logs for each run</a></li>
       <li><a href="/blog/20150127/2015-01-27-consistent-latex-units-in-non-italics-html/">Consistent Latex units in non italics</a></li>
-      <li><a href="/blog/20150127/2015-01-27-xmgr-annotations-html/">Xmgr annotations</a></li>
     </ul>
   </section>
   <section>
