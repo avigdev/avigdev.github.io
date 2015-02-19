@@ -625,7 +625,7 @@ myimagesc(x1(1,:),y1(:,1),z1,0.55,0.95,0.05);
 
 Where your input parameters to [[http://avigdev.github.io/blog/20150112/2015-01-12-matlab-discrete-colorbar-html/][myimagesc]] may vary, and you could replace "5" by whatever division of the equally spaced grids you fancy. 
 
-* save a plot in png, eps, and fig formats
+* COMMENT save a plot in png, eps, and fig formats
   :PROPERTIES:
   :categories: matlab,octave,workflow
   :date:     2015/02/12 01:07:53
