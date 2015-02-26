@@ -97,6 +97,59 @@
 <article>
   <div class="blog_post">
     <header>
+      <div id="gmt-pen-attributes"></div>
+      <h2 class="blog_post_title"><a href="/blog/20150226/2015-02-26-gmt-pen-attributes-html/" rel="bookmark" title="Permanent Link to GMT pen attributes">GMT pen attributes</a></h2>
+      <p><small><span class="blog_post_date">February 26, 2015 at 04:17 AM</span> | categories: 
+        <span class="blog_post_categories"><a href='/blog/category/gmt/'>gmt</a></span>
+        | <a href="http://avigdev.github.io/blog/20150226/2015-02-26-gmt-pen-attributes-html#disqus_thread">View Comments</a>
+      </small></p>
+    </header>
+    <div class="post_prose">
+      
+
+
+
+<p>
+A lot of GMT programs have flags with "<i>pen</i>" attributes. It is not very easy to find in the man pages or the pdf documentation what is a pen. So&#x2026; 
+</p>
+
+<p>
+A pen is a comma separated triple parameter :
+</p>
+<pre class="example">
+width,color,style
+</pre>
+<p>
+where : 
+</p>
+<ul class="org-ul">
+<li>width = faint default thinnest thinner thin thick thicker thickest fat fatter fattest obese
+it can also be indicated in numbers in the range [0 18p]
+</li>
+<li>color = a gray shade in the range 0–255 (linearly going from black (0) to white (255)).
+or RGB, by specifying r/g/b, each ranging from 0–255. Here 0/0/0 is black, 255/255/255 is white, 255/0/0 is red, etc.
+or color Name. There are  663 valid color names. Use man gmtcolors to list all valid names. A very small yet versatile subset consists of the 29 choices white, black, and [light:|dark]{red, orange, yellow, green, cyan, blue, magenta, gray|grey, brown}. The color names are case-insensitive, so mixed upper and lower case can be used (like DarkGreen).
+</li>
+<li>style = solid, dashed, etc.
+</li>
+</ul>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/02/26/GMT-pen-attributes.org">org-mode source</a><p>
+
+    </div>
+  </div>
+</article>
+
+
+
+  <div class="after_post"><a href="http://avigdev.github.io/blog/20150226/2015-02-26-gmt-pen-attributes-html#disqus_thread">Read and Post Comments</a></div>
+  <hr class="interblog" />
+  
+
+
+
+<article>
+  <div class="blog_post">
+    <header>
       <div id="a-general-slicing-syntax"></div>
       <h2 class="blog_post_title"><a href="/blog/20150219/2015-02-19-a-general-slicing-syntax-html/" rel="bookmark" title="Permanent Link to A general slicing syntax">A general slicing syntax</a></h2>
       <p><small><span class="blog_post_date">February 19, 2015 at 11:16 AM</span> | categories: 
@@ -340,75 +393,6 @@ logfile screenlog-%Y%m%d-%c:%s
 
   <div class="after_post"><a href="http://avigdev.github.io/blog/20150129/2015-01-29-screen-unique-logs-for-each-run-html#disqus_thread">Read and Post Comments</a></div>
   <hr class="interblog" />
-  
-
-
-
-<article>
-  <div class="blog_post">
-    <header>
-      <div id="consistent-latex-units-in-non-italics"></div>
-      <h2 class="blog_post_title"><a href="/blog/20150127/2015-01-27-consistent-latex-units-in-non-italics-html/" rel="bookmark" title="Permanent Link to Consistent Latex units in non italics">Consistent Latex units in non italics</a></h2>
-      <p><small><span class="blog_post_date">January 27, 2015 at 07:23 PM</span> | categories: 
-        <span class="blog_post_categories"><a href='/blog/category/latex/'>latex</a></span>
-        | <a href="http://avigdev.github.io/blog/20150127/2015-01-27-consistent-latex-units-in-non-italics-html#disqus_thread">View Comments</a>
-      </small></p>
-    </header>
-    <div class="post_prose">
-      
-
-
-
-
-<p>
-Yet another latex tidbit. Its purpose - remove <i>italics</i> from the units inside math mode.
-</p>
-
-<p>
-in the header :
-</p>
-<div class="org-src-container">
-
-<pre class="src src-latex"><span class="linenr">1: </span><span style="color: #932092;">\newcommand</span>{<span style="color: #0000ff;">\unit</span>}[1]{<span style="color: #932092;">\ensuremath</span>{<span style="color: #932092;">\,</span> <span style="color: #932092;">\mathrm</span>{#1}}}
-</pre>
-</div>
-
-<p>
-in the body :
-</p>
-<div class="org-src-container">
-
-<pre class="src src-latex"><span class="linenr">1: </span><span style="color: #8b2252;">$\tau=0.0257\left[\unit{N\cdot m^</span><span style="color: #8b2252;">{-2}</span><span style="color: #8b2252;">}\right]$</span>
-</pre>
-</div>
-
-<p>
-If you want to take this approach to the very extreme, you could have the units of every var defined in the header : 
-</p>
-<div class="org-src-container">
-
-<pre class="src src-latex"><span class="linenr">1: </span><span style="color: #932092;">\newcommand</span>{<span style="color: #0000ff;">\tauunit</span>}{<span style="color: #932092;">\unit</span>{N}<span style="color: #932092;">\cdot\unit</span>{m}^{-2}}
-</pre>
-</div>
-
-<p>
-And use them consistently without silly unit mistakes inside your manuscript : 
-</p>
-<div class="org-src-container">
-
-<pre class="src src-latex"><span class="linenr">1: </span><span style="color: #8b2252;">$\tau=0.4\tauunit$</span>
-</pre>
-</div>
-<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/27/Consistent-Latex-units-in-non-italics.org">org-mode source</a><p>
-
-    </div>
-  </div>
-</article>
-
-
-
-  <div class="after_post"><a href="http://avigdev.github.io/blog/20150127/2015-01-27-consistent-latex-units-in-non-italics-html#disqus_thread">Read and Post Comments</a></div>
-  <hr class="interblog" />
  <a href="../2">Next Page »</a>
 
           </div>
@@ -428,11 +412,11 @@ And use them consistently without silly unit mistakes inside your manuscript :
   <section>
     <h1 class="post_header_gradient theme_font">Latest Posts</h1>
     <ul>
+      <li><a href="/blog/20150226/2015-02-26-gmt-pen-attributes-html/">GMT pen attributes</a></li>
       <li><a href="/blog/20150219/2015-02-19-a-general-slicing-syntax-html/">A general slicing syntax</a></li>
       <li><a href="/blog/20150212/2015-02-12-save-a-plot-in-png-eps-and-fig-formats-html/">save a plot in png, eps, and fig formats</a></li>
       <li><a href="/blog/20150207/2015-02-07-regridding-unequally-spaced-sampled-field-and-plotting-an-imagesc-html/">Regridding unequally spaced sampled field, and plotting an imagesc</a></li>
       <li><a href="/blog/20150129/2015-01-29-screen-unique-logs-for-each-run-html/">Screen - unique logs for each run</a></li>
-      <li><a href="/blog/20150127/2015-01-27-consistent-latex-units-in-non-italics-html/">Consistent Latex units in non italics</a></li>
     </ul>
   </section>
   <section>

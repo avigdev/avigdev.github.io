@@ -7,12 +7,53 @@
   <title type="text">Avi Gozolchiani אבי גוזולצני</title>
   <subtitle type="text">Environmental Physics at Ben Gurion University</subtitle>
 
-  <updated>2015-02-19T09:16:55Z</updated>
+  <updated>2015-02-26T02:17:22Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://avigdev.github.io/blog" />
   <id>http://avigdev.github.io/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://avigdev.github.io/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://avigdev.github.io/blog</uri>
+    </author>
+    <title type="html"><![CDATA[GMT pen attributes]]></title>
+    <link rel="alternate" type="text/html" href="http://avigdev.github.io/blog/20150226/2015-02-26-gmt-pen-attributes-html" />
+    <id>http://avigdev.github.io/blog/20150226/2015-02-26-gmt-pen-attributes-html</id>
+    <updated>2015-02-26T04:17:11Z</updated>
+    <published>2015-02-26T04:17:11Z</published>
+    <category scheme="http://avigdev.github.io/blog" term="gmt" />
+    <summary type="html"><![CDATA[GMT pen attributes]]></summary>
+    <content type="html" xml:base="http://avigdev.github.io/blog/20150226/2015-02-26-gmt-pen-attributes-html"><![CDATA[
+
+
+<p>
+A lot of GMT programs have flags with "<i>pen</i>" attributes. It is not very easy to find in the man pages or the pdf documentation what is a pen. So&#x2026; 
+</p>
+
+<p>
+A pen is a comma separated triple parameter :
+</p>
+<pre class="example">
+width,color,style
+</pre>
+<p>
+where : 
+</p>
+<ul class="org-ul">
+<li>width = faint default thinnest thinner thin thick thicker thickest fat fatter fattest obese
+it can also be indicated in numbers in the range [0 18p]
+</li>
+<li>color = a gray shade in the range 0–255 (linearly going from black (0) to white (255)).
+or RGB, by specifying r/g/b, each ranging from 0–255. Here 0/0/0 is black, 255/255/255 is white, 255/0/0 is red, etc.
+or color Name. There are  663 valid color names. Use man gmtcolors to list all valid names. A very small yet versatile subset consists of the 29 choices white, black, and [light:|dark]{red, orange, yellow, green, cyan, blue, magenta, gray|grey, brown}. The color names are case-insensitive, so mixed upper and lower case can be used (like DarkGreen).
+</li>
+<li>style = solid, dashed, etc.
+</li>
+</ul>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/02/26/GMT-pen-attributes.org">org-mode source</a><p>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>
@@ -557,34 +598,5 @@ to disable automatic rotation in ps2pdf (the source for this tip is <a href="htt
 </pre>
 </div>
 <p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/17/latex-automatic-rotation.org">org-mode source</a><p>]]></content>
-  </entry>
-  <entry>
-    <author>
-      <name></name>
-      <uri>http://avigdev.github.io/blog</uri>
-    </author>
-    <title type="html"><![CDATA[LaTeX - please don't mix bibliography and figures]]></title>
-    <link rel="alternate" type="text/html" href="http://avigdev.github.io/blog/20150115/2015-01-15-latex-please-don-t-mix-bibliography-and-figures-html" />
-    <id>http://avigdev.github.io/blog/20150115/2015-01-15-latex-please-don-t-mix-bibliography-and-figures-html</id>
-    <updated>2015-01-15T12:22:42Z</updated>
-    <published>2015-01-15T12:03:45Z</published>
-    <category scheme="http://avigdev.github.io/blog" term="latex" />
-    <summary type="html"><![CDATA[LaTeX - please don't mix bibliography and figures]]></summary>
-    <content type="html" xml:base="http://avigdev.github.io/blog/20150115/2015-01-15-latex-please-don-t-mix-bibliography-and-figures-html"><![CDATA[
-
-
-<p>
-The weird mingling of figs and bibliography which is the default setting in LaTeX could be avoided by using the package <a href="http://www.ctan.org/pkg/placeins">"placeins"</a> . You could use several more barriers to make sure that all figures will not leak beyond certain position in text (for example - the end of a section).
-</p>
-<div class="org-src-container">
-
-<pre class="src src-latex"><span class="linenr">1: </span><span style="color: #932092;">\usepackage</span>{<span style="color: #483d8b;">placeins</span>} <span style="color: #b22222;">% in the header</span>
-<span class="linenr">2: </span>....
-<span class="linenr">3: </span><span style="color: #932092;">\FloatBarrier</span> <span style="color: #b22222;">% this forces all figures to be presented before the bibl.</span>
-<span class="linenr">4: </span><span style="color: #932092;">\bibliographystyle</span>{unsrt}
-<span class="linenr">5: </span><span style="color: #932092;">\bibliography</span>{<span style="color: #483d8b;">gyre_ref</span>} <span style="color: #b22222;">% your bibtex file is probably named differently</span>
-</pre>
-</div>
-<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/15/LaTeX---please-don't-mix-bibliography-and-figures.org">org-mode source</a><p>]]></content>
   </entry>
 </feed>

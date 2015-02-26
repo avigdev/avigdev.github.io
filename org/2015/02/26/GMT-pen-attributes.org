@@ -1,0 +1,19 @@
+* GMT pen attributes
+  :PROPERTIES:
+  :categories: GMT
+  :date:     2015/02/26 04:17:11
+  :updated:  2015/02/26 04:17:11
+  :END:
+A lot of GMT programs have flags with "/pen/" attributes. It is not very easy to find in the man pages or the pdf documentation what is a pen. So... 
+
+A pen is a comma separated triple parameter :
+#+BEGIN_EXAMPLE
+width,color,style
+#+END_EXAMPLE
+where : 
+- width = faint default thinnest thinner thin thick thicker thickest fat fatter fattest obese
+ it can also be indicated in numbers in the range [0 18p]
+- color = a gray shade in the range 0–255 (linearly going from black (0) to white (255)).
+        or RGB, by specifying r/g/b, each ranging from 0–255. Here 0/0/0 is black, 255/255/255 is white, 255/0/0 is red, etc.
+        or color Name. There are  663 valid color names. Use man gmtcolors to list all valid names. A very small yet versatile subset consists of the 29 choices white, black, and [light:|dark]{red, orange, yellow, green, cyan, blue, magenta, gray|grey, brown}. The color names are case-insensitive, so mixed upper and lower case can be used (like DarkGreen).
+- style = solid, dashed, etc.

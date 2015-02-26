@@ -684,7 +684,7 @@ fclose(fid);
 % save the vector/matrix for future crunching
 save([filename,'_data','.mat'],'data_str');
 #+END_SRC
-* A general slicing syntax 
+* COMMENT A general slicing syntax 
   :PROPERTIES:
   :categories: matlab,octave
   :date:     2015/02/19 11:16:40
@@ -706,6 +706,30 @@ idx.subs{dim}=4;
 z=subsref(z,idx);
 #+END_SRC
 
+* GMT pen attributes
+  :PROPERTIES:
+  :categories: GMT
+  :date:     2015/02/26 04:17:11
+  :updated:  2015/02/26 04:17:11
+  :END:
+A lot of GMT programs have flags with "/pen/" attributes. It is not very easy to find in the man pages or the pdf documentation what is a pen. So... 
+
+A pen is a comma separated triple parameter :
+#+BEGIN_EXAMPLE
+width,color,style
+#+END_EXAMPLE
+where : 
+- width = faint default thinnest thinner thin thick thicker thickest fat fatter fattest obese
+ it can also be indicated in numbers in the range [0 18p]
+- color = a gray shade in the range 0–255 (linearly going from black (0) to white (255)).
+        or RGB, by specifying r/g/b, each ranging from 0–255. Here 0/0/0 is black, 255/255/255 is white, 255/0/0 is red, etc.
+        or color Name. There are  663 valid color names. Use man gmtcolors to list all valid names. A very small yet versatile subset consists of the 29 choices white, black, and [light:|dark]{red, orange, yellow, green, cyan, blue, magenta, gray|grey, brown}. The color names are case-insensitive, so mixed upper and lower case can be used (like DarkGreen).
+- style = solid, dashed, etc.
+* Alternating checkpoint in MITgcm
+Pickups are the essential
+There are 2 kinds of 
+in data, parm03:
+pickupSuff='ckptA'
 * bash shell execute the same program on all the files in the current directory
 
 find -exec prog_name flags {} +
@@ -820,9 +844,6 @@ show()
 (source http://www.commandlinefu.com/commands/view/11692/commandline-document-conversion-with-libreoffice)
 
 libreoffice --headless -convert-to odt:"writer8" somefile.docx
-* mitgcm alternating checkpoint :
-in data, parm03:
-pickupSuff='ckptA'
 * python split filename to file+extension
 (source : http://stackoverflow.com/questions/541390/extracting-extension-from-filename-in-python)
 
@@ -1311,7 +1332,7 @@ lynx -dump -listonly "http://www.example.com/"
 
 * define a remote directory
 in fstab :
-sshfs#avigoz@132.64.144.245:/data/avigoz /data1 fuse defaults,allow_other 0 0
+sshfs#avigoz@111.11.111.111:/your/path /local/mounted/path fuse defaults,allow_other 0 0
 
 in /etc/fuse.conf , uncomment :
 user_allow_other
@@ -1541,19 +1562,6 @@ right click on a sheet, select all sheets, and change whatever you want
 
 cmd+pageup (or on a laptop : Fn + Command + up arrow / down arrow)
 
-* GMT pen attributes:
-
-width,color,style
-
-width = faint default thinnest thinner thin thick thicker thickest fat fatter fattest obese
-
-this can also be indicated in numbers in the range [0 18p]
-
-The color can be specified using:
-1. Gray. Specify a gray shade in the range 0–255 (linearly going from black [0] to white
-[255]).
-2. RGB. Specify r/g/b, each ranging from 0–255. Here 0/0/0 is black, 255/255/255 is white, 255/0/0 is red, etc.
-3. Name. Specify one of 663 valid color names. Use man gmtcolors to list all valid names. A very small yet versatile subset consists of the 29 choices white, black, and [light:|dark]{red, orange, yellow, green, cyan, blue, magenta, gray|grey, brown}. The color names are case-insensitive, so mixed upper and lower case can be used (like DarkGreen).
 
 * xclip equivalent in mac os x:
 (source : http://stackoverflow.com/questions/3482289/easiest-way-to-strip-newline-character-from-input-string-in-pasteboard)

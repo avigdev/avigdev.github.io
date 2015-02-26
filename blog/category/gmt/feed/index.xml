@@ -10,10 +10,46 @@
     <title>Avi Gozolchiani אבי גוזולצני</title>
     <link>http://avigdev.github.io/blog</link>
     <description>Environmental Physics at Ben Gurion University</description>
-    <pubDate>Thu, 19 Feb 2015 09:16:54 GMT</pubDate>
+    <pubDate>Thu, 26 Feb 2015 02:17:22 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>GMT pen attributes</title>
+      <link>http://avigdev.github.io/blog/20150226/2015-02-26-gmt-pen-attributes-html</link>
+      <pubDate>Thu, 26 Feb 2015 04:17:11 IST</pubDate>
+      <category><![CDATA[gmt]]></category>
+      <guid isPermaLink="false">_7kr3Z4xJljF4jQ34JcSo-rr_bE=</guid>
+      <description>GMT pen attributes</description>
+      <content:encoded><![CDATA[
+
+
+<p>
+A lot of GMT programs have flags with "<i>pen</i>" attributes. It is not very easy to find in the man pages or the pdf documentation what is a pen. So&#x2026; 
+</p>
+
+<p>
+A pen is a comma separated triple parameter :
+</p>
+<pre class="example">
+width,color,style
+</pre>
+<p>
+where : 
+</p>
+<ul class="org-ul">
+<li>width = faint default thinnest thinner thin thick thicker thickest fat fatter fattest obese
+it can also be indicated in numbers in the range [0 18p]
+</li>
+<li>color = a gray shade in the range 0–255 (linearly going from black (0) to white (255)).
+or RGB, by specifying r/g/b, each ranging from 0–255. Here 0/0/0 is black, 255/255/255 is white, 255/0/0 is red, etc.
+or color Name. There are  663 valid color names. Use man gmtcolors to list all valid names. A very small yet versatile subset consists of the 29 choices white, black, and [light:|dark]{red, orange, yellow, green, cyan, blue, magenta, gray|grey, brown}. The color names are case-insensitive, so mixed upper and lower case can be used (like DarkGreen).
+</li>
+<li>style = solid, dashed, etc.
+</li>
+</ul>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/02/26/GMT-pen-attributes.org">org-mode source</a><p>]]></content:encoded>
+    </item>
     <item>
       <title>matlab subplots packed densely together</title>
       <link>http://avigdev.github.io/blog/20150111/2015-01-11-matlab-subplots-packed-densely-together-html</link>
