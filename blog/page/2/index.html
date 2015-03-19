@@ -97,6 +97,70 @@
 <article>
   <div class="blog_post">
     <header>
+      <div id="screen-unique-logs-for-each-run"></div>
+      <h2 class="blog_post_title"><a href="/blog/20150129/2015-01-29-screen-unique-logs-for-each-run-html/" rel="bookmark" title="Permanent Link to Screen - unique logs for each run">Screen - unique logs for each run</a></h2>
+      <p><small><span class="blog_post_date">January 29, 2015 at 01:58 AM</span> | categories: 
+        <span class="blog_post_categories"><a href='/blog/category/workflow/'>workflow</a>, <a href='/blog/category/linux/'>linux</a></span>
+        | <a href="http://avigdev.github.io/blog/20150129/2015-01-29-screen-unique-logs-for-each-run-html#disqus_thread">View Comments</a>
+      </small></p>
+    </header>
+    <div class="post_prose">
+      
+
+
+
+
+<p>
+<a href="https://wiki.archlinux.org/index.php/GNU_Screen">Screen</a> is a little wrap around linux shell that enables detaching and logging out while the session you created is still running. It could be used for lots of different purposes, and running an intensive computation on a remote computer is an obvious example.
+</p>
+
+<p>
+You would normally do :
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="linenr">1: </span>screen -md -L -S session_name your_program
+</pre>
+</div>
+
+<p>
+-md = detach immediately after running, and return to the current terminal session
+-L = create a log file
+-S = create meaningful name for your session
+</p>
+
+<p>
+To check the stat of your sessions you will use:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="linenr">1: </span>screen -ls
+</pre>
+</div>
+
+<p>
+To have different log files with unique names for different sessions, you need to create a <code>~/.screenrc</code> file, with the following single line
+</p>
+<pre class="example">
+logfile screenlog-%Y%m%d-%c:%s
+</pre>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/29/Screen---unique-logs-for-each-run.org">org-mode source</a><p>
+
+    </div>
+  </div>
+</article>
+
+
+
+  <div class="after_post"><a href="http://avigdev.github.io/blog/20150129/2015-01-29-screen-unique-logs-for-each-run-html#disqus_thread">Read and Post Comments</a></div>
+  <hr class="interblog" />
+  
+
+
+
+<article>
+  <div class="blog_post">
+    <header>
       <div id="consistent-latex-units-in-non-italics"></div>
       <h2 class="blog_post_title"><a href="/blog/20150127/2015-01-27-consistent-latex-units-in-non-italics-html/" rel="bookmark" title="Permanent Link to Consistent Latex units in non italics">Consistent Latex units in non italics</a></h2>
       <p><small><span class="blog_post_date">January 27, 2015 at 07:23 PM</span> | categories: 
@@ -442,48 +506,6 @@ The two approaches for removing the newlines work equivalently on both systems.
 
   <div class="after_post"><a href="http://avigdev.github.io/blog/20150119/2015-01-19-linux-copy-to-clipboard-html#disqus_thread">Read and Post Comments</a></div>
   <hr class="interblog" />
-  
-
-
-
-<article>
-  <div class="blog_post">
-    <header>
-      <div id="latex-automatic-rotation"></div>
-      <h2 class="blog_post_title"><a href="/blog/20150117/2015-01-17-latex-automatic-rotation-html/" rel="bookmark" title="Permanent Link to latex automatic rotation">latex automatic rotation</a></h2>
-      <p><small><span class="blog_post_date">January 17, 2015 at 05:43 PM</span> | categories: 
-        <span class="blog_post_categories"><a href='/blog/category/latex/'>latex</a></span>
-        | <a href="http://avigdev.github.io/blog/20150117/2015-01-17-latex-automatic-rotation-html#disqus_thread">View Comments</a>
-      </small></p>
-    </header>
-    <div class="post_prose">
-      
-
-
-
-<p>
-The usual workflow with a latex document is latex-&gt;bibtex-&gt;latex-&gt;dvips-&gt;ps2pdf. There are some variations, on this theme. Anyway - when you use ps2pdf it tries to optimize space and sometimes rotates the figures. There's a whole story about how dvi includes figures as links to files and how dvips,ps2pdf plant this file inside the document. <b>Bottom line is</b> - we don't like automatic orientation of figures. Once we got it right, we want it to behave the same even if the document has changed. 
-</p>
-
-<p>
-So&#x2026; 
-to disable automatic rotation in ps2pdf (the source for this tip is <a href="http://textricks.blogspot.co.il/2010/01/ps2pdf-autorotate-switch-off.html">over here</a> ):
-</p>
-<div class="org-src-container">
-
-<pre class="src src-sh"><span class="linenr">1: </span>ps2pdf -dAutoRotatePages=/None
-</pre>
-</div>
-<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/17/latex-automatic-rotation.org">org-mode source</a><p>
-
-    </div>
-  </div>
-</article>
-
-
-
-  <div class="after_post"><a href="http://avigdev.github.io/blog/20150117/2015-01-17-latex-automatic-rotation-html#disqus_thread">Read and Post Comments</a></div>
-  <hr class="interblog" />
  <a href="../1">« Previous Page</a>
   --  
  <a href="../3">Next Page »</a>
@@ -505,11 +527,11 @@ to disable automatic rotation in ps2pdf (the source for this tip is <a href="htt
   <section>
     <h1 class="post_header_gradient theme_font">Latest Posts</h1>
     <ul>
+      <li><a href="/blog/20150319/2015-03-19-backups-html/">Backups</a></li>
       <li><a href="/blog/20150226/2015-02-26-gmt-pen-attributes-html/">GMT pen attributes</a></li>
       <li><a href="/blog/20150219/2015-02-19-a-general-slicing-syntax-html/">A general slicing syntax</a></li>
       <li><a href="/blog/20150212/2015-02-12-save-a-plot-in-png-eps-and-fig-formats-html/">save a plot in png, eps, and fig formats</a></li>
       <li><a href="/blog/20150207/2015-02-07-regridding-unequally-spaced-sampled-field-and-plotting-an-imagesc-html/">Regridding unequally spaced sampled field, and plotting an imagesc</a></li>
-      <li><a href="/blog/20150129/2015-01-29-screen-unique-logs-for-each-run-html/">Screen - unique logs for each run</a></li>
     </ul>
   </section>
   <section>

@@ -706,7 +706,7 @@ idx.subs{dim}=4;
 z=subsref(z,idx);
 #+END_SRC
 
-* GMT pen attributes
+* COMMENT GMT pen attributes
   :PROPERTIES:
   :categories: GMT
   :date:     2015/02/26 04:17:11
@@ -725,7 +725,33 @@ where :
         or RGB, by specifying r/g/b, each ranging from 0–255. Here 0/0/0 is black, 255/255/255 is white, 255/0/0 is red, etc.
         or color Name. There are  663 valid color names. Use man gmtcolors to list all valid names. A very small yet versatile subset consists of the 29 choices white, black, and [light:|dark]{red, orange, yellow, green, cyan, blue, magenta, gray|grey, brown}. The color names are case-insensitive, so mixed upper and lower case can be used (like DarkGreen).
 - style = solid, dashed, etc.
+* Backups
+  :PROPERTIES:
+  :categories: linux,mac
+  :date:     2015/03/19 18:31:45
+  :updated:  2015/03/19 18:36:19
+  :END:
+
+Backuping should be - routine,automatic, and simple. I'm using the following: 
+
+#+BEGIN_SRC sh -n
+rsync --force --ignore-errors --delete \
+ --exclude /path/to/*excluded_files* \
+ --backup-dir=`date +%Y-%m` -avb /home/yourname/ \
+ /path/to/your/BCK/hd
+#+END_SRC
+
+Each month you get a new directory =YYYYmm= (year+month) on your backup hard drive, for files that have been changed/deleted during this month. You should probably delete it after a few months, but sometimes you will want to recover some data which was mistakenly deleted. Otherwise, all other files (which weren't deleted or modified) are just duplicated to the backup hd. 
+
+If you are using linux, you should probably put this script in your =/etc/cron.daily/= directory. And give it the correct permissions.
+
+
+
 * Alternating checkpoint in MITgcm
+  :PROPERTIES:
+  :categories: MITgcm
+  :END:
+
 Pickups are the essential
 There are 2 kinds of 
 in data, parm03:
@@ -853,12 +879,6 @@ libreoffice --headless -convert-to odt:"writer8" somefile.docx
 '/path/to/somefile'
 >>> fileExtension
 '.ext'
-* python equivalent for importdata
-(source http://stackoverflow.com/questions/1057666/using-python-to-replace-matlab-how-to-import-data)
-
-import numpy
-imported_array = numpy.loadtxt('file.txt',delimiter='\t')  # assuming tab-delimiter
-print imported_array.shape
 * latex reference ranges of images (other stuff)
 (source : http://tex.stackexchange.com/questions/7624/how-to-reference-ranges-rather-than-separate-numbers,
 http://www.howtotex.com/packages/automatic-clever-references-with-cleveref/
@@ -1004,10 +1024,6 @@ max_u*delta_t/delta_x<0.5
 * compiling large array :
 
 FFLAGS="$FFLAGS -g -convert big_endian -assume byterecl -mcmodel=large"
-
-* sync folders to hd
-
-rsync --force --ignore-errors --delete --exclude /home/avigoz/.opera/*cach* --backup-dir=`date +%Y-%m` -avb /home/avigoz/ /media/linux_part/backups/home_64
 
 * setting up a (mac) computer checklist
 - [ ] d/l home directory from external hd

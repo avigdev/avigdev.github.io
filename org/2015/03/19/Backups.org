@@ -1,0 +1,21 @@
+* Backups
+  :PROPERTIES:
+  :categories: linux,mac
+  :date:     2015/03/19 18:31:45
+  :updated:  2015/03/19 18:36:19
+  :END:
+
+Backuping should be - routine,automatic, and simple. I'm using the following: 
+
+#+BEGIN_SRC sh -n
+rsync --force --ignore-errors --delete \
+ --exclude /path/to/*excluded_files* \
+ --backup-dir=`date +%Y-%m` -avb /home/yourname/ \
+ /path/to/your/BCK/hd
+#+END_SRC
+
+Each month you get a new directory =YYYYmm= (year+month) on your backup hard drive, for files that have been changed/deleted during this month. You should probably delete it after a few months, but sometimes you will want to recover some data which was mistakenly deleted. Otherwise, all other files (which weren't deleted or modified) are just duplicated to the backup hd. 
+
+If you are using linux, you should probably put this script in your =/etc/cron.daily/= directory. And give it the correct permissions.
+
+

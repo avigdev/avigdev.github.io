@@ -10,10 +10,44 @@
     <title>Avi Gozolchiani אבי גוזולצני</title>
     <link>http://avigdev.github.io/blog</link>
     <description>Environmental Physics at Ben Gurion University</description>
-    <pubDate>Thu, 26 Feb 2015 02:21:24 GMT</pubDate>
+    <pubDate>Thu, 19 Mar 2015 16:36:26 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>Backups</title>
+      <link>http://avigdev.github.io/blog/20150319/2015-03-19-backups-html</link>
+      <pubDate>Thu, 19 Mar 2015 18:31:45 IST</pubDate>
+      <category><![CDATA[mac]]></category>
+      <category><![CDATA[linux]]></category>
+      <guid isPermaLink="false">TwBC3qYlVvPCTaiKctBmsQ3uVZc=</guid>
+      <description>Backups</description>
+      <content:encoded><![CDATA[
+
+
+
+<p>
+Backuping should be - routine,automatic, and simple. I'm using the following: 
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="linenr">1: </span>rsync --force --ignore-errors --delete <span style="color: #8b2252;">\</span>
+<span class="linenr">2: </span> --exclude /path/to/*excluded_files* <span style="color: #8b2252;">\</span>
+<span class="linenr">3: </span> --backup-dir=<span style="color: #ff40ff;">`date +%Y-%m`</span> -avb /home/yourname/ <span style="color: #8b2252;">\</span>
+<span class="linenr">4: </span> /path/to/your/BCK/hd
+</pre>
+</div>
+
+<p>
+Each month you get a new directory <code>YYYYmm</code> (year+month) on your backup hard drive, for files that have been changed/deleted during this month. You should probably delete it after a few months, but sometimes you will want to recover some data which was mistakenly deleted. Otherwise, all other files (which weren't deleted or modified) are just duplicated to the backup hd. 
+</p>
+
+<p>
+If you are using linux, you should probably put this script in your <code>/etc/cron.daily/</code> directory. And give it the correct permissions.
+</p>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/03/19/Backups.org">org-mode source</a><p>]]></content:encoded>
+    </item>
     <item>
       <title>Screen - unique logs for each run</title>
       <link>http://avigdev.github.io/blog/20150129/2015-01-29-screen-unique-logs-for-each-run-html</link>
