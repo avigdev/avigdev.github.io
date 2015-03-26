@@ -10,10 +10,83 @@
     <title>Avi Gozolchiani אבי גוזולצני</title>
     <link>http://avigdev.github.io/blog</link>
     <description>Environmental Physics at Ben Gurion University</description>
-    <pubDate>Thu, 19 Mar 2015 16:36:26 GMT</pubDate>
+    <pubDate>Thu, 26 Mar 2015 15:17:51 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>Backups on OS X</title>
+      <link>http://avigdev.github.io/blog/20150319/2015-03-19-backups-on-os-x-html</link>
+      <pubDate>Thu, 19 Mar 2015 18:31:45 IST</pubDate>
+      <category><![CDATA[mac]]></category>
+      <category><![CDATA[linux]]></category>
+      <guid isPermaLink="false">KmyTC1iS-44fH2ZQ1h6AH1FG8kQ=</guid>
+      <description>Backups on OS X</description>
+      <content:encoded><![CDATA[
+
+
+
+<p>
+Back to <a href="http://avigdev.github.io/blog/20150319/2015-03-19-backups-html/">backing up</a> (no pun intended), OS X uses a launchd system rather than "cron.daily". If you are like me, you probably don't want to know why and you don't care. You just want a cron.daily approach, and a way to know whether it worked or not. 
+</p>
+
+<p>
+So put your bash script from <a href="http://avigdev.github.io/blog/20150319/2015-03-19-backups-html/">here</a> somewhere on your system, and put the following script in your ~/Library/LaunchAgents/ ,  with a name like me.bckup.daily.plist (though the name should not matter, or so they tell) : 
+</p>
+<pre class="example">
+<span class="linenr"> 1: </span>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+<span class="linenr"> 2: </span>&lt;!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/
+<span class="linenr"> 3: </span>DTDs/PropertyList-1.0.dtd"&gt;
+<span class="linenr"> 4: </span>&lt;plist version="1.0"&gt;
+<span class="linenr"> 5: </span>&lt;dict&gt;
+<span class="linenr"> 6: </span>&lt;key&gt;Label&lt;/key&gt;
+<span class="linenr"> 7: </span>&lt;string&gt;me.bckup.daily&lt;/string&gt;
+<span class="linenr"> 8: </span>&lt;key&gt;LowPriorityIO&lt;/key&gt;
+<span class="linenr"> 9: </span>&lt;true/&gt;
+<span class="linenr">10: </span>&lt;key&gt;Nice&lt;/key&gt;
+<span class="linenr">11: </span>&lt;integer&gt;12&lt;/integer&gt;
+<span class="linenr">12: </span>&lt;key&gt;Program&lt;/key&gt;
+<span class="linenr">13: </span>&lt;string&gt;/path/to/your/script/bckup_to_hd&lt;/string&gt;
+<span class="linenr">14: </span>&lt;key&gt;StartCalendarInterval&lt;/key&gt;
+<span class="linenr">15: </span>&lt;dict&gt;
+<span class="linenr">16: </span>&lt;key&gt;Hour&lt;/key&gt;
+<span class="linenr">17: </span>&lt;integer&gt;16&lt;/integer&gt;
+<span class="linenr">18: </span>&lt;key&gt;Minute&lt;/key&gt;
+<span class="linenr">19: </span>&lt;integer&gt;49&lt;/integer&gt;
+<span class="linenr">20: </span>&lt;/dict&gt;
+<span class="linenr">21: </span>&lt;key&gt;StandardErrorPath&lt;/key&gt;
+<span class="linenr">22: </span>&lt;string&gt;/path/to/log_err_file.txt&lt;/string&gt;
+<span class="linenr">23: </span>&lt;key&gt;StandardOutPath&lt;/key&gt;
+<span class="linenr">24: </span>&lt;string&gt;/path/to/log_out_file.txt&lt;/string&gt;
+<span class="linenr">25: </span>&lt;/dict&gt;
+<span class="linenr">26: </span>&lt;/plist&gt;
+</pre>
+<p>
+with the obvious ammendments of the exact time you want it to be launched every day, and your exact absolute paths.
+</p>
+
+<p>
+To begin its action for the first time, either logout and login or :
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="linenr">1: </span>launchctl load me.bckup.daily.plist
+</pre>
+</div>
+
+<p>
+If something went wrong, you could use <code>launchctl unload</code> instead of <code>load</code> , get things straight and <code>load</code> again.
+</p>
+
+<p>
+Now, how do you know if something went wrong ? 
+</p>
+
+<p>
+first, you have your log files /path/to/log_*_file.txt . Second, you could search for clues in /private/var/log/system.log in the time you designated.
+</p>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/03/19/Backups-on-OS-X.org">org-mode source</a><p>]]></content:encoded>
+    </item>
     <item>
       <title>Backups</title>
       <link>http://avigdev.github.io/blog/20150319/2015-03-19-backups-html</link>
@@ -499,65 +572,6 @@ Thanks to Matlab's <i>varargin</i> this little gem could be very close to <i>spr
 </pre>
 </div>
 <p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/25/The-best-of-all-worlds---disp-+-sprintf.org">org-mode source</a><p>]]></content:encoded>
-    </item>
-    <item>
-      <title>linux copy to clipboard</title>
-      <link>http://avigdev.github.io/blog/20150119/2015-01-19-linux-copy-to-clipboard-html</link>
-      <pubDate>Mon, 19 Jan 2015 00:08:45 IST</pubDate>
-      <category><![CDATA[alias]]></category>
-      <category><![CDATA[workflow]]></category>
-      <category><![CDATA[osx]]></category>
-      <category><![CDATA[linux]]></category>
-      <guid isPermaLink="false">txTu7dBha0I3ckwFYdxR3_51Z7I=</guid>
-      <description>linux copy to clipboard</description>
-      <content:encoded><![CDATA[
-
-
-
-<p>
-Is it true that you have to give names to things to really appreciate and understand them? It's really one of these questions that are just too gross for answering a straight yes or no. 
-</p>
-
-<p>
-When you think of this question, math comes to mind. I have little doubt that you must internalize dozens of definitions and the relations between them before you master differential geometry, or group theory. But do you need language to understand subtraction? The answer is - <a href="http://ocw.mit.edu/courses/brain-and-cognitive-sciences/9-00-introduction-to-psychology-fall-2004/lecture-notes/9-cognitive-development-how-do-children-think/">NO</a> . Babies do it intuitively. So there is some border beyond which things become too abstract, and we've got to give them names. But isn't my answer a tautology? Isn't "abstract" just the name of this phenomena of having to name something in order to understand it? Sure enough, if we were not so used to giving names to everything, we would have found lots of things "abstract". Helen Keller <a href="http://digital.library.upenn.edu/women/keller/life/life.html">writes</a> :
-</p>
-
-<p class="verse">
-"my teacher placed my hand under the spout. As the cool stream gushed over one hand she spelled into the other the word water, first slowly, then rapidly. I stood still, my whole attention fixed upon the motions of her fingers. Suddenly I felt a misty consciousness as of something forgotten - a thrill of returning thought; and somehow the mystery of language was revealed to me. I knew then that "w-a-t-e-r" meant the wonderful cool something that was flowing over my hand"<br  />
-</p>
-
-<p>
-Most of us don't think of the notion of water as abstract, but it's just a matter of experience. 
-</p>
-
-<p>
-SO&#x2026; It didn't occur to me that I need to copy linux outputs to the clipboard, until I found out about xclip (keep your comments about the long intro to yourself, by the way&#x2026;). Now that I know about it, I also care about cases where I want the trailing '\n', and cases where I don't.
-</p>
-
-<p>
-Here are my aliases for linux:
-</p>
-<div class="org-src-container">
-
-<pre class="src src-sh"><span class="linenr">1: </span><span style="color: #483d8b;">alias</span> <span style="color: #a0522d;">xc</span>=<span style="color: #8b2252;">'xclip -selection clipboard'</span>
-<span class="linenr">2: </span><span style="color: #483d8b;">alias</span> <span style="color: #a0522d;">xcn</span>=<span style="color: #8b2252;">'perl -ne "chomp();print" |xclip -selection clipboard'</span>
-</pre>
-</div>
-
-<p>
-And here they are for mac osx : 
-</p>
-<div class="org-src-container">
-
-<pre class="src src-sh"><span class="linenr">1: </span><span style="color: #483d8b;">alias</span> <span style="color: #a0522d;">xc</span>=<span style="color: #8b2252;">"pbcopy"</span>
-<span class="linenr">2: </span><span style="color: #483d8b;">alias</span> <span style="color: #a0522d;">xcn</span>=<span style="color: #8b2252;">"tr -d '\n' | pbcopy"</span>
-</pre>
-</div>
-
-<p>
-The two approaches for removing the newlines work equivalently on both systems.
-</p>
-<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/19/linux-copy-to-clipboard.org">org-mode source</a><p>]]></content:encoded>
     </item>
   </channel>
 </rss>

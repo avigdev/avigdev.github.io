@@ -97,6 +97,95 @@
 <article>
   <div class="blog_post">
     <header>
+      <div id="backups-on-os-x"></div>
+      <h2 class="blog_post_title"><a href="/blog/20150319/2015-03-19-backups-on-os-x-html/" rel="bookmark" title="Permanent Link to Backups on OS X">Backups on OS X</a></h2>
+      <p><small><span class="blog_post_date">March 19, 2015 at 06:31 PM</span> | categories: 
+        <span class="blog_post_categories"><a href='/blog/category/mac/'>mac</a>, <a href='/blog/category/linux/'>linux</a></span>
+        | <a href="http://avigdev.github.io/blog/20150319/2015-03-19-backups-on-os-x-html#disqus_thread">View Comments</a>
+      </small></p>
+    </header>
+    <div class="post_prose">
+      
+
+
+
+
+<p>
+Back to <a href="http://avigdev.github.io/blog/20150319/2015-03-19-backups-html/">backing up</a> (no pun intended), OS X uses a launchd system rather than "cron.daily". If you are like me, you probably don't want to know why and you don't care. You just want a cron.daily approach, and a way to know whether it worked or not. 
+</p>
+
+<p>
+So put your bash script from <a href="http://avigdev.github.io/blog/20150319/2015-03-19-backups-html/">here</a> somewhere on your system, and put the following script in your ~/Library/LaunchAgents/ ,  with a name like me.bckup.daily.plist (though the name should not matter, or so they tell) : 
+</p>
+<pre class="example">
+<span class="linenr"> 1: </span>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+<span class="linenr"> 2: </span>&lt;!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/
+<span class="linenr"> 3: </span>DTDs/PropertyList-1.0.dtd"&gt;
+<span class="linenr"> 4: </span>&lt;plist version="1.0"&gt;
+<span class="linenr"> 5: </span>&lt;dict&gt;
+<span class="linenr"> 6: </span>&lt;key&gt;Label&lt;/key&gt;
+<span class="linenr"> 7: </span>&lt;string&gt;me.bckup.daily&lt;/string&gt;
+<span class="linenr"> 8: </span>&lt;key&gt;LowPriorityIO&lt;/key&gt;
+<span class="linenr"> 9: </span>&lt;true/&gt;
+<span class="linenr">10: </span>&lt;key&gt;Nice&lt;/key&gt;
+<span class="linenr">11: </span>&lt;integer&gt;12&lt;/integer&gt;
+<span class="linenr">12: </span>&lt;key&gt;Program&lt;/key&gt;
+<span class="linenr">13: </span>&lt;string&gt;/path/to/your/script/bckup_to_hd&lt;/string&gt;
+<span class="linenr">14: </span>&lt;key&gt;StartCalendarInterval&lt;/key&gt;
+<span class="linenr">15: </span>&lt;dict&gt;
+<span class="linenr">16: </span>&lt;key&gt;Hour&lt;/key&gt;
+<span class="linenr">17: </span>&lt;integer&gt;16&lt;/integer&gt;
+<span class="linenr">18: </span>&lt;key&gt;Minute&lt;/key&gt;
+<span class="linenr">19: </span>&lt;integer&gt;49&lt;/integer&gt;
+<span class="linenr">20: </span>&lt;/dict&gt;
+<span class="linenr">21: </span>&lt;key&gt;StandardErrorPath&lt;/key&gt;
+<span class="linenr">22: </span>&lt;string&gt;/path/to/log_err_file.txt&lt;/string&gt;
+<span class="linenr">23: </span>&lt;key&gt;StandardOutPath&lt;/key&gt;
+<span class="linenr">24: </span>&lt;string&gt;/path/to/log_out_file.txt&lt;/string&gt;
+<span class="linenr">25: </span>&lt;/dict&gt;
+<span class="linenr">26: </span>&lt;/plist&gt;
+</pre>
+<p>
+with the obvious ammendments of the exact time you want it to be launched every day, and your exact absolute paths.
+</p>
+
+<p>
+To begin its action for the first time, either logout and login or :
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="linenr">1: </span>launchctl load me.bckup.daily.plist
+</pre>
+</div>
+
+<p>
+If something went wrong, you could use <code>launchctl unload</code> instead of <code>load</code> , get things straight and <code>load</code> again.
+</p>
+
+<p>
+Now, how do you know if something went wrong ? 
+</p>
+
+<p>
+first, you have your log files /path/to/log_*_file.txt . Second, you could search for clues in /private/var/log/system.log in the time you designated.
+</p>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/03/19/Backups-on-OS-X.org">org-mode source</a><p>
+
+    </div>
+  </div>
+</article>
+
+
+
+  <div class="after_post"><a href="http://avigdev.github.io/blog/20150319/2015-03-19-backups-on-os-x-html#disqus_thread">Read and Post Comments</a></div>
+  <hr class="interblog" />
+  
+
+
+
+<article>
+  <div class="blog_post">
+    <header>
       <div id="backups"></div>
       <h2 class="blog_post_title"><a href="/blog/20150319/2015-03-19-backups-html/" rel="bookmark" title="Permanent Link to Backups">Backups</a></h2>
       <p><small><span class="blog_post_date">March 19, 2015 at 06:31 PM</span> | categories: 
@@ -330,55 +419,6 @@ When you save a figure, what you really want to save is - several formats, a fig
 
   <div class="after_post"><a href="http://avigdev.github.io/blog/20150212/2015-02-12-save-a-plot-in-png-eps-and-fig-formats-html#disqus_thread">Read and Post Comments</a></div>
   <hr class="interblog" />
-  
-
-
-
-<article>
-  <div class="blog_post">
-    <header>
-      <div id="regridding-unequally-spaced-sampled-field-and-plotting-an-imagesc"></div>
-      <h2 class="blog_post_title"><a href="/blog/20150207/2015-02-07-regridding-unequally-spaced-sampled-field-and-plotting-an-imagesc-html/" rel="bookmark" title="Permanent Link to Regridding unequally spaced sampled field, and plotting an imagesc">Regridding unequally spaced sampled field, and plotting an imagesc</a></h2>
-      <p><small><span class="blog_post_date">February 07, 2015 at 06:48 PM</span> | categories: 
-        <span class="blog_post_categories"><a href='/blog/category/matlab/'>matlab</a>, <a href='/blog/category/octave/'>octave</a></span>
-        | <a href="http://avigdev.github.io/blog/20150207/2015-02-07-regridding-unequally-spaced-sampled-field-and-plotting-an-imagesc-html#disqus_thread">View Comments</a>
-      </small></p>
-    </header>
-    <div class="post_prose">
-      
-
-
-
-
-<p>
-In <a href="http://avigdev.github.io/blog/20150112/2015-01-12-matlab-discrete-colorbar-html/">a previous post</a> we discussed a better way for using imagesc, with a more sane colormap. Let's now speak about the grid. Imagesc will happily embed every xy-axis you plug in, without checking whether dimensions fit. If your grid is non-equally spaced - it will just draw the z-axis on a regular axis (i.e. ignoring the xy input), and show the xy-axes as if they genuinely represent the input. My conclusion from this wild behavior is - never use imagesc on non-equally spaced data. Matlab has nice interpolant interfaces to help you get your data equally gridded. 
-</p>
-
-<div class="org-src-container">
-
-<pre class="src src-matlab"><span class="linenr">1: </span>[x1,y1]=ndgrid(x,y); <span style="color: #b22222;">% this step is actually not crucial</span>
-<span class="linenr">2: </span>I = griddedInterpolant(x1,y1,z);  
-<span class="linenr">3: </span>x1 = linspace(min(x),max(x),5);     <span style="color: #b22222;">% Define an equally spaced grid</span>
-<span class="linenr">4: </span>y1 = linspace(min(y),max(y),5);
-<span class="linenr">5: </span>[x1,y1]=ndgrid(x1,y1);
-<span class="linenr">6: </span>z1=I(x1,y1);
-<span class="linenr">7: </span>myimagesc(x1(1,<span style="color: #228b22;">:</span>),y1(<span style="color: #228b22;">:</span>,1),z1,0.55,0.95,0.05);
-</pre>
-</div>
-
-<p>
-Where your input parameters to <a href="http://avigdev.github.io/blog/20150112/2015-01-12-matlab-discrete-colorbar-html/">myimagesc</a> may vary, and you could replace "5" by whatever division of the equally spaced grids you fancy. 
-</p>
-<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/02/07/Regridding-unequally-spaced-sampled-field,-and-plotting-an-imagesc.org">org-mode source</a><p>
-
-    </div>
-  </div>
-</article>
-
-
-
-  <div class="after_post"><a href="http://avigdev.github.io/blog/20150207/2015-02-07-regridding-unequally-spaced-sampled-field-and-plotting-an-imagesc-html#disqus_thread">Read and Post Comments</a></div>
-  <hr class="interblog" />
  <a href="../2">Next Page »</a>
 
           </div>
@@ -398,11 +438,11 @@ Where your input parameters to <a href="http://avigdev.github.io/blog/20150112/2
   <section>
     <h1 class="post_header_gradient theme_font">Latest Posts</h1>
     <ul>
+      <li><a href="/blog/20150319/2015-03-19-backups-on-os-x-html/">Backups on OS X</a></li>
       <li><a href="/blog/20150319/2015-03-19-backups-html/">Backups</a></li>
       <li><a href="/blog/20150226/2015-02-26-gmt-pen-attributes-html/">GMT pen attributes</a></li>
       <li><a href="/blog/20150219/2015-02-19-a-general-slicing-syntax-html/">A general slicing syntax</a></li>
       <li><a href="/blog/20150212/2015-02-12-save-a-plot-in-png-eps-and-fig-formats-html/">save a plot in png, eps, and fig formats</a></li>
-      <li><a href="/blog/20150207/2015-02-07-regridding-unequally-spaced-sampled-field-and-plotting-an-imagesc-html/">Regridding unequally spaced sampled field, and plotting an imagesc</a></li>
     </ul>
   </section>
   <section>

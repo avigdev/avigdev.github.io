@@ -67,7 +67,7 @@
       </li>
       <li>
         
-        <a href="/blog" class="">Blog</a>
+        <a href="/blog" class="selected">Blog</a>
       </li>
       <li>
         
@@ -90,26 +90,99 @@
 
           <div id="prose_block" class="grid_8">
             
-<article class="page_box">
-<header>
-  <h3>Categories</h3>
-</header>
-<ul>
-  <li class="item"><a href="/blog/category/alias/">alias</a> (<a href="/blog/category/alias//feed/index.xml">rss</a>) (1)</li>
-  <li class="item"><a href="/blog/category/gmt/">gmt</a> (<a href="/blog/category/gmt//feed/index.xml">rss</a>) (2)</li>
-  <li class="item"><a href="/blog/category/latex/">latex</a> (<a href="/blog/category/latex//feed/index.xml">rss</a>) (4)</li>
-  <li class="item"><a href="/blog/category/linux/">linux</a> (<a href="/blog/category/linux//feed/index.xml">rss</a>) (4)</li>
-  <li class="item"><a href="/blog/category/mac/">mac</a> (<a href="/blog/category/mac//feed/index.xml">rss</a>) (2)</li>
-  <li class="item"><a href="/blog/category/matlab/">matlab</a> (<a href="/blog/category/matlab//feed/index.xml">rss</a>) (8)</li>
-  <li class="item"><a href="/blog/category/octave/">octave</a> (<a href="/blog/category/octave//feed/index.xml">rss</a>) (8)</li>
-  <li class="item"><a href="/blog/category/orgmode/">orgmode</a> (<a href="/blog/category/orgmode//feed/index.xml">rss</a>) (1)</li>
-  <li class="item"><a href="/blog/category/osx/">osx</a> (<a href="/blog/category/osx//feed/index.xml">rss</a>) (1)</li>
-  <li class="item"><a href="/blog/category/qsub/">qsub</a> (<a href="/blog/category/qsub//feed/index.xml">rss</a>) (1)</li>
-  <li class="item"><a href="/blog/category/slurm/">slurm</a> (<a href="/blog/category/slurm//feed/index.xml">rss</a>) (1)</li>
-  <li class="item"><a href="/blog/category/workflow/">workflow</a> (<a href="/blog/category/workflow//feed/index.xml">rss</a>) (4)</li>
-  <li class="item"><a href="/blog/category/xmgr/">xmgr</a> (<a href="/blog/category/xmgr//feed/index.xml">rss</a>) (2)</li>
-</ul>
+
+
+
+
+<article>
+  <div class="blog_post">
+    <header>
+      <div id="backups-on-os-x"></div>
+      <h2 class="blog_post_title"><a href="/blog/20150319/2015-03-19-backups-on-os-x-html/" rel="bookmark" title="Permanent Link to Backups on OS X">Backups on OS X</a></h2>
+      <p><small><span class="blog_post_date">March 19, 2015 at 06:31 PM</span> | categories: 
+        <span class="blog_post_categories"><a href='/blog/category/mac/'>mac</a>, <a href='/blog/category/linux/'>linux</a></span>
+        | <a href="http://avigdev.github.io/blog/20150319/2015-03-19-backups-on-os-x-html#disqus_thread">View Comments</a>
+      </small></p>
+    </header>
+    <div class="post_prose">
+      
+
+
+
+
+<p>
+Back to <a href="http://avigdev.github.io/blog/20150319/2015-03-19-backups-html/">backing up</a> (no pun intended), OS X uses a launchd system rather than "cron.daily". If you are like me, you probably don't want to know why and you don't care. You just want a cron.daily approach, and a way to know whether it worked or not. 
+</p>
+
+<p>
+So put your bash script from <a href="http://avigdev.github.io/blog/20150319/2015-03-19-backups-html/">here</a> somewhere on your system, and put the following script in your ~/Library/LaunchAgents/ ,  with a name like me.bckup.daily.plist (though the name should not matter, or so they tell) : 
+</p>
+<pre class="example">
+<span class="linenr"> 1: </span>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+<span class="linenr"> 2: </span>&lt;!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/
+<span class="linenr"> 3: </span>DTDs/PropertyList-1.0.dtd"&gt;
+<span class="linenr"> 4: </span>&lt;plist version="1.0"&gt;
+<span class="linenr"> 5: </span>&lt;dict&gt;
+<span class="linenr"> 6: </span>&lt;key&gt;Label&lt;/key&gt;
+<span class="linenr"> 7: </span>&lt;string&gt;me.bckup.daily&lt;/string&gt;
+<span class="linenr"> 8: </span>&lt;key&gt;LowPriorityIO&lt;/key&gt;
+<span class="linenr"> 9: </span>&lt;true/&gt;
+<span class="linenr">10: </span>&lt;key&gt;Nice&lt;/key&gt;
+<span class="linenr">11: </span>&lt;integer&gt;12&lt;/integer&gt;
+<span class="linenr">12: </span>&lt;key&gt;Program&lt;/key&gt;
+<span class="linenr">13: </span>&lt;string&gt;/path/to/your/script/bckup_to_hd&lt;/string&gt;
+<span class="linenr">14: </span>&lt;key&gt;StartCalendarInterval&lt;/key&gt;
+<span class="linenr">15: </span>&lt;dict&gt;
+<span class="linenr">16: </span>&lt;key&gt;Hour&lt;/key&gt;
+<span class="linenr">17: </span>&lt;integer&gt;16&lt;/integer&gt;
+<span class="linenr">18: </span>&lt;key&gt;Minute&lt;/key&gt;
+<span class="linenr">19: </span>&lt;integer&gt;49&lt;/integer&gt;
+<span class="linenr">20: </span>&lt;/dict&gt;
+<span class="linenr">21: </span>&lt;key&gt;StandardErrorPath&lt;/key&gt;
+<span class="linenr">22: </span>&lt;string&gt;/path/to/log_err_file.txt&lt;/string&gt;
+<span class="linenr">23: </span>&lt;key&gt;StandardOutPath&lt;/key&gt;
+<span class="linenr">24: </span>&lt;string&gt;/path/to/log_out_file.txt&lt;/string&gt;
+<span class="linenr">25: </span>&lt;/dict&gt;
+<span class="linenr">26: </span>&lt;/plist&gt;
+</pre>
+<p>
+with the obvious ammendments of the exact time you want it to be launched every day, and your exact absolute paths.
+</p>
+
+<p>
+To begin its action for the first time, either logout and login or :
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="linenr">1: </span>launchctl load me.bckup.daily.plist
+</pre>
+</div>
+
+<p>
+If something went wrong, you could use <code>launchctl unload</code> instead of <code>load</code> , get things straight and <code>load</code> again.
+</p>
+
+<p>
+Now, how do you know if something went wrong ? 
+</p>
+
+<p>
+first, you have your log files /path/to/log_*_file.txt . Second, you could search for clues in /private/var/log/system.log in the time you designated.
+</p>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/03/19/Backups-on-OS-X.org">org-mode source</a><p>
+
+    </div>
+  </div>
 </article>
+
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_url = "http://avigdev.github.io/blog/20150319/2015-03-19-backups-on-os-x-html";
+</script>
+<script type="text/javascript" src="http://disqus.com/forums/avigdev/embed.js"></script>
+<noscript><a href="http://avigdev.disqus.com/?url=ref">View the discussion thread.</a></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
 
           </div>
           <div id="sidebar" class="grid_4">
