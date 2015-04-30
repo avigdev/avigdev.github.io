@@ -1,0 +1,241 @@
+
+
+<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avi Gozolchiani אבי גוזולצני</title>
+  <meta name="description" content="Environmental Physics at Ben Gurion University">
+  <meta name="author" content="Avi Gozolchiani">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS 2.0"
+        href="/blog/feed/">
+  <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
+        href="/blog/feed/atom/">
+
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon"
+        href="/img/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="/css/base.css?v=1">
+  <link rel="stylesheet" href="/css/grid.css?v=1">
+  <link rel="stylesheet" media="handheld"
+        href="/css/handheld.css?v=1">
+  <link rel="stylesheet"
+        href="/css/pygments_murphy.css">
+
+  <script
+    src="/js/libs/modernizr-1.7.min.js">
+  </script>
+
+  <link rel="stylesheet" href="/themes/theme1/style.css?v=1">
+<link href='http://fonts.googleapis.com/css?family=Architects+Daughter'  rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+
+
+</head>
+  <body>
+    <div id="container" class="container container_12">
+      <div id="main" role="main">
+        <div id="main_block">
+          <header>
+  <div id="header" class="header_gradient theme_font">
+    <h1>
+      <a href="/">
+        Avi Gozolchiani אבי גוזולצני
+      </a>
+    </h1>
+    <h2>Environmental Physics at Ben Gurion University</h2>
+  </div>
+  <div id="navigation" class="grid_12">
+    
+    
+    <ul class="theme_font">
+      <li>
+        
+        <a href="/" class="">Home</a>
+      </li>
+      <li>
+        
+        <a href="/publications" class="">Publications</a>
+      </li>
+      <li>
+        
+        <a href="/blog" class="selected">Blog</a>
+      </li>
+      <li>
+        
+        <a href="/blog/archive/" class="">Archives</a>
+      </li>
+      <li>
+        
+        <a href="/contact.html" class="">Contact</a>
+      </li>
+      <li>
+        <a href="http://sourceforge.net/u/avigdev/profile/" class="">Software</a>
+      </li>
+      <li>
+        
+        <a href="/categories.html" class="">Categories</a>
+      </li>
+    </ul>
+  </div>
+</header>
+
+          <div id="prose_block" class="grid_8">
+            
+
+
+
+
+<article>
+  <div class="blog_post">
+    <header>
+      <div id="alternative-to-keyword-substitution-in-git-using-org-mode"></div>
+      <h2 class="blog_post_title"><a href="/blog/20150430/2015-04-30-alternative-to-keyword-substitution-in-git-using-org-mode-html/" rel="bookmark" title="Permanent Link to Alternative to keyword substitution in git, using org-mode">Alternative to keyword substitution in git, using org-mode</a></h2>
+      <p><small><span class="blog_post_date">April 30, 2015 at 01:52 PM</span> | categories: 
+        <span class="blog_post_categories"><a href='/blog/category/orgmode/'>orgmode</a>, <a href='/blog/category/max/'>max</a>, <a href='/blog/category/git/'>git</a>, <a href='/blog/category/linux/'>linux</a></span>
+        | <a href="http://avigdev.github.io/blog/20150430/2015-04-30-alternative-to-keyword-substitution-in-git-using-org-mode-html#disqus_thread">View Comments</a>
+      </small></p>
+    </header>
+    <div class="post_prose">
+      
+
+
+
+<p>
+Linus Torvalds <a href="http://www.gelato.unsw.edu.au/archives/git/0610/28891.html">thinks</a> that cvs-style keyword substitution (like having the string \\(Log\\) substituted by actual cvs logs in text file) is idiotic. He's got some points, like avoid mess in binary files.
+, I think seeing a log in my <a href="http://orgmode.org">org-files</a> is not that bad, and it gives me a notion of the gradual advances that were made. I found the following lines to be non-intrusive enough to make them an almost keyword-substitution-substitution.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-example"># git logging 
+#+BEGIN_SRC sh :exports results :results raw drawer
+git log | sed -e "s/^/# /g"
+\#+END_SRC
+</pre>
+</div>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/04/30/Alternative-to-keyword-substitution-in-git,-using-org-mode.org">org-mode source</a><p>
+
+    </div>
+  </div>
+</article>
+
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_url = "http://avigdev.github.io/blog/20150430/2015-04-30-alternative-to-keyword-substitution-in-git-using-org-mode-html";
+</script>
+<script type="text/javascript" src="http://disqus.com/forums/avigdev/embed.js"></script>
+<noscript><a href="http://avigdev.disqus.com/?url=ref">View the discussion thread.</a></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+          </div>
+          <div id="sidebar" class="grid_4">
+            <aside>
+  <section>
+    <h1 class="post_header_gradient theme_font">Twitter</h1>
+<div class="sidebar_item">
+<a class="twitter-timeline" href="https://twitter.com/avigdev" data-widget-id="549128905232109568">Tweets by @avigdev</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+<br />
+    <!-- <div id="on_twitter"> -->
+    <!--   <div id="tweets"></div> -->
+    <!--   <a href="http://search.twitter.com/search?q=example" style="float: right">See more tweets</a> -->
+    <!-- </div> -->
+  </section>
+  <section>
+    <h1 class="post_header_gradient theme_font">Latest Posts</h1>
+    <ul>
+      <li><a href="/blog/20150430/2015-04-30-alternative-to-keyword-substitution-in-git-using-org-mode-html/">Alternative to keyword substitution in git, using org-mode</a></li>
+      <li><a href="/blog/20150319/2015-03-19-backups-on-os-x-html/">Backups on OS X</a></li>
+      <li><a href="/blog/20150319/2015-03-19-backups-html/">Backups</a></li>
+      <li><a href="/blog/20150226/2015-02-26-gmt-pen-attributes-html/">GMT pen attributes</a></li>
+      <li><a href="/blog/20150219/2015-02-19-a-general-slicing-syntax-html/">A general slicing syntax</a></li>
+    </ul>
+  </section>
+  <section>
+    <h1 class="post_header_gradient theme_font">Latest sourceforge repos</h1>
+    <div id="sourceforge">
+    <aside>
+
+      <a href="http://sourceforge.net/u/avigdev/profile/" style="float: right">@avigdev</a> on sourceforge : 
+    <lr>
+    </lr> 
+</aside>
+    
+    </div>
+  </section>
+</aside>
+
+
+          </div>
+          <div class="clear"></div>
+        </div>
+      </div>
+      
+<footer>
+  <div id="footer" class="grid_12">
+    <div class="grid_8">
+      <p>
+        <a href="/blog/feed/index.xml">RSS</a>
+        <a href="http://avigdev.disqus.com/latest.rss">Comments RSS Feed</a>.
+      </p>
+    </div>
+    <div class="grid_4" id="credits">
+      <p>
+        Copyright 2015
+        Avi Gozolchiani
+      </p>
+      <p>
+        Powered by <a href="http://www.blogofile.com">Blogofile</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+    </div>
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/js/libs/jquery-1.5.1.min.js"%3E%3C/script%3E'))</script>
+  <script src="/js/plugins.js"></script>
+  <script src="/js/script.js"></script>
+  <script src="/js/jquery.tweet.js"></script>  
+  <script src="/js/site.js"></script>
+  <!--[if lt IE 7 ]>
+  <script src="js/libs/dd_belatedpng.js"></script>
+  <script> DD_belatedPNG.fix('img, .png_bg');</script>
+  <![endif]-->
+  <script>
+      var _gaq=[['_setAccount','UA-58132730-1'],['_trackPageview']];
+      (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
+      g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+      s.parentNode.insertBefore(g,s)}(document,'script'));
+  </script>
+  <script>
+  (function() {
+      var links = document.getElementsByTagName('a');
+      var query = '?';
+      for(var i = 0; i < links.length; i++) {
+          if(links[i].href.indexOf('#disqus_thread') >= 0) {
+              query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+          }
+      }
+      document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/avigdev/get_num_replies.js' + query + '"></' + 'script>');
+  })();
+  </script>
+
+  </body>
+</html>
+
+
+
+
+
+

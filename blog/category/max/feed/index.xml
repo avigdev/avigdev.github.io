@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+     >
+  <channel>
+    <title>Avi Gozolchiani אבי גוזולצני</title>
+    <link>http://avigdev.github.io/blog</link>
+    <description>Environmental Physics at Ben Gurion University</description>
+    <pubDate>Thu, 30 Apr 2015 11:00:26 GMT</pubDate>
+    <generator>Blogofile</generator>
+    <sy:updatePeriod>hourly</sy:updatePeriod>
+    <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>Alternative to keyword substitution in git, using org-mode</title>
+      <link>http://avigdev.github.io/blog/20150430/2015-04-30-alternative-to-keyword-substitution-in-git-using-org-mode-html</link>
+      <pubDate>Thu, 30 Apr 2015 13:52:36 IDT</pubDate>
+      <category><![CDATA[orgmode]]></category>
+      <category><![CDATA[max]]></category>
+      <category><![CDATA[git]]></category>
+      <category><![CDATA[linux]]></category>
+      <guid isPermaLink="false">dqz7jZoPpkfRAdSMibgf9sPukXU=</guid>
+      <description>Alternative to keyword substitution in git, using org-mode</description>
+      <content:encoded><![CDATA[
+
+
+<p>
+Linus Torvalds <a href="http://www.gelato.unsw.edu.au/archives/git/0610/28891.html">thinks</a> that cvs-style keyword substitution (like having the string \\(Log\\) substituted by actual cvs logs in text file) is idiotic. He's got some points, like avoid mess in binary files.
+, I think seeing a log in my <a href="http://orgmode.org">org-files</a> is not that bad, and it gives me a notion of the gradual advances that were made. I found the following lines to be non-intrusive enough to make them an almost keyword-substitution-substitution.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-example"># git logging 
+#+BEGIN_SRC sh :exports results :results raw drawer
+git log | sed -e "s/^/# /g"
+\#+END_SRC
+</pre>
+</div>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/04/30/Alternative-to-keyword-substitution-in-git,-using-org-mode.org">org-mode source</a><p>]]></content:encoded>
+    </item>
+  </channel>
+</rss>

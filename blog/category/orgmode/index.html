@@ -97,6 +97,48 @@
 <article>
   <div class="blog_post">
     <header>
+      <div id="alternative-to-keyword-substitution-in-git-using-org-mode"></div>
+      <h2 class="blog_post_title"><a href="/blog/20150430/2015-04-30-alternative-to-keyword-substitution-in-git-using-org-mode-html/" rel="bookmark" title="Permanent Link to Alternative to keyword substitution in git, using org-mode">Alternative to keyword substitution in git, using org-mode</a></h2>
+      <p><small><span class="blog_post_date">April 30, 2015 at 01:52 PM</span> | categories: 
+        <span class="blog_post_categories"><a href='/blog/category/orgmode/'>orgmode</a>, <a href='/blog/category/max/'>max</a>, <a href='/blog/category/git/'>git</a>, <a href='/blog/category/linux/'>linux</a></span>
+        | <a href="http://avigdev.github.io/blog/20150430/2015-04-30-alternative-to-keyword-substitution-in-git-using-org-mode-html#disqus_thread">View Comments</a>
+      </small></p>
+    </header>
+    <div class="post_prose">
+      
+
+
+
+<p>
+Linus Torvalds <a href="http://www.gelato.unsw.edu.au/archives/git/0610/28891.html">thinks</a> that cvs-style keyword substitution (like having the string \\(Log\\) substituted by actual cvs logs in text file) is idiotic. He's got some points, like avoid mess in binary files.
+, I think seeing a log in my <a href="http://orgmode.org">org-files</a> is not that bad, and it gives me a notion of the gradual advances that were made. I found the following lines to be non-intrusive enough to make them an almost keyword-substitution-substitution.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-example"># git logging 
+#+BEGIN_SRC sh :exports results :results raw drawer
+git log | sed -e "s/^/# /g"
+\#+END_SRC
+</pre>
+</div>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/04/30/Alternative-to-keyword-substitution-in-git,-using-org-mode.org">org-mode source</a><p>
+
+    </div>
+  </div>
+</article>
+
+
+
+  <div class="after_post"><a href="http://avigdev.github.io/blog/20150430/2015-04-30-alternative-to-keyword-substitution-in-git-using-org-mode-html#disqus_thread">Read and Post Comments</a></div>
+  <hr class="interblog" />
+  
+
+
+
+<article>
+  <div class="blog_post">
+    <header>
       <div id="simplify-slurm-and-qsub"></div>
       <h2 class="blog_post_title"><a href="/blog/20141228/2014-12-28-simplify-slurm-and-qsub-html/" rel="bookmark" title="Permanent Link to simplify slurm and qsub">simplify slurm and qsub</a></h2>
       <p><small><span class="blog_post_date">December 28, 2014 at 06:48 PM</span> | categories: 
@@ -235,11 +277,11 @@ The "-x n03" part in slurm_run.pl was added since our system admin asked me to n
   <section>
     <h1 class="post_header_gradient theme_font">Latest Posts</h1>
     <ul>
+      <li><a href="/blog/20150430/2015-04-30-alternative-to-keyword-substitution-in-git-using-org-mode-html/">Alternative to keyword substitution in git, using org-mode</a></li>
       <li><a href="/blog/20150319/2015-03-19-backups-on-os-x-html/">Backups on OS X</a></li>
       <li><a href="/blog/20150319/2015-03-19-backups-html/">Backups</a></li>
       <li><a href="/blog/20150226/2015-02-26-gmt-pen-attributes-html/">GMT pen attributes</a></li>
       <li><a href="/blog/20150219/2015-02-19-a-general-slicing-syntax-html/">A general slicing syntax</a></li>
-      <li><a href="/blog/20150212/2015-02-12-save-a-plot-in-png-eps-and-fig-formats-html/">save a plot in png, eps, and fig formats</a></li>
     </ul>
   </section>
   <section>
