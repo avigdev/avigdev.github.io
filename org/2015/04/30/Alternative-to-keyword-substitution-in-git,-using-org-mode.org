@@ -2,9 +2,9 @@
   :PROPERTIES:
   :categories: git,linux,max,orgmode
   :date:     2015/04/30 13:52:36
-  :updated:  2015/04/30 14:00:21
+  :updated:  2015/04/30 14:08:29
   :END:
-Linus Torvalds [[http://www.gelato.unsw.edu.au/archives/git/0610/28891.html][thinks]] that cvs-style keyword substitution (like having the string \$Log\$ substituted by actual cvs logs in text file) is idiotic. He's got some points, like avoid mess in binary files.
+Linus Torvalds [[http://www.gelato.unsw.edu.au/archives/git/0610/28891.html][thinks]] that cvs-style keyword substitution (like having the string $Log$ substituted by actual cvs logs in text file) is idiotic. He's got some points, like avoiding mess in binary files.
 , I think seeing a log in my [[http://orgmode.org][org-files]] is not that bad, and it gives me a notion of the gradual advances that were made. I found the following lines to be non-intrusive enough to make them an almost keyword-substitution-substitution.
 
 #+BEGIN_SRC example

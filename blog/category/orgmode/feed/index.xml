@@ -10,7 +10,7 @@
     <title>Avi Gozolchiani אבי גוזולצני</title>
     <link>http://avigdev.github.io/blog</link>
     <description>Environmental Physics at Ben Gurion University</description>
-    <pubDate>Thu, 30 Apr 2015 11:00:26 GMT</pubDate>
+    <pubDate>Mon, 04 May 2015 14:35:38 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
@@ -28,8 +28,8 @@
 
 
 <p>
-Linus Torvalds <a href="http://www.gelato.unsw.edu.au/archives/git/0610/28891.html">thinks</a> that cvs-style keyword substitution (like having the string \\(Log\\) substituted by actual cvs logs in text file) is idiotic. He's got some points, like avoid mess in binary files.
-, I think seeing a log in my <a href="http://orgmode.org">org-files</a> is not that bad, and it gives me a notion of the gradual advances that were made. I found the following lines to be non-intrusive enough to make them an almost keyword-substitution-substitution.
+Linus Torvalds <a href="http://www.gelato.unsw.edu.au/archives/git/0610/28891.html">thinks</a> that cvs-style keyword substitution (like having the string \(Log\) substituted by actual cvs logs in text file) is idiotic. He's got some points, like avoiding mess in binary files.
+ I think that seeing a log in my <a href="http://orgmode.org">org-files</a> is not that bad, and it gives me a notion of the gradual advances that were made. I found the following lines to be non-intrusive enough to make them an almost keyword-substitution-substitution.
 </p>
 
 <div class="org-src-container">
@@ -40,7 +40,8 @@ git log | sed -e "s/^/# /g"
 \#+END_SRC
 </pre>
 </div>
-<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/04/30/Alternative-to-keyword-substitution-in-git,-using-org-mode.org">org-mode source</a><p>]]></content:encoded>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/04/30/Alternative-to-keyword-substitution-in-git,-using-org-mode.org">org-mode source</a><p>
+]]></content:encoded>
     </item>
     <item>
       <title>simplify slurm and qsub</title>

@@ -7,7 +7,7 @@
   <title type="text">Avi Gozolchiani אבי גוזולצני</title>
   <subtitle type="text">Environmental Physics at Ben Gurion University</subtitle>
 
-  <updated>2015-04-30T11:00:26Z</updated>
+  <updated>2015-05-04T14:35:38Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://avigdev.github.io/blog" />
@@ -21,7 +21,7 @@
     <title type="html"><![CDATA[Alternative to keyword substitution in git, using org-mode]]></title>
     <link rel="alternate" type="text/html" href="http://avigdev.github.io/blog/20150430/2015-04-30-alternative-to-keyword-substitution-in-git-using-org-mode-html" />
     <id>http://avigdev.github.io/blog/20150430/2015-04-30-alternative-to-keyword-substitution-in-git-using-org-mode-html</id>
-    <updated>2015-04-30T14:00:21Z</updated>
+    <updated>2015-04-30T14:08:29Z</updated>
     <published>2015-04-30T13:52:36Z</published>
     <category scheme="http://avigdev.github.io/blog" term="orgmode" />
     <category scheme="http://avigdev.github.io/blog" term="max" />
@@ -32,8 +32,8 @@
 
 
 <p>
-Linus Torvalds <a href="http://www.gelato.unsw.edu.au/archives/git/0610/28891.html">thinks</a> that cvs-style keyword substitution (like having the string \\(Log\\) substituted by actual cvs logs in text file) is idiotic. He's got some points, like avoid mess in binary files.
-, I think seeing a log in my <a href="http://orgmode.org">org-files</a> is not that bad, and it gives me a notion of the gradual advances that were made. I found the following lines to be non-intrusive enough to make them an almost keyword-substitution-substitution.
+Linus Torvalds <a href="http://www.gelato.unsw.edu.au/archives/git/0610/28891.html">thinks</a> that cvs-style keyword substitution (like having the string \(Log\) substituted by actual cvs logs in text file) is idiotic. He's got some points, like avoiding mess in binary files.
+ I think that seeing a log in my <a href="http://orgmode.org">org-files</a> is not that bad, and it gives me a notion of the gradual advances that were made. I found the following lines to be non-intrusive enough to make them an almost keyword-substitution-substitution.
 </p>
 
 <div class="org-src-container">
@@ -44,7 +44,8 @@ git log | sed -e "s/^/# /g"
 \#+END_SRC
 </pre>
 </div>
-<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/04/30/Alternative-to-keyword-substitution-in-git,-using-org-mode.org">org-mode source</a><p>]]></content>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/04/30/Alternative-to-keyword-substitution-in-git,-using-org-mode.org">org-mode source</a><p>
+]]></content>
   </entry>
   <entry>
     <author>
