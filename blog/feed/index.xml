@@ -10,35 +10,20 @@
     <title>Avi Gozolchiani אבי גוזולצני</title>
     <link>http://avigdev.github.io/blog</link>
     <description>Environmental Physics at Ben Gurion University</description>
-    <pubDate>Thu, 11 Jun 2015 12:13:13 GMT</pubDate>
+    <pubDate>Thu, 11 Jun 2015 12:57:19 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
-      <title>MITGCM recipee for building a package</title>
-      <link>http://avigdev.github.io/blog/20150611/2015-06-11-mitgcm-recipee-for-building-a-package-html</link>
-      <pubDate>Thu, 11 Jun 2015 15:13:03 IDT</pubDate>
-      <category><![CDATA[mitgcm]]></category>
-      <guid isPermaLink="false">Zpda64MUi5yfD1Of5FCKOm5oumU=</guid>
-      <description>MITGCM recipee for building a package</description>
+      <title>prepare an empty package that does nothing</title>
+      <link>http://avigdev.github.io/blog/20150611/2015-06-11-prepare-an-empty-package-that-does-nothing-html</link>
+      <pubDate>Thu, 11 Jun 2015 15:55:15 IDT</pubDate>
+      <category><![CDATA[uncategorized]]></category>
+      <guid isPermaLink="false">ZTWwH_4V9xi_-ZNJw3-5LLUBL_E=</guid>
+      <description>prepare an empty package that does nothing</description>
       <content:encoded><![CDATA[
 
 
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#sec-1">1. prepare an empty package that does nothing</a></li>
-<li><a href="#sec-2">2. parse user parameters</a></li>
-</ul>
-</div>
-</div>
-<p>
-It is not easy to include a new functionality in a huge computer simulation such as <a href="http://mitgcm.org">MITgcm</a> , even if it is very modular and written with extensions in mind (and it is). So here is my experience with it. In the following, some of the replacements could be done on your local "code" directory, rather than on the root. The name of the example package is mypack.
-</p>
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> prepare an empty package that does nothing</h2>
-<div class="outline-text-2" id="text-1">
 <p>
 the minimal list of files (which can be coppied, with necessary name changes of files/variables/parameters/functions, from MYPACKAGE) is:
 </p>
@@ -135,6 +120,136 @@ their description :
 
 <tr>
 <td class="left">mypack_routines.F</td>
+<td class="left">routines that implement double diffusion parametrization schemes</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+they should be under a new directory of the rootdir (in mypack case ~/MITgcm/model/pkg/mypack )
+</p>
+
+<p>
+the input file data.pkg should include the new entry "useMypack=.TRUE.," under the namelist "&amp;PACKAGES"
+</p>
+
+<p>
+this parameter should be declared (with the type <code>LOGICAL</code>), and included in the common block <i>PARM_PACKAGES</i> under <code>~/MITgcm/model/inc/PARAMS.h</code> .  it should also be included under the namelist "PACKAGES" in <code>~/MITgcm/model/src/packages_boot.F</code> , and its default value should usually be declared in this file to be <code>.FALSE.</code>.
+</p>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/06/11/prepare-an-empty-package-that-does-nothing.org">org-mode source</a><p>]]></content:encoded>
+    </item>
+    <item>
+      <title>MITGCM recipee for building a package</title>
+      <link>http://avigdev.github.io/blog/20150611/2015-06-11-mitgcm-recipee-for-building-a-package-html</link>
+      <pubDate>Thu, 11 Jun 2015 15:13:03 IDT</pubDate>
+      <category><![CDATA[mitgcm]]></category>
+      <guid isPermaLink="false">Zpda64MUi5yfD1Of5FCKOm5oumU=</guid>
+      <description>MITGCM recipee for building a package</description>
+      <content:encoded><![CDATA[
+
+
+<p>
+It is not easy to include a new functionality in a huge computer simulation such as <a href="http://mitgcm.org">MITgcm</a> , even if it is very modular and written with extensions in mind (and it is). So here is my experience with it. In the following, some of the replacements could be done on your local "code" directory, rather than on the root. The name of the example package is mypack.
+</p>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> prepare an empty package that does nothing</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+the minimal list of files (which can be coppied, with necessary name changes of files/variables/parameters/functions, from MYPACKAGE) is:
+</p>
+
+<pre class="example">
+mypack_calc.F
+mypack_diagnostics_init.F
+MYPACK_OPTIONS.h
+MYPACK_PARAMS.h
+MYPACK.h
+mypack_output.F
+mypack_routines.F
+mypack_check.F
+mypack_init_varia.F
+mypack_readparms.F
+</pre>
+
+
+<p>
+their description :
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">file</th>
+<th scope="col" class="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">headers</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">MYPACK.h</td>
+<td class="left">define pkg variables, and their common blocks</td>
+</tr>
+
+<tr>
+<td class="left">MYPACK\_OPTIONS.h</td>
+<td class="left">package specific MACRO option defs</td>
+</tr>
+
+<tr>
+<td class="left">MYPACK\_PARAMS.h</td>
+<td class="left">package parameters and their common block  (read from data.mypack)</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">code</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">mypack\_calc.F</td>
+<td class="left">interface for mitgcnuv (this is what the model's core calls)</td>
+</tr>
+
+<tr>
+<td class="left">mypack\_check.F</td>
+<td class="left">check dependencies/conflicts with other packages</td>
+</tr>
+
+<tr>
+<td class="left">mypack\_diagnostics\_init.F</td>
+<td class="left">define diagnostics related to the package</td>
+</tr>
+
+<tr>
+<td class="left">mypack\_init\_varia.F</td>
+<td class="left">initialize MYPACK parameters and variables</td>
+</tr>
+
+<tr>
+<td class="left">mypack\_output.F</td>
+<td class="left">create diagnostic outputs</td>
+</tr>
+
+<tr>
+<td class="left">mypack\_readparms.F</td>
+<td class="left">parse data.mypack</td>
+</tr>
+
+<tr>
+<td class="left">mypack\_routines.F</td>
 <td class="left">routines that implement double diffusion parametrization schemes</td>
 </tr>
 </tbody>
@@ -571,58 +686,6 @@ To have different log files with unique names for different sessions, you need t
 logfile screenlog-%Y%m%d-%c:%s
 </pre>
 <p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/29/Screen---unique-logs-for-each-run.org">org-mode source</a><p>]]></content:encoded>
-    </item>
-    <item>
-      <title>Consistent Latex units in non italics</title>
-      <link>http://avigdev.github.io/blog/20150127/2015-01-27-consistent-latex-units-in-non-italics-html</link>
-      <pubDate>Tue, 27 Jan 2015 19:23:23 IST</pubDate>
-      <category><![CDATA[latex]]></category>
-      <guid isPermaLink="false">EweFAep8SEIgcJoTKBebpuPnX1s=</guid>
-      <description>Consistent Latex units in non italics</description>
-      <content:encoded><![CDATA[
-
-
-
-<p>
-Yet another latex tidbit. Its purpose - remove <i>italics</i> from the units inside math mode.
-</p>
-
-<p>
-in the header :
-</p>
-<div class="org-src-container">
-
-<pre class="src src-latex"><span class="linenr">1: </span><span style="color: #932092;">\newcommand</span>{<span style="color: #0000ff;">\unit</span>}[1]{<span style="color: #932092;">\ensuremath</span>{<span style="color: #932092;">\,</span> <span style="color: #932092;">\mathrm</span>{#1}}}
-</pre>
-</div>
-
-<p>
-in the body :
-</p>
-<div class="org-src-container">
-
-<pre class="src src-latex"><span class="linenr">1: </span><span style="color: #8b2252;">$\tau=0.0257\left[\unit{N\cdot m^</span><span style="color: #8b2252;">{-2}</span><span style="color: #8b2252;">}\right]$</span>
-</pre>
-</div>
-
-<p>
-If you want to take this approach to the very extreme, you could have the units of every var defined in the header : 
-</p>
-<div class="org-src-container">
-
-<pre class="src src-latex"><span class="linenr">1: </span><span style="color: #932092;">\newcommand</span>{<span style="color: #0000ff;">\tauunit</span>}{<span style="color: #932092;">\unit</span>{N}<span style="color: #932092;">\cdot\unit</span>{m}^{-2}}
-</pre>
-</div>
-
-<p>
-And use them consistently without silly unit mistakes inside your manuscript : 
-</p>
-<div class="org-src-container">
-
-<pre class="src src-latex"><span class="linenr">1: </span><span style="color: #8b2252;">$\tau=0.4\tauunit$</span>
-</pre>
-</div>
-<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/27/Consistent-Latex-units-in-non-italics.org">org-mode source</a><p>]]></content:encoded>
     </item>
   </channel>
 </rss>

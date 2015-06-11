@@ -109,15 +109,6 @@
 
 
 
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#sec-1">1. prepare an empty package that does nothing</a></li>
-<li><a href="#sec-2">2. parse user parameters</a></li>
-</ul>
-</div>
-</div>
 <p>
 It is not easy to include a new functionality in a huge computer simulation such as <a href="http://mitgcm.org">MITgcm</a> , even if it is very modular and written with extensions in mind (and it is). So here is my experience with it. In the following, some of the replacements could be done on your local "code" directory, rather than on the root. The name of the example package is mypack.
 </p>
@@ -172,12 +163,12 @@ their description :
 </tr>
 
 <tr>
-<td class="left">MYPACK_OPTIONS.h</td>
+<td class="left">MYPACK\_OPTIONS.h</td>
 <td class="left">package specific MACRO option defs</td>
 </tr>
 
 <tr>
-<td class="left">MYPACK_PARAMS.h</td>
+<td class="left">MYPACK\_PARAMS.h</td>
 <td class="left">package parameters and their common block  (read from data.mypack)</td>
 </tr>
 </tbody>
@@ -189,37 +180,37 @@ their description :
 </tbody>
 <tbody>
 <tr>
-<td class="left">mypack_calc.F</td>
+<td class="left">mypack\_calc.F</td>
 <td class="left">interface for mitgcnuv (this is what the model's core calls)</td>
 </tr>
 
 <tr>
-<td class="left">mypack_check.F</td>
+<td class="left">mypack\_check.F</td>
 <td class="left">check dependencies/conflicts with other packages</td>
 </tr>
 
 <tr>
-<td class="left">mypack_diagnostics_init.F</td>
+<td class="left">mypack\_diagnostics\_init.F</td>
 <td class="left">define diagnostics related to the package</td>
 </tr>
 
 <tr>
-<td class="left">mypack_init_varia.F</td>
+<td class="left">mypack\_init\_varia.F</td>
 <td class="left">initialize MYPACK parameters and variables</td>
 </tr>
 
 <tr>
-<td class="left">mypack_output.F</td>
+<td class="left">mypack\_output.F</td>
 <td class="left">create diagnostic outputs</td>
 </tr>
 
 <tr>
-<td class="left">mypack_readparms.F</td>
+<td class="left">mypack\_readparms.F</td>
 <td class="left">parse data.mypack</td>
 </tr>
 
 <tr>
-<td class="left">mypack_routines.F</td>
+<td class="left">mypack\_routines.F</td>
 <td class="left">routines that implement double diffusion parametrization schemes</td>
 </tr>
 </tbody>
@@ -324,11 +315,11 @@ these subroutines are run from the model file <code>packages_readparms.F</code>.
   <section>
     <h1 class="post_header_gradient theme_font">Latest Posts</h1>
     <ul>
+      <li><a href="/blog/20150611/2015-06-11-prepare-an-empty-package-that-does-nothing-html/">prepare an empty package that does nothing</a></li>
       <li><a href="/blog/20150611/2015-06-11-mitgcm-recipee-for-building-a-package-html/">MITGCM recipee for building a package</a></li>
       <li><a href="/blog/20150430/2015-04-30-alternative-to-keyword-substitution-in-git-using-org-mode-html/">Alternative to keyword substitution in git, using org-mode</a></li>
       <li><a href="/blog/20150319/2015-03-19-backups-on-os-x-html/">Backups on OS X</a></li>
       <li><a href="/blog/20150319/2015-03-19-backups-html/">Backups</a></li>
-      <li><a href="/blog/20150226/2015-02-26-gmt-pen-attributes-html/">GMT pen attributes</a></li>
     </ul>
   </section>
   <section>

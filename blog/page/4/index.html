@@ -97,6 +97,47 @@
 <article>
   <div class="blog_post">
     <header>
+      <div id="latex-please-don-t-mix-bibliography-and-figures"></div>
+      <h2 class="blog_post_title"><a href="/blog/20150115/2015-01-15-latex-please-don-t-mix-bibliography-and-figures-html/" rel="bookmark" title="Permanent Link to LaTeX - please don't mix bibliography and figures">LaTeX - please don't mix bibliography and figures</a></h2>
+      <p><small><span class="blog_post_date">January 15, 2015 at 12:03 PM</span> | categories: 
+        <span class="blog_post_categories"><a href='/blog/category/latex/'>latex</a></span>
+        | <a href="http://avigdev.github.io/blog/20150115/2015-01-15-latex-please-don-t-mix-bibliography-and-figures-html#disqus_thread">View Comments</a>
+      </small></p>
+    </header>
+    <div class="post_prose">
+      
+
+
+
+<p>
+The weird mingling of figs and bibliography which is the default setting in LaTeX could be avoided by using the package <a href="http://www.ctan.org/pkg/placeins">"placeins"</a> . You could use several more barriers to make sure that all figures will not leak beyond certain position in text (for example - the end of a section).
+</p>
+<div class="org-src-container">
+
+<pre class="src src-latex"><span class="linenr">1: </span><span style="color: #932092;">\usepackage</span>{<span style="color: #483d8b;">placeins</span>} <span style="color: #b22222;">% in the header</span>
+<span class="linenr">2: </span>....
+<span class="linenr">3: </span><span style="color: #932092;">\FloatBarrier</span> <span style="color: #b22222;">% this forces all figures to be presented before the bibl.</span>
+<span class="linenr">4: </span><span style="color: #932092;">\bibliographystyle</span>{unsrt}
+<span class="linenr">5: </span><span style="color: #932092;">\bibliography</span>{<span style="color: #483d8b;">gyre_ref</span>} <span style="color: #b22222;">% your bibtex file is probably named differently</span>
+</pre>
+</div>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/01/15/LaTeX---please-don't-mix-bibliography-and-figures.org">org-mode source</a><p>
+
+    </div>
+  </div>
+</article>
+
+
+
+  <div class="after_post"><a href="http://avigdev.github.io/blog/20150115/2015-01-15-latex-please-don-t-mix-bibliography-and-figures-html#disqus_thread">Read and Post Comments</a></div>
+  <hr class="interblog" />
+  
+
+
+
+<article>
+  <div class="blog_post">
+    <header>
       <div id="gmt-s-mysterious-page-dimension"></div>
       <h2 class="blog_post_title"><a href="/blog/20150114/2015-01-14-gmt-s-mysterious-page-dimension-html/" rel="bookmark" title="Permanent Link to GMT's mysterious page dimension">GMT's mysterious page dimension</a></h2>
       <p><small><span class="blog_post_date">January 14, 2015 at 06:40 PM</span> | categories: 
@@ -513,46 +554,6 @@ where <i>LATEXTMPL</i> is an environment variable, telling your script the locat
 
   <div class="after_post"><a href="http://avigdev.github.io/blog/20150107/2015-1-7-create-a-document-from-your-figures-html#disqus_thread">Read and Post Comments</a></div>
   <hr class="interblog" />
-  
-
-
-
-<article>
-  <div class="blog_post">
-    <header>
-      <div id="ncdump-h-for-matlab"></div>
-      <h2 class="blog_post_title"><a href="/blog/20141230/2014-12-30-ncdump-h-for-matlab-html/" rel="bookmark" title="Permanent Link to ncdump -h for matlab">ncdump -h for matlab</a></h2>
-      <p><small><span class="blog_post_date">December 30, 2014 at 01:16 PM</span> | categories: 
-        <span class="blog_post_categories"><a href='/blog/category/matlab/'>matlab</a>, <a href='/blog/category/octave/'>octave</a></span>
-        | <a href="http://avigdev.github.io/blog/20141230/2014-12-30-ncdump-h-for-matlab-html#disqus_thread">View Comments</a>
-      </small></p>
-    </header>
-    <div class="post_prose">
-      
-
-
-
-
-<p>
-I launch "ncdump -h" many times during my workflow. It gives you all the meta-data you need for netcdf files, without the hassle of opening a more serious program like <a href="http://ferret.pmel.noaa.gov/Ferret/">ferret</a> . I figured out that I need the same for mat files. You will need <a href="https://www.gnu.org/software/octave/">octave</a> to make it work&#x2026;
-</p>
-
-<div class="org-src-container">
-
-<pre class="src src-matlab"><span class="linenr">1: </span>#<span style="color: #228b22;">!/</span>usr<span style="color: #228b22;">/</span>local<span style="color: #228b22;">/</span>bin<span style="color: #228b22;">/</span>octave <span style="color: #228b22;">-</span>q
-<span class="linenr">2: </span>whos(<span style="color: #8b2252;">'-file'</span>,argv(){1})
-</pre>
-</div>
-<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2014/12/30/ncdump--h-for-matlab.org">org-mode source</a><p>
-
-    </div>
-  </div>
-</article>
-
-
-
-  <div class="after_post"><a href="http://avigdev.github.io/blog/20141230/2014-12-30-ncdump-h-for-matlab-html#disqus_thread">Read and Post Comments</a></div>
-  <hr class="interblog" />
  <a href="../3">« Previous Page</a>
   --  
  <a href="../5">Next Page »</a>
@@ -574,11 +575,11 @@ I launch "ncdump -h" many times during my workflow. It gives you all the meta-da
   <section>
     <h1 class="post_header_gradient theme_font">Latest Posts</h1>
     <ul>
+      <li><a href="/blog/20150611/2015-06-11-prepare-an-empty-package-that-does-nothing-html/">prepare an empty package that does nothing</a></li>
       <li><a href="/blog/20150611/2015-06-11-mitgcm-recipee-for-building-a-package-html/">MITGCM recipee for building a package</a></li>
       <li><a href="/blog/20150430/2015-04-30-alternative-to-keyword-substitution-in-git-using-org-mode-html/">Alternative to keyword substitution in git, using org-mode</a></li>
       <li><a href="/blog/20150319/2015-03-19-backups-on-os-x-html/">Backups on OS X</a></li>
       <li><a href="/blog/20150319/2015-03-19-backups-html/">Backups</a></li>
-      <li><a href="/blog/20150226/2015-02-26-gmt-pen-attributes-html/">GMT pen attributes</a></li>
     </ul>
   </section>
   <section>

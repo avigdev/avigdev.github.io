@@ -1,0 +1,47 @@
+** prepare an empty package that does nothing
+   :PROPERTIES:
+   :date:     2015/06/11 15:55:15
+   :updated:  2015/06/11 15:57:15
+   :END:
+the minimal list of files (which can be coppied, with necessary name changes of files/variables/parameters/functions, from MYPACKAGE) is:
+
+#+BEGIN_EXAMPLE
+mypack_calc.F
+mypack_diagnostics_init.F
+MYPACK_OPTIONS.h
+MYPACK_PARAMS.h
+MYPACK.h
+mypack_output.F
+mypack_routines.F
+mypack_check.F
+mypack_init_varia.F
+mypack_readparms.F
+#+END_EXAMPLE
+
+
+their description :
+|-----------------------------+--------------------------------------------------------------------|
+| file                        | description                                                        |
+|-----------------------------+--------------------------------------------------------------------|
+| headers                     |                                                                    |
+|-----------------------------+--------------------------------------------------------------------|
+| MYPACK.h                    | define pkg variables, and their common blocks                      |
+| MYPACK_OPTIONS.h           | package specific MACRO option defs                                 |
+| MYPACK_PARAMS.h            | package parameters and their common block  (read from data.mypack) |
+|-----------------------------+--------------------------------------------------------------------|
+| code                        |                                                                    |
+|-----------------------------+--------------------------------------------------------------------|
+| mypack_calc.F              | interface for mitgcnuv (this is what the model's core calls)       |
+| mypack_check.F             | check dependencies/conflicts with other packages                   |
+| mypack_diagnostics_init.F | define diagnostics related to the package                          |
+| mypack_init_varia.F       | initialize MYPACK parameters and variables                         |
+| mypack_output.F            | create diagnostic outputs                                          |
+| mypack_readparms.F         | parse data.mypack                                                  |
+| mypack_routines.F          | routines that implement double diffusion parametrization schemes   |
+|-----------------------------+--------------------------------------------------------------------|
+
+they should be under a new directory of the rootdir (in mypack case ~/MITgcm/model/pkg/mypack )
+
+the input file data.pkg should include the new entry "useMypack=.TRUE.," under the namelist "&PACKAGES"
+
+this parameter should be declared (with the type =LOGICAL=), and included in the common block /PARM_PACKAGES/ under =~/MITgcm/model/inc/PARAMS.h= .  it should also be included under the namelist "PACKAGES" in =~/MITgcm/model/src/packages_boot.F= , and its default value should usually be declared in this file to be =.FALSE.=.
