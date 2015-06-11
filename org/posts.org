@@ -796,7 +796,7 @@ Now, how do you know if something went wrong ?
 
 first, you have your log files /path/to/log_*_file.txt . Second, you could search for clues in /private/var/log/system.log in the time you designated.
 
-* Alternative to keyword substitution in git, using org-mode
+* COMMENT Alternative to keyword substitution in git, using org-mode
   :PROPERTIES:
   :categories: git,linux,max,orgmode
   :date:     2015/04/30 13:52:36
@@ -811,6 +811,98 @@ Linus Torvalds [[http://www.gelato.unsw.edu.au/archives/git/0610/28891.html][thi
 git log | sed -e "s/^/# /g"
 \#+END_SRC
 #+END_SRC
+* MITGCM recipee for building a package 
+  :PROPERTIES:
+  :categories: MITgcm
+  :date:     2015/06/11 15:13:03
+  :updated:  2015/06/11 15:13:03
+  :END:
+It is not easy to include a new functionality in a huge computer simulation such as [[http://mitgcm.org][MITgcm]], even if it is very modular and written with extensions in mind (and it is). So here is my experience with it. In the following, some of the replacements could be done on your local "code" directory, rather than on the root. The name of the example package is mypack.
+** prepare an empty package that does nothing
+the minimal list of files (which can be coppied, with necessary name changes of files/variables/parameters/functions, from MYPACKAGE) is:
+
+#+BEGIN_EXAMPLE
+mypack_calc.F
+mypack_diagnostics_init.F
+MYPACK_OPTIONS.h
+MYPACK_PARAMS.h
+MYPACK.h
+mypack_output.F
+mypack_routines.F
+mypack_check.F
+mypack_init_varia.F
+mypack_readparms.F
+#+END_EXAMPLE
+
+
+their description :
+|---------------------------+--------------------------------------------------------------------|
+| file                      | description                                                        |
+|---------------------------+--------------------------------------------------------------------|
+| headers                   |                                                                    |
+|---------------------------+--------------------------------------------------------------------|
+| MYPACK.h                  | define pkg variables, and their common blocks                      |
+| MYPACK_OPTIONS.h          | package specific MACRO option defs                                 |
+| MYPACK_PARAMS.h           | package parameters and their common block  (read from data.mypack) |
+|---------------------------+--------------------------------------------------------------------|
+| code                      |                                                                    |
+|---------------------------+--------------------------------------------------------------------|
+| mypack_calc.F             | interface for mitgcnuv (this is what the model's core calls)       |
+| mypack_check.F            | check dependencies/conflicts with other packages                   |
+| mypack_diagnostics_init.F | define diagnostics related to the package                          |
+| mypack_init_varia.F       | initialize MYPACK parameters and variables                         |
+| mypack_output.F           | create diagnostic outputs                                          |
+| mypack_readparms.F        | parse data.mypack                                                  |
+| mypack_routines.F         | routines that implement double diffusion parametrization schemes   |
+|---------------------------+--------------------------------------------------------------------|
+
+they should be under a new directory of the rootdir (in mypack case ~/MITgcm/model/pkg/mypack )
+
+the input file data.pkg should include the new entry "useMypack=.TRUE.," under the namelist "&PACKAGES"
+
+this parameter should be declared (with the type =LOGICAL=), and included in the common block /PARM_PACKAGES/ under =~/MITgcm/model/inc/PARAMS.h= .  it should also be included under the namelist "PACKAGES" in =~/MITgcm/model/src/packages_boot.F= , and its default value should usually be declared in this file to be =.FALSE.=.
+
+** parse user parameters
+
+in =mypack_readparms= - create a separate NAMELIST for each namelist that should appear in =data.mypack= .
+then give the parameters default values.  (e.g.       mypack_scheme    = 'kunze' )
+then try to read them    (e.g.   "READ(UNIT=iUnit,NML=MYPACK_SCHEME,IOSTAT=errIO)" ) and monitor events where errIO<0 :
+
+#+BEGIN_SRC fortran -n
+      READ(UNIT=iUnit,NML=MYPACK_SCHEME,IOSTAT=errIO)
+      IF ( errIO .LT. 0 ) THEN
+       WRITE(msgBuf,'(A)')
+     &  'S/R INI_PARMS'
+       CALL PRINT_ERROR( msgBuf , 1)
+       WRITE(msgBuf,'(A)')
+     &  'Error reading numerical model '
+       CALL PRINT_ERROR( msgBuf , 1)
+       WRITE(msgBuf,'(A)')
+     &  'parameter file "data.mypack"'
+       CALL PRINT_ERROR( msgBuf , 1)
+       WRITE(msgBuf,'(A)')
+     &  'Problem in namelist MYPACK_SCHEME'
+       CALL PRINT_ERROR( msgBuf , 1)
+       STOP 'ABNORMAL END: S/R MYPACK_INIT'
+      ENDIF
+
+      CLOSE(iUnit)
+#+END_SRC
+
+finally tell =STDOUT.*= that you're finished
+#+BEGIN_SRC fortran -n
+      WRITE(msgBuf,'(A)') ' MYPACK_INIT: finished reading data.mypack'
+#+END_SRC
+
+declare these variables in =MYPACK_PARAMS.h=
+
+these subroutines are run from the model file =packages_readparms.F=. these are the needed lines in =packages_readparms.F=:
+#+BEGIN_SRC fortran -n
+C--   Initialize Mypack parameters
+      IF (useMypack) CALL MYPACK_READPARMS( myThid )
+#endif
+#+END_SRC
+
 * Alternating checkpoint in MITgcm
   :PROPERTIES:
   :categories: MITgcm
@@ -1302,85 +1394,6 @@ create a text file with the following :
 and PATH it.
 
 remove previous vers from /usr/bin/
-
-* MITGCM recipee for building a package (the name of the example package is diffus2):
-
-1) prepare an empty package that does nothing
-
-the minimal list of files (which can be coppied, with necessary name changes of files/variables/parameters/functions, from MYPACKAGE) is:
-diffus2_calc.F
-diffus2_diagnostics_init.F
-DIFFUS2_OPTIONS.h
-DIFFUS2_PARAMS.h
-DIFFUS2.h
-diffus2_output.F
-diffus2_routines.F
-diffus2_check.F
-diffus2_init_varia.F
-diffus2_readparms.F
-
-their description :
-|----------------------------+---------------------------------------------------------------------|
-| file                       | description                                                         |
-|----------------------------+---------------------------------------------------------------------|
-| headers                    |                                                                     |
-|----------------------------+---------------------------------------------------------------------|
-| DIFFUS2.h                  | define pkg variables, and their common blocks                       |
-| DIFFUS2_OPTIONS.h          | package specific MACRO option defs                                  |
-| DIFFUS2_PARAMS.h           | package parameters and their common block  (read from data.diffus2) |
-|----------------------------+---------------------------------------------------------------------|
-| code                       |                                                                     |
-|----------------------------+---------------------------------------------------------------------|
-| diffus2_calc.F             | interface for mitgcnuv (this is what the model's core calls)        |
-| diffus2_check.F            | check dependencies/conflicts with other packages                    |
-| diffus2_diagnostics_init.F | define diagnostics related to the package                           |
-| diffus2_init_varia.F       | initialize DIFFUS2 parameters and variables                         |
-| diffus2_output.F           | create diagnostic outputs                                           |
-| diffus2_readparms.F        | parse data.diffus2                                                  |
-| diffus2_routines.F         | routines that implement double diffusion parametrization schemes    |
-|----------------------------+---------------------------------------------------------------------|
-
-they should be under a new directory of the rootdir (in diffus2 case ~/MITgcm/model/pkg/diffus2 )
-
-the input file data.pkg should include the entry "useDiffus2=.TRUE.," under the namelist "&PACKAGES"
-
-this parameter should be declared (with the type LOGICAL), and included in the common block /PARM_PACKAGES/ under ~/MITgcm/model/inc/PARAMS.h .  it should also be included under the namelist "PACKAGES" in ~/MITgcm/model/src/packages_boot.F , and its default value should usually declared in this file to be .FALSE..
-
-2) parse user parameters
-
-in diffus2_readparms - create a separate NAMELIST for each namelist that should appear in data.diffus2 .
-then give the parameters default conditions.  (e.g.       diffus2_scheme    = 'kunze' )
-then try to read them    (e.g.   READ(UNIT=iUnit,NML=DIFFUS2_SCHEME,IOSTAT=errIO) ) and monitor events where errIO<0 :
-
-      READ(UNIT=iUnit,NML=DIFFUS2_SCHEME,IOSTAT=errIO)
-      IF ( errIO .LT. 0 ) THEN
-       WRITE(msgBuf,'(A)')
-     &  'S/R INI_PARMS'
-       CALL PRINT_ERROR( msgBuf , 1)
-       WRITE(msgBuf,'(A)')
-     &  'Error reading numerical model '
-       CALL PRINT_ERROR( msgBuf , 1)
-       WRITE(msgBuf,'(A)')
-     &  'parameter file "data.diffus2"'
-       CALL PRINT_ERROR( msgBuf , 1)
-       WRITE(msgBuf,'(A)')
-     &  'Problem in namelist DIFFUS2_SCHEME'
-       CALL PRINT_ERROR( msgBuf , 1)
-       STOP 'ABNORMAL END: S/R DIFFUS2_INIT'
-      ENDIF
-
-      CLOSE(iUnit)
-
-finally tell STDOUT.* that you're finished
-      WRITE(msgBuf,'(A)') ' DIFFUS2_INIT: finished reading data.diffus2'
-
-declare these variables in DIFFUS2_PARAMS.h
-
-these subroutines are run from the model file "packages_readparms.F". these are the needed lines in packages_readparms.F:
-
-C--   Initialize Diffus2 parameters
-      IF (useDiffus2) CALL DIFFUS2_READPARMS( myThid )
-#endif
 
 * ssh tunnel through proxy : 
 

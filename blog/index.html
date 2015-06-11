@@ -97,6 +97,222 @@
 <article>
   <div class="blog_post">
     <header>
+      <div id="mitgcm-recipee-for-building-a-package"></div>
+      <h2 class="blog_post_title"><a href="/blog/20150611/2015-06-11-mitgcm-recipee-for-building-a-package-html/" rel="bookmark" title="Permanent Link to MITGCM recipee for building a package">MITGCM recipee for building a package</a></h2>
+      <p><small><span class="blog_post_date">June 11, 2015 at 03:13 PM</span> | categories: 
+        <span class="blog_post_categories"><a href='/blog/category/mitgcm/'>mitgcm</a></span>
+        | <a href="http://avigdev.github.io/blog/20150611/2015-06-11-mitgcm-recipee-for-building-a-package-html#disqus_thread">View Comments</a>
+      </small></p>
+    </header>
+    <div class="post_prose">
+      
+
+
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. prepare an empty package that does nothing</a></li>
+<li><a href="#sec-2">2. parse user parameters</a></li>
+</ul>
+</div>
+</div>
+<p>
+It is not easy to include a new functionality in a huge computer simulation such as <a href="http://mitgcm.org">MITgcm</a> , even if it is very modular and written with extensions in mind (and it is). So here is my experience with it. In the following, some of the replacements could be done on your local "code" directory, rather than on the root. The name of the example package is mypack.
+</p>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> prepare an empty package that does nothing</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+the minimal list of files (which can be coppied, with necessary name changes of files/variables/parameters/functions, from MYPACKAGE) is:
+</p>
+
+<pre class="example">
+mypack_calc.F
+mypack_diagnostics_init.F
+MYPACK_OPTIONS.h
+MYPACK_PARAMS.h
+MYPACK.h
+mypack_output.F
+mypack_routines.F
+mypack_check.F
+mypack_init_varia.F
+mypack_readparms.F
+</pre>
+
+
+<p>
+their description :
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">file</th>
+<th scope="col" class="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">headers</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">MYPACK.h</td>
+<td class="left">define pkg variables, and their common blocks</td>
+</tr>
+
+<tr>
+<td class="left">MYPACK_OPTIONS.h</td>
+<td class="left">package specific MACRO option defs</td>
+</tr>
+
+<tr>
+<td class="left">MYPACK_PARAMS.h</td>
+<td class="left">package parameters and their common block  (read from data.mypack)</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">code</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">mypack_calc.F</td>
+<td class="left">interface for mitgcnuv (this is what the model's core calls)</td>
+</tr>
+
+<tr>
+<td class="left">mypack_check.F</td>
+<td class="left">check dependencies/conflicts with other packages</td>
+</tr>
+
+<tr>
+<td class="left">mypack_diagnostics_init.F</td>
+<td class="left">define diagnostics related to the package</td>
+</tr>
+
+<tr>
+<td class="left">mypack_init_varia.F</td>
+<td class="left">initialize MYPACK parameters and variables</td>
+</tr>
+
+<tr>
+<td class="left">mypack_output.F</td>
+<td class="left">create diagnostic outputs</td>
+</tr>
+
+<tr>
+<td class="left">mypack_readparms.F</td>
+<td class="left">parse data.mypack</td>
+</tr>
+
+<tr>
+<td class="left">mypack_routines.F</td>
+<td class="left">routines that implement double diffusion parametrization schemes</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+they should be under a new directory of the rootdir (in mypack case ~/MITgcm/model/pkg/mypack )
+</p>
+
+<p>
+the input file data.pkg should include the new entry "useMypack=.TRUE.," under the namelist "&amp;PACKAGES"
+</p>
+
+<p>
+this parameter should be declared (with the type <code>LOGICAL</code>), and included in the common block <i>PARM_PACKAGES</i> under <code>~/MITgcm/model/inc/PARAMS.h</code> .  it should also be included under the namelist "PACKAGES" in <code>~/MITgcm/model/src/packages_boot.F</code> , and its default value should usually be declared in this file to be <code>.FALSE.</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> parse user parameters</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+in <code>mypack_readparms</code> - create a separate NAMELIST for each namelist that should appear in <code>data.mypack</code> .
+then give the parameters default values.  (e.g.       mypack_scheme    = 'kunze' )
+then try to read them    (e.g.   "READ(UNIT=iUnit,NML=MYPACK_SCHEME,IOSTAT=errIO)" ) and monitor events where errIO&lt;0 :
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span class="linenr"> 1: </span> <span style="color: #932092;">READ</span>(UNIT=iUnit,NML=MYPACK_SCHEME,IOSTAT=errIO)
+<span class="linenr"> 2: </span> <span style="color: #932092;">IF</span> ( errIO <span style="color: #932092;">.LT.</span> 0 ) <span style="color: #932092;">THEN</span>
+<span class="linenr"> 3: </span>  <span style="color: #932092;">WRITE</span>(msgBuf,<span style="color: #8b2252;">'(A)'</span>)
+<span class="linenr"> 4: </span>&amp;  <span style="color: #8b2252;">'S/R INI_PARMS'</span>
+<span class="linenr"> 5: </span>  <span style="color: #932092;">CALL</span> <span style="color: #0000ff;">PRINT_ERROR</span>( msgBuf , 1)
+<span class="linenr"> 6: </span>  <span style="color: #932092;">WRITE</span>(msgBuf,<span style="color: #8b2252;">'(A)'</span>)
+<span class="linenr"> 7: </span>&amp;  <span style="color: #8b2252;">'Error reading numerical model '</span>
+<span class="linenr"> 8: </span>  <span style="color: #932092;">CALL</span> <span style="color: #0000ff;">PRINT_ERROR</span>( msgBuf , 1)
+<span class="linenr"> 9: </span>  <span style="color: #932092;">WRITE</span>(msgBuf,<span style="color: #8b2252;">'(A)'</span>)
+<span class="linenr">10: </span>&amp;  <span style="color: #8b2252;">'parameter file "data.mypack"'</span>
+<span class="linenr">11: </span>  <span style="color: #932092;">CALL</span> <span style="color: #0000ff;">PRINT_ERROR</span>( msgBuf , 1)
+<span class="linenr">12: </span>  <span style="color: #932092;">WRITE</span>(msgBuf,<span style="color: #8b2252;">'(A)'</span>)
+<span class="linenr">13: </span>&amp;  <span style="color: #8b2252;">'Problem in namelist MYPACK_SCHEME'</span>
+<span class="linenr">14: </span>  <span style="color: #932092;">CALL</span> <span style="color: #0000ff;">PRINT_ERROR</span>( msgBuf , 1)
+<span class="linenr">15: </span>  <span style="color: #932092;">STOP</span> <span style="color: #8b2252;">'ABNORMAL END: S/R MYPACK_INIT'</span>
+<span class="linenr">16: </span> <span style="color: #932092;">ENDIF</span>
+<span class="linenr">17: </span>
+<span class="linenr">18: </span> <span style="color: #932092;">CLOSE</span>(iUnit)
+</pre>
+</div>
+
+<p>
+finally tell <code>STDOUT.*</code> that you're finished
+</p>
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span class="linenr">1: </span><span style="color: #932092;">WRITE</span>(msgBuf,<span style="color: #8b2252;">'(A)'</span>) <span style="color: #8b2252;">' MYPACK_INIT: finished reading data.mypack'</span>
+</pre>
+</div>
+
+<p>
+declare these variables in <code>MYPACK_PARAMS.h</code>
+</p>
+
+<p>
+these subroutines are run from the model file <code>packages_readparms.F</code>. these are the needed lines in <code>packages_readparms.F</code>:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span class="linenr">1: </span><span style="color: #b22222;">C--   </span><span style="color: #b22222;">Initialize Mypack parameters</span>
+<span class="linenr">2: </span>      <span style="color: #932092;">IF</span> (useMypack) <span style="color: #932092;">CALL</span> <span style="color: #0000ff;">MYPACK_READPARMS</span>( myThid )
+<span class="linenr">3: </span><span style="color: #483d8b;">#endif</span>
+</pre>
+</div>
+</div>
+</div>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/06/11/MITGCM-recipee-for-building-a-package.org">org-mode source</a><p>
+
+    </div>
+  </div>
+</article>
+
+
+
+  <div class="after_post"><a href="http://avigdev.github.io/blog/20150611/2015-06-11-mitgcm-recipee-for-building-a-package-html#disqus_thread">Read and Post Comments</a></div>
+  <hr class="interblog" />
+  
+
+
+
+<article>
+  <div class="blog_post">
+    <header>
       <div id="alternative-to-keyword-substitution-in-git-using-org-mode"></div>
       <h2 class="blog_post_title"><a href="/blog/20150430/2015-04-30-alternative-to-keyword-substitution-in-git-using-org-mode-html/" rel="bookmark" title="Permanent Link to Alternative to keyword substitution in git, using org-mode">Alternative to keyword substitution in git, using org-mode</a></h2>
       <p><small><span class="blog_post_date">April 30, 2015 at 01:52 PM</span> | categories: 
@@ -325,58 +541,6 @@ or color Name. There are  663 valid color names. Use man gmtcolors to list all v
 
   <div class="after_post"><a href="http://avigdev.github.io/blog/20150226/2015-02-26-gmt-pen-attributes-html#disqus_thread">Read and Post Comments</a></div>
   <hr class="interblog" />
-  
-
-
-
-<article>
-  <div class="blog_post">
-    <header>
-      <div id="a-general-slicing-syntax"></div>
-      <h2 class="blog_post_title"><a href="/blog/20150219/2015-02-19-a-general-slicing-syntax-html/" rel="bookmark" title="Permanent Link to A general slicing syntax">A general slicing syntax</a></h2>
-      <p><small><span class="blog_post_date">February 19, 2015 at 11:16 AM</span> | categories: 
-        <span class="blog_post_categories"><a href='/blog/category/matlab/'>matlab</a>, <a href='/blog/category/octave/'>octave</a></span>
-        | <a href="http://avigdev.github.io/blog/20150219/2015-02-19-a-general-slicing-syntax-html#disqus_thread">View Comments</a>
-      </small></p>
-    </header>
-    <div class="post_prose">
-      
-
-
-
-
-<p>
-To slice the 4th cross section of the second dimension of a 3-dimensional array in Matlab/Octave, you would use a code like : 
-</p>
-<div class="org-src-container">
-
-<pre class="src src-matlab"><span class="linenr">1: </span>z=z(<span style="color: #228b22;">:</span>,4,<span style="color: #228b22;">:</span>);
-</pre>
-</div>
-
-<p>
-If you want a bit more flexibility than that, you can have the sliced dimension as a parameter, using <a href="http://www.mathworks.com/help/matlab/ref/subsref.html">subsref</a> : 
-</p>
-
-<div class="org-src-container">
-
-<pre class="src src-matlab"><span class="linenr">1: </span>dim=2;
-<span class="linenr">2: </span>idx.type=<span style="color: #8b2252;">'()'</span>;               
-<span class="linenr">3: </span>idx.subs={<span style="color: #8b2252;">':'</span>,<span style="color: #8b2252;">':'</span>,<span style="color: #8b2252;">':'</span>};
-<span class="linenr">4: </span>idx.subs{dim}=4;
-<span class="linenr">5: </span>z=subsref(z,idx);
-</pre>
-</div>
-<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/02/19/A-general-slicing-syntax.org">org-mode source</a><p>
-
-    </div>
-  </div>
-</article>
-
-
-
-  <div class="after_post"><a href="http://avigdev.github.io/blog/20150219/2015-02-19-a-general-slicing-syntax-html#disqus_thread">Read and Post Comments</a></div>
-  <hr class="interblog" />
  <a href="/blog/page/2">Next Page »</a>
 
           </div>
@@ -396,11 +560,11 @@ If you want a bit more flexibility than that, you can have the sliced dimension 
   <section>
     <h1 class="post_header_gradient theme_font">Latest Posts</h1>
     <ul>
+      <li><a href="/blog/20150611/2015-06-11-mitgcm-recipee-for-building-a-package-html/">MITGCM recipee for building a package</a></li>
       <li><a href="/blog/20150430/2015-04-30-alternative-to-keyword-substitution-in-git-using-org-mode-html/">Alternative to keyword substitution in git, using org-mode</a></li>
       <li><a href="/blog/20150319/2015-03-19-backups-on-os-x-html/">Backups on OS X</a></li>
       <li><a href="/blog/20150319/2015-03-19-backups-html/">Backups</a></li>
       <li><a href="/blog/20150226/2015-02-26-gmt-pen-attributes-html/">GMT pen attributes</a></li>
-      <li><a href="/blog/20150219/2015-02-19-a-general-slicing-syntax-html/">A general slicing syntax</a></li>
     </ul>
   </section>
   <section>
