@@ -2,14 +2,10 @@
   :PROPERTIES:
   :categories: MITgcm
   :date:     2015/06/11 15:13:03
-  :updated:  2015/06/11 15:56:37
+  :updated:  2015/06/11 16:00:50
   :END:
 It is not easy to include a new functionality in a huge computer simulation such as [[http://mitgcm.org][MITgcm]], even if it is very modular and written with extensions in mind (and it is). So here is my experience with it. In the following, some of the replacements could be done on your local "code" directory, rather than on the root. The name of the example package is mypack.
 ** prepare an empty package that does nothing
-   :PROPERTIES:
-   :date:     2015/06/11 15:55:15
-   :updated:  2015/06/11 15:55:15
-   :END:
 the minimal list of files (which can be coppied, with necessary name changes of files/variables/parameters/functions, from MYPACKAGE) is:
 
 #+BEGIN_EXAMPLE
@@ -33,18 +29,18 @@ their description :
 | headers                     |                                                                    |
 |-----------------------------+--------------------------------------------------------------------|
 | MYPACK.h                    | define pkg variables, and their common blocks                      |
-| MYPACK\_OPTIONS.h           | package specific MACRO option defs                                 |
-| MYPACK\_PARAMS.h            | package parameters and their common block  (read from data.mypack) |
+| MYPACK_OPTIONS.h           | package specific MACRO option defs                                 |
+| MYPACK_PARAMS.h            | package parameters and their common block  (read from data.mypack) |
 |-----------------------------+--------------------------------------------------------------------|
 | code                        |                                                                    |
 |-----------------------------+--------------------------------------------------------------------|
-| mypack\_calc.F              | interface for mitgcnuv (this is what the model's core calls)       |
-| mypack\_check.F             | check dependencies/conflicts with other packages                   |
-| mypack\_diagnostics\_init.F | define diagnostics related to the package                          |
-| mypack\_init\_varia.F       | initialize MYPACK parameters and variables                         |
-| mypack\_output.F            | create diagnostic outputs                                          |
-| mypack\_readparms.F         | parse data.mypack                                                  |
-| mypack\_routines.F          | routines that implement double diffusion parametrization schemes   |
+| mypack_calc.F              | interface for mitgcnuv (this is what the model's core calls)       |
+| mypack_check.F             | check dependencies/conflicts with other packages                   |
+| mypack_diagnostics_init.F | define diagnostics related to the package                          |
+| mypack_init_varia.F       | initialize MYPACK parameters and variables                         |
+| mypack_output.F            | create diagnostic outputs                                          |
+| mypack_readparms.F         | parse data.mypack                                                  |
+| mypack_routines.F          | routines that implement double diffusion parametrization schemes   |
 |-----------------------------+--------------------------------------------------------------------|
 
 they should be under a new directory of the rootdir (in mypack case ~/MITgcm/model/pkg/mypack )

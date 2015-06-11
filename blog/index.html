@@ -97,11 +97,11 @@
 <article>
   <div class="blog_post">
     <header>
-      <div id="prepare-an-empty-package-that-does-nothing"></div>
-      <h2 class="blog_post_title"><a href="/blog/20150611/2015-06-11-prepare-an-empty-package-that-does-nothing-html/" rel="bookmark" title="Permanent Link to prepare an empty package that does nothing">prepare an empty package that does nothing</a></h2>
-      <p><small><span class="blog_post_date">June 11, 2015 at 03:55 PM</span> | categories: 
-        <span class="blog_post_categories"><a href='/blog/category/uncategorized/'>uncategorized</a></span>
-        | <a href="http://avigdev.github.io/blog/20150611/2015-06-11-prepare-an-empty-package-that-does-nothing-html#disqus_thread">View Comments</a>
+      <div id="mitgcm-recipee-for-building-a-package"></div>
+      <h2 class="blog_post_title"><a href="/blog/20150611/2015-06-11-mitgcm-recipee-for-building-a-package-html/" rel="bookmark" title="Permanent Link to MITGCM recipee for building a package">MITGCM recipee for building a package</a></h2>
+      <p><small><span class="blog_post_date">June 11, 2015 at 03:13 PM</span> | categories: 
+        <span class="blog_post_categories"><a href='/blog/category/mitgcm/'>mitgcm</a></span>
+        | <a href="http://avigdev.github.io/blog/20150611/2015-06-11-mitgcm-recipee-for-building-a-package-html#disqus_thread">View Comments</a>
       </small></p>
     </header>
     <div class="post_prose">
@@ -109,6 +109,12 @@
 
 
 
+<p>
+It is not easy to include a new functionality in a huge computer simulation such as <a href="http://mitgcm.org">MITgcm</a> , even if it is very modular and written with extensions in mind (and it is). So here is my experience with it. In the following, some of the replacements could be done on your local "code" directory, rather than on the root. The name of the example package is mypack.
+</p>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> prepare an empty package that does nothing</h2>
+<div class="outline-text-2" id="text-1">
 <p>
 the minimal list of files (which can be coppied, with necessary name changes of files/variables/parameters/functions, from MYPACKAGE) is:
 </p>
@@ -205,153 +211,6 @@ their description :
 
 <tr>
 <td class="left">mypack_routines.F</td>
-<td class="left">routines that implement double diffusion parametrization schemes</td>
-</tr>
-</tbody>
-</table>
-
-<p>
-they should be under a new directory of the rootdir (in mypack case ~/MITgcm/model/pkg/mypack )
-</p>
-
-<p>
-the input file data.pkg should include the new entry "useMypack=.TRUE.," under the namelist "&amp;PACKAGES"
-</p>
-
-<p>
-this parameter should be declared (with the type <code>LOGICAL</code>), and included in the common block <i>PARM_PACKAGES</i> under <code>~/MITgcm/model/inc/PARAMS.h</code> .  it should also be included under the namelist "PACKAGES" in <code>~/MITgcm/model/src/packages_boot.F</code> , and its default value should usually be declared in this file to be <code>.FALSE.</code>.
-</p>
-<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/06/11/prepare-an-empty-package-that-does-nothing.org">org-mode source</a><p>
-
-    </div>
-  </div>
-</article>
-
-
-
-  <div class="after_post"><a href="http://avigdev.github.io/blog/20150611/2015-06-11-prepare-an-empty-package-that-does-nothing-html#disqus_thread">Read and Post Comments</a></div>
-  <hr class="interblog" />
-  
-
-
-
-<article>
-  <div class="blog_post">
-    <header>
-      <div id="mitgcm-recipee-for-building-a-package"></div>
-      <h2 class="blog_post_title"><a href="/blog/20150611/2015-06-11-mitgcm-recipee-for-building-a-package-html/" rel="bookmark" title="Permanent Link to MITGCM recipee for building a package">MITGCM recipee for building a package</a></h2>
-      <p><small><span class="blog_post_date">June 11, 2015 at 03:13 PM</span> | categories: 
-        <span class="blog_post_categories"><a href='/blog/category/mitgcm/'>mitgcm</a></span>
-        | <a href="http://avigdev.github.io/blog/20150611/2015-06-11-mitgcm-recipee-for-building-a-package-html#disqus_thread">View Comments</a>
-      </small></p>
-    </header>
-    <div class="post_prose">
-      
-
-
-
-<p>
-It is not easy to include a new functionality in a huge computer simulation such as <a href="http://mitgcm.org">MITgcm</a> , even if it is very modular and written with extensions in mind (and it is). So here is my experience with it. In the following, some of the replacements could be done on your local "code" directory, rather than on the root. The name of the example package is mypack.
-</p>
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> prepare an empty package that does nothing</h2>
-<div class="outline-text-2" id="text-1">
-<p>
-the minimal list of files (which can be coppied, with necessary name changes of files/variables/parameters/functions, from MYPACKAGE) is:
-</p>
-
-<pre class="example">
-mypack_calc.F
-mypack_diagnostics_init.F
-MYPACK_OPTIONS.h
-MYPACK_PARAMS.h
-MYPACK.h
-mypack_output.F
-mypack_routines.F
-mypack_check.F
-mypack_init_varia.F
-mypack_readparms.F
-</pre>
-
-
-<p>
-their description :
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="left" />
-
-<col  class="left" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="left">file</th>
-<th scope="col" class="left">description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="left">headers</td>
-<td class="left">&#xa0;</td>
-</tr>
-</tbody>
-<tbody>
-<tr>
-<td class="left">MYPACK.h</td>
-<td class="left">define pkg variables, and their common blocks</td>
-</tr>
-
-<tr>
-<td class="left">MYPACK\_OPTIONS.h</td>
-<td class="left">package specific MACRO option defs</td>
-</tr>
-
-<tr>
-<td class="left">MYPACK\_PARAMS.h</td>
-<td class="left">package parameters and their common block  (read from data.mypack)</td>
-</tr>
-</tbody>
-<tbody>
-<tr>
-<td class="left">code</td>
-<td class="left">&#xa0;</td>
-</tr>
-</tbody>
-<tbody>
-<tr>
-<td class="left">mypack\_calc.F</td>
-<td class="left">interface for mitgcnuv (this is what the model's core calls)</td>
-</tr>
-
-<tr>
-<td class="left">mypack\_check.F</td>
-<td class="left">check dependencies/conflicts with other packages</td>
-</tr>
-
-<tr>
-<td class="left">mypack\_diagnostics\_init.F</td>
-<td class="left">define diagnostics related to the package</td>
-</tr>
-
-<tr>
-<td class="left">mypack\_init\_varia.F</td>
-<td class="left">initialize MYPACK parameters and variables</td>
-</tr>
-
-<tr>
-<td class="left">mypack\_output.F</td>
-<td class="left">create diagnostic outputs</td>
-</tr>
-
-<tr>
-<td class="left">mypack\_readparms.F</td>
-<td class="left">parse data.mypack</td>
-</tr>
-
-<tr>
-<td class="left">mypack\_routines.F</td>
 <td class="left">routines that implement double diffusion parametrization schemes</td>
 </tr>
 </tbody>
@@ -620,6 +479,59 @@ If you are using linux, you should probably put this script in your <code>/etc/c
 
   <div class="after_post"><a href="http://avigdev.github.io/blog/20150319/2015-03-19-backups-html#disqus_thread">Read and Post Comments</a></div>
   <hr class="interblog" />
+  
+
+
+
+<article>
+  <div class="blog_post">
+    <header>
+      <div id="gmt-pen-attributes"></div>
+      <h2 class="blog_post_title"><a href="/blog/20150226/2015-02-26-gmt-pen-attributes-html/" rel="bookmark" title="Permanent Link to GMT pen attributes">GMT pen attributes</a></h2>
+      <p><small><span class="blog_post_date">February 26, 2015 at 04:17 AM</span> | categories: 
+        <span class="blog_post_categories"><a href='/blog/category/gmt/'>gmt</a></span>
+        | <a href="http://avigdev.github.io/blog/20150226/2015-02-26-gmt-pen-attributes-html#disqus_thread">View Comments</a>
+      </small></p>
+    </header>
+    <div class="post_prose">
+      
+
+
+
+<p>
+A lot of GMT programs have flags with "<i>pen</i>" attributes. It is not very easy to find in the man pages or the pdf documentation what is a pen. So&#x2026; 
+</p>
+
+<p>
+A pen is a comma separated triple parameter :
+</p>
+<pre class="example">
+width,color,style
+</pre>
+<p>
+where : 
+</p>
+<ul class="org-ul">
+<li>width = faint default thinnest thinner thin thick thicker thickest fat fatter fattest obese
+it can also be indicated in numbers in the range [0 18p]
+</li>
+<li>color = a gray shade in the range 0–255 (linearly going from black (0) to white (255)).
+or RGB, by specifying r/g/b, each ranging from 0–255. Here 0/0/0 is black, 255/255/255 is white, 255/0/0 is red, etc.
+or color Name. There are  663 valid color names. Use man gmtcolors to list all valid names. A very small yet versatile subset consists of the 29 choices white, black, and [light:|dark]{red, orange, yellow, green, cyan, blue, magenta, gray|grey, brown}. The color names are case-insensitive, so mixed upper and lower case can be used (like DarkGreen).
+</li>
+<li>style = solid, dashed, etc.
+</li>
+</ul>
+<p>Copyright (C) 2015 by Avi Gozolchiani. See the <a href="/copying.html">License</a> for information about copying.<p><p><a href="/org/2015/02/26/GMT-pen-attributes.org">org-mode source</a><p>
+
+    </div>
+  </div>
+</article>
+
+
+
+  <div class="after_post"><a href="http://avigdev.github.io/blog/20150226/2015-02-26-gmt-pen-attributes-html#disqus_thread">Read and Post Comments</a></div>
+  <hr class="interblog" />
  <a href="/blog/page/2">Next Page »</a>
 
           </div>
@@ -639,11 +551,11 @@ If you are using linux, you should probably put this script in your <code>/etc/c
   <section>
     <h1 class="post_header_gradient theme_font">Latest Posts</h1>
     <ul>
-      <li><a href="/blog/20150611/2015-06-11-prepare-an-empty-package-that-does-nothing-html/">prepare an empty package that does nothing</a></li>
       <li><a href="/blog/20150611/2015-06-11-mitgcm-recipee-for-building-a-package-html/">MITGCM recipee for building a package</a></li>
       <li><a href="/blog/20150430/2015-04-30-alternative-to-keyword-substitution-in-git-using-org-mode-html/">Alternative to keyword substitution in git, using org-mode</a></li>
       <li><a href="/blog/20150319/2015-03-19-backups-on-os-x-html/">Backups on OS X</a></li>
       <li><a href="/blog/20150319/2015-03-19-backups-html/">Backups</a></li>
+      <li><a href="/blog/20150226/2015-02-26-gmt-pen-attributes-html/">GMT pen attributes</a></li>
     </ul>
   </section>
   <section>

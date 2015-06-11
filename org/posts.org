@@ -815,14 +815,10 @@ git log | sed -e "s/^/# /g"
   :PROPERTIES:
   :categories: MITgcm
   :date:     2015/06/11 15:13:03
-  :updated:  2015/06/11 15:56:37
+  :updated:  2015/06/11 16:00:50
   :END:
 It is not easy to include a new functionality in a huge computer simulation such as [[http://mitgcm.org][MITgcm]], even if it is very modular and written with extensions in mind (and it is). So here is my experience with it. In the following, some of the replacements could be done on your local "code" directory, rather than on the root. The name of the example package is mypack.
 ** prepare an empty package that does nothing
-   :PROPERTIES:
-   :date:     2015/06/11 15:55:15
-   :updated:  2015/06/11 15:57:15
-   :END:
 the minimal list of files (which can be coppied, with necessary name changes of files/variables/parameters/functions, from MYPACKAGE) is:
 
 #+BEGIN_EXAMPLE
