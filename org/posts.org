@@ -811,7 +811,7 @@ Linus Torvalds [[http://www.gelato.unsw.edu.au/archives/git/0610/28891.html][thi
 git log | sed -e "s/^/# /g"
 \#+END_SRC
 #+END_SRC
-* MITGCM recipee for building a package 
+* COMMENT MITGCM recipee for building a package 
   :PROPERTIES:
   :categories: MITgcm
   :date:     2015/06/11 15:13:03
@@ -1399,12 +1399,12 @@ remove previous vers from /usr/bin/
 
 in: .ssh/config:
 
-Host tsia
-Hostname tsia.boker
-User avigoz
+Host hostname_nick
+Hostname hostname
+User yourname
 ForwardAgent yes
 Port 22
-ProxyCommand ssh avigoz@sansana.bgu.ac.il nc %h %p
+ProxyCommand ssh yourname@your.tun.nel nc %h %p
 
 to make it passwordless :
 
@@ -1425,7 +1425,7 @@ lynx -dump -listonly "http://www.example.com/"
 
 * define a remote directory
 in fstab :
-sshfs#avigoz@111.11.111.111:/your/path /local/mounted/path fuse defaults,allow_other 0 0
+sshfs#youruser@111.11.111.111:/your/path /local/mounted/path fuse defaults,allow_other 0 0
 
 in /etc/fuse.conf , uncomment :
 user_allow_other
@@ -1439,15 +1439,15 @@ brew install fuse4x
 sudo /bin/cp -rfX /usr/local/Cellar/fuse4x-kext/0.9.2/Library/Extensions/fuse4x.kext /Library/Extensions/
 sudo chmod +s /Library/Extensions/Support/load_fuse4x
 
-sudo mkdir -p /mnt/tsia
-sudo chown avigoz /mnt /mnt/tsia
-sudo chmod a+rwx /mnt /mnt/tsia
+sudo mkdir -p /mnt/hostname
+sudo chown username /mnt /mnt/hostname
+sudo chmod a+rwx /mnt /mnt/hostname
 
 now you should be able to manually mount the remote drive: 
-sshfs tsia:/home/avigoz /mnt/tsia/ -oreconnect,allow_other,volname=tsia,sshfs_debug
+sshfs hostname:/home/username /mnt/hostname/ -oreconnect,allow_other,volname=hostname,sshfs_debug
 
-so now /mnt/tsia includes files from the remote source.  unmount it:
-umount /mnt/tsia
+so now /mnt/hostname includes files from the remote source.  unmount it:
+umount /mnt/hostname
 
 
 the following does not work properly for me. I do see the files but I don't have permissions to change them
@@ -1465,7 +1465,7 @@ check the location of sshfs in the last line, since it might vary between versio
 
 chmod a+rwx progs/sshfs/sshfs-authsock
 
-sudo emacs   /Library/LaunchAgents/tsia.home.plist  
+sudo emacs   /Library/LaunchAgents/hostname.home.plist  
 
 and therein : 
 
@@ -1474,13 +1474,13 @@ and therein :
 <plist version="1.0">
 <dict>
         <key>Label</key>
-        <string>tsia.home.sshfs</string>
+        <string>hostname.home.sshfs</string>
         <key>ProgramArguments</key>
         <array>
-                <string>/Users/avigoz/progs/sshfs/sshfs-authsock</string>
-                <string>avigoz@tsia:</string>
-                <string>/mnt/tsia</string>
-                <string>-oreconnect,allow_other,volname=tsia</string>
+                <string>/Users/username/progs/sshfs/sshfs-authsock</string>
+                <string>username@hostname:</string>
+                <string>/mnt/hostname</string>
+                <string>-oreconnect,allow_other,volname=hostname</string>
         </array>
         <key>RunAtLoad</key>
         <true/>
@@ -1490,8 +1490,8 @@ and therein :
 
 with the obvious modifications of directory/file/user/host names . 
 
-launchctl load /Library/LaunchAgents/tsia.home.plist
-% launchctl start tsia.home.sshfs --> does not seem relevant
+launchctl load /Library/LaunchAgents/hostname.home.plist
+% launchctl start hostname.home.sshfs --> does not seem relevant
 
 * perl command line arguments :
 
