@@ -1,0 +1,28 @@
+* Some Random links 
+
+** ML
+*** ML papers :
+
+https://github.com/terryum/awesome-deep-learning-papers
+https://github.com/gpfvic/IRR
+
+*** NLP course : 
+http://cs224d.stanford.edu/syllabus.html
+
+*** Azure ML tutorials : 
+https://github.com/Azure-Readiness/hol-azure-machine-learning
+
+*** adaboost : 
+http://babkin-cep.blogspot.com/search/label/learning_boosting
+
+*** R/python ML algos cheetsheet
+
+https://www.analyticsvidhya.com/blog/2015/09/full-cheatsheet-machine-learning-algorithms/?__scoop_post=d3cb2e10-0e8b-11e6-ffbe-f01fafd7b417&__scoop_topic=1906679&utm_content=buffer777d2&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer#__scoop_post=d3cb2e10-0e8b-11e6-ffbe-f01fafd7b417&__scoop_topic=1906679
+
+*** bootstrap:
+http://courses.washington.edu/matlab1/Bootstrap_examples.html#2
+
+** climate 
+*** climate data:
+by rectangular selection : 
+http://fetchclimate2.cloudapp.net/#page=geography&dm=values&t=years&yc=1961,1991&dc=1,366&hc=0,24&ts=2016-10-05T08:33:53.006Z
