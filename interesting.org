@@ -21,6 +21,9 @@ http://babkin-cep.blogspot.com/search/label/learning_boosting
 
 https://www.analyticsvidhya.com/blog/2015/09/full-cheatsheet-machine-learning-algorithms/?__scoop_post=d3cb2e10-0e8b-11e6-ffbe-f01fafd7b417&__scoop_topic=1906679&utm_content=buffer777d2&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer#__scoop_post=d3cb2e10-0e8b-11e6-ffbe-f01fafd7b417&__scoop_topic=1906679
 
+*** Clustering 
+how to choose k in k-means? https://en.wikipedia.org/wiki/Determining_the_number_of_clusters_in_a_data_set
+
 *** bootstrap:
 http://courses.washington.edu/matlab1/Bootstrap_examples.html#2
 
