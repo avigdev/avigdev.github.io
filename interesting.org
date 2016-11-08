@@ -5,8 +5,8 @@ https://onlinecourses.science.psu.edu/stat510/?q=node/76
 ** ML
 *** ML papers :
 
-https://github.com/terryum/awesome-deep-learning-papers
-https://github.com/gpfvic/IRR
+- https://github.com/terryum/awesome-deep-learning-papers
+- https://github.com/gpfvic/IRR
 
 *** NLP course : 
 http://cs224d.stanford.edu/syllabus.html
@@ -22,11 +22,11 @@ http://babkin-cep.blogspot.com/search/label/learning_boosting
 https://www.analyticsvidhya.com/blog/2015/09/full-cheatsheet-machine-learning-algorithms/?__scoop_post=d3cb2e10-0e8b-11e6-ffbe-f01fafd7b417&__scoop_topic=1906679&utm_content=buffer777d2&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer#__scoop_post=d3cb2e10-0e8b-11e6-ffbe-f01fafd7b417&__scoop_topic=1906679
 
 *** Clustering 
-how to choose k in k-means? https://en.wikipedia.org/wiki/Determining_the_number_of_clusters_in_a_data_set
-clustering by message passing (without a tuning parameter k): https://en.wikipedia.org/wiki/Affinity_propagation , http://fusion.grids.cn/qmeiCourse/files/AffinityPropagation.pdf 
+- how to choose k in k-means? https://en.wikipedia.org/wiki/Determining_the_number_of_clusters_in_a_data_set
+- clustering by message passing (without a tuning parameter k): https://en.wikipedia.org/wiki/Affinity_propagation , http://fusion.grids.cn/qmeiCourse/files/AffinityPropagation.pdf 
 
 *** bootstrap:
-http://courses.washington.edu/matlab1/Bootstrap_examples.html#2
+- http://courses.washington.edu/matlab1/Bootstrap_examples.html#2
 
 ** climate 
 *** climate data:
