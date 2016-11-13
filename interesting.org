@@ -1,7 +1,14 @@
 * Some Random links 
+** Networks
+- http://kateto.net/network-visualization - R network visualization, using the igraph library
 ** AB testing
 Intervention analysis : 
 https://onlinecourses.science.psu.edu/stat510/?q=node/76
+** Recommendations
+*** Software
+- https://github.com/recommenders/rival/wiki - comparison of reco-engines
+- http://www.librec.net/example.html - comparison results of the most common algos
+- http://www.libfm.org/ - Factorization machines engine, including Bayesian inference
 ** ML
 *** ML papers :
 
