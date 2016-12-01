@@ -1,0 +1,49 @@
+#+TITLE: ML in water resources problems
+
+* Anomaly detection
+Detecting accidental contaminations in municipal water networks,A Kessler, A Ostfeld, G Sinai,Journal of Water Resources Planning and Management 124 (4), 192-198
+
+Detecting accidental contaminations in municipal water networks, A Kumar, ML Kansal, G Arora, A Ostfeld, A Kessler, Journal of Water Resources Planning and Management 125 (5), 308-310
+
+* Classifying sources of anomalies
+Contamination source identification in water systems: A hybrid model trees–linear programming scheme, A Preis, A Ostfeld, Journal of Water Resources Planning and Management 132 (4), 263-273
+
+* Alignment of sensors
+The battle of the water sensor networks (BWSN): A design challenge for engineers and algorithms, A Ostfeld, JG Uber, E Salomons, JW Berry, WE Hart, CA Phillips, Journal of Water Resources Planning and Management 134 (6), 556-568
+
+Optimal layout of early warning detection stations for water distribution systems security,A Ostfeld, E Salomons, Journal of Water Resources Planning and Management 130 (5), 377-385
+
+* design
+Design of optimal reliable multiquality water-supply systems, A Ostfeld, U Shamir, Journal of Water Resources Planning and Management 122 (5), 322-333
+
+Ant colony optimization for least-cost design and operation of pumping water distribution systems, A Ostfeld, A Tubaltzev, Journal of Water Resources Planning and Management 134 (2), 107-118
+
+Multiobjective contaminant sensor network design for water distribution systems, A Preis, A Ostfeld, Journal of Water Resources Planning and Management 134 (4), 366-377
+
+
+An adaptive heuristic cross-entropy algorithm for optimal design of water distribution systems, L Perelman, A Ostfeld, Engineering Optimization 39 (4), 413-428
+
+
+* un-classified
+State of the art for genetic algorithms and beyond in water resources planning and management,J Nicklow, P Reed, D Savic, T Dessalegne, L Harrell, A Chan-Hilton, Journal of Water Resources Planning and Management 136 (4), 412-432
+
+Evolutionary algorithms and other metaheuristics in water resources: Current status, research challenges and future directions, HR Maier, Z Kapelan, J Kasprzyk, J Kollat, LS Matott, MC Cunha, Environmental Modelling & Software 62, 271-299
+
+Topological clustering for water distribution systems analysis, L Perelman, A Ostfeld, Environmental Modelling & Software 26 (7), 969-972
+
+Reliability simulation of water distribution systems–single and multiquality, A Ostfeld, D Kogan, U Shamir, Urban Water 4 (1), 53-61
+
+Optimal operation of multiquality networks. I: Steady-state conditions, A Ostfeld, U Shamir, Journal of Water Resources Planning and Management 119 (6), 645-662
+
+Optimal operation of multiquality networks. I: Steady-state conditions, A Ostfeld, U Shamir, Journal of Water Resources Planning and Management 119 (6), 645-662
+Water distribution systems connectivity analysis, A Ostfeld, Journal of water resources planning and management 131 (1), 58-66
+
+Reliability analysis of regional water distribution systems, A Ostfeld, Urban Water 3 (4), 253-260
+
+A hybrid genetic—instance based learning algorithm for CE-QUAL-W2 calibration, A Ostfeld, S Salomons, Journal of Hydrology 310 (1), 122-142
+Battle of the water calibration networks, A Ostfeld, E Salomons, L Ormsbee, JG Uber, CM Bros, P Kalungi, R Burd, Journal of Water Resources Planning and Management 138 (5), 523-532
+
+Battle of the water networks II, A Marchi, E Salomons, A Ostfeld, Z Kapelan, AR Simpson, AC Zecchin, Journal of water resources planning and management 140 (7), 04014009
+
+
+
