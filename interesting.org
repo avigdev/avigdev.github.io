@@ -39,3 +39,7 @@ https://www.analyticsvidhya.com/blog/2015/09/full-cheatsheet-machine-learning-al
 *** climate data:
 by rectangular selection : 
 http://fetchclimate2.cloudapp.net/#page=geography&dm=values&t=years&yc=1961,1991&dc=1,366&hc=0,24&ts=2016-10-05T08:33:53.006Z
+
+historical fluxes in the amazon river:
+https://daac.ornl.gov/LBA/guides/CD06_CAMREX.html
+
